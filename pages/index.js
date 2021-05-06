@@ -32,29 +32,21 @@ const Dashboard = () => {
         id: 'notes',
         name: 'Notes',
         position: 'top left',
-        width: '49%',
-        height: '49%'
       },
       {
         id: 'notes',
         name: 'Notes',
         position: 'top right',
-        width: '49%',
-        height: '49%'
       },
       {
         id: 'notes',
         name: 'Notes',
         position: 'bottom right',
-        width: '49%',
-        height: '49%'
       },
       {
         id: 'notes', 
         name: 'Notes',
         position: 'bottom left',
-        width: '49%',
-        height: '49%'
       },
     ]
   }) 
@@ -75,21 +67,6 @@ const Dashboard = () => {
     setLayout(current)
   }
   
-  const setWidth = (position, width) => {
-    let index = getAppletIndex(position)
-    let current = {...layout}
-    current.applets[index].width = width
-    console.log(current)
-    setLayout(current)
-  }
-
-  const setHeight = (position, height) => {
-    let index = getAppletIndex(position)
-    let current = {...layout}
-    current.applets[index].height = height
-    setLayout(current)
-  }
-
   return (
     <Site background={background}>
       <Wrapper>
@@ -103,8 +80,6 @@ const Dashboard = () => {
           layout={layout}
           setLayout={setLayout}
           closeApplet={closeApplet}
-          setWidth={setWidth}
-          setHeight={setHeight}
         />
       </Wrapper>
     </Site>

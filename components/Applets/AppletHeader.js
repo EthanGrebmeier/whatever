@@ -74,7 +74,7 @@ const AppletHeader = (props) => {
 
     const ExpandUp = () => {
         const expandComponentUp = () => {
-            props.setHeight(props.position, '100%')
+            props.setHeight('100%')
         }
         return (
             <ModuleHeaderControl onClick={expandComponentUp}>
@@ -85,7 +85,7 @@ const AppletHeader = (props) => {
 
     const ExpandRight = () => {
         const expandComponentRight = () => {
-            props.setWidth(props.position, '100%')
+            props.setWidth('100%')
         }
         return (
             <ModuleHeaderControl onClick={expandComponentRight}>
@@ -96,7 +96,7 @@ const AppletHeader = (props) => {
 
     const ExpandDown = () => {
         const expandComponentDown = () => {
-            props.setHeight(props.position, '100%')
+            props.setHeight('100%')
         }
         return (
             <ModuleHeaderControl onClick={expandComponentDown}>
@@ -107,7 +107,7 @@ const AppletHeader = (props) => {
 
     const ExpandLeft = () => {
         const expandComponentLeft = () => {
-            props.setWidth(props.position, '100%')
+            props.setWidth('100%')
         }
         return (
             <ModuleHeaderControl onClick={expandComponentLeft}>
