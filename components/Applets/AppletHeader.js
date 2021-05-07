@@ -36,26 +36,45 @@ const AppletHeader = (props) => {
 
     const checkPosition = (expandPositionY, expandPositionX) => {
         const checkedPosition = `${expandPositionY} ${expandPositionX}`
+        // Check directly in the position
         for (let applet in props.applets) {
             if (props.applets[applet].position == checkedPosition){
                 return false
             }
         }
-        console.log(checkedPosition)
+        
         return true
     }
+
+
 
     const canAppletExpand = (direction) => {
         const [y, x] = props.position.split(' ')
         switch (direction) {
             case 'right':
-                return checkPosition(y, 'right')
+                return props.width == '100%' ? false : checkPosition(y, 'right')
             case 'left':
-                return checkPosition(y, 'left')
+                return props.width == '100%' ? false : checkPosition(y, 'left')
             case 'down':
-                return checkPosition('bottom', x)
+                return props.height == '100%' ? false : checkPosition('bottom', x)
             case 'up':
-                return checkPosition('top', x)
+                return props.height == '100%' ? false : checkPosition('top', x)
+            default:
+                break;
+        }
+    }
+
+    const canAppletShrink = (direction) => {
+        const [y, x] = props.position.split(' ')
+        switch (direction) {
+            case 'right':
+                return props.width == '100%'
+            case 'left':
+                return props.width == '100%'
+            case 'down':
+                return props.height == '100%'
+            case 'up':
+                return props.height == '100%'
             default:
                 break;
         }
@@ -68,7 +87,71 @@ const AppletHeader = (props) => {
                 {canAppletExpand('right') && <ExpandRight/>}
                 {canAppletExpand('down') && <ExpandDown/>}
                 {canAppletExpand('up') && <ExpandUp/>}
+                {canAppletShrink('left') && <ShrinkLeft/>}
+                {canAppletShrink('right') && <ShrinkRight/>}
+                {canAppletShrink('down') && <ShrinkDown/>}
+                {canAppletShrink('up') && <ShrinkUp/>}
             </>
+        )
+    }
+
+    const ShrinkUp = () => {
+        const shrinkComponentUp = () => {
+            const [y, x] = props.position.split(' ')
+            if (y == 'bottom'){
+                props.moveApplet(props.position, `top ${x}`)
+            }
+            props.setHeight('49%')
+        }
+        return (
+            <ModuleHeaderControl onClick={shrinkComponentUp}>
+                <UilTopArrowFromTop title='test'/>
+            </ModuleHeaderControl>
+        )
+    }
+
+    const ShrinkDown = () => {
+        const shrinkComponentDown = () => {
+            const [y, x] = props.position.split(' ')
+            if (y == 'top'){
+                props.moveApplet(props.position, `bottom ${x}`)
+            }
+            props.setHeight('49%')
+        }
+        return (
+            <ModuleHeaderControl onClick={shrinkComponentDown}>
+                <UilArrowFromTop title='test'/>
+            </ModuleHeaderControl>
+        )
+    }
+
+    const ShrinkLeft = () => {
+        const shrinkComponentLeft = () => {
+            const [y, x] = props.position.split(' ')
+            if (x == 'right'){
+                props.moveApplet(props.position, `${y} left`)
+            }
+            props.setWidth('49%')
+        }
+        return (
+            <ModuleHeaderControl onClick={shrinkComponentLeft}>
+                <UilLeftArrowFromLeft title='test'/>
+            </ModuleHeaderControl>
+        )
+    }
+
+    const ShrinkRight = () => {
+        const shrinkComponentRight = () => {
+            const [y, x] = props.position.split(' ')
+            if (x == 'left'){
+                props.moveApplet(props.position, `${y} right`)
+            }
+            props.setWidth('49%')
+        }
+        return (
+            <ModuleHeaderControl onClick={shrinkComponentRight}>
+                <UilArrowFromRight/>
+            </ModuleHeaderControl>
         )
     }
 
@@ -78,7 +161,7 @@ const AppletHeader = (props) => {
         }
         return (
             <ModuleHeaderControl onClick={expandComponentUp}>
-                <UilTopArrowFromTop/>
+                <UilTopArrowFromTop title='test'/>
             </ModuleHeaderControl>
         )
     }

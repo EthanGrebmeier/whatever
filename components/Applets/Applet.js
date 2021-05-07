@@ -50,6 +50,7 @@ const Applet = (props) => {
                 setHeight={setHeight}
                 width={width}
                 height={height}
+                moveApplet={props.moveApplet}
             />
             {props.children}
         </Wrapper>

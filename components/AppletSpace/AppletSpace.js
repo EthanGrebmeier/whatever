@@ -35,6 +35,7 @@ const AppletSpace = (props) => {
                     setPosition={setPosition}
                     setWidth={props.setWidth}
                     setHeight={props.setHeight}
+                    moveApplet={props.moveApplet}
                 >
                     {applet.component}
                 </Applet>

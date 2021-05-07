@@ -66,6 +66,15 @@ const Dashboard = () => {
     current.applets.splice(index, 1)
     setLayout(current)
   }
+
+  const moveApplet = (oldPosition, newPosition) => {
+    let index = getAppletIndex(oldPosition) 
+    console.log(index)
+    let current = {...layout}
+    console.log(current)
+    current.applets[index].position = newPosition
+    setLayout(current)
+  }
   
   return (
     <Site background={background}>
@@ -80,6 +89,7 @@ const Dashboard = () => {
           layout={layout}
           setLayout={setLayout}
           closeApplet={closeApplet}
+          moveApplet={moveApplet}
         />
       </Wrapper>
     </Site>
