@@ -75,6 +75,21 @@ const Dashboard = () => {
     current.applets[index].position = newPosition
     setLayout(current)
   }
+
+  const setWidth = (position, width) => {
+    let index = getAppletIndex(position)
+    let current = {...layout}
+    current.applets[index].width = width 
+    console.log(current)
+    setLayout(current)
+  }
+
+  const setHeight = (position, height) => {
+    let index = getAppletIndex(position)
+    let current = {...layout}
+    current.applets[index].height = height
+    setLayout(current)
+  }
   
   return (
     <Site background={background}>
@@ -90,6 +105,8 @@ const Dashboard = () => {
           setLayout={setLayout}
           closeApplet={closeApplet}
           moveApplet={moveApplet}
+          setWidth={setWidth}
+          setHeight={setHeight}
         />
       </Wrapper>
     </Site>

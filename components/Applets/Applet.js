@@ -33,6 +33,17 @@ const Wrapper = styled.div`
 const Applet = (props) => {
     const [width, setWidth] = useState('49%')
     const [height, setHeight] = useState('49%')
+
+    const setParentHeight = (newHeight) => {
+        setHeight(newHeight)
+        props.setHeight(props.applet.position, newHeight)
+    }
+
+    const setParentWidth = (newWidth) => {
+        setWidth(newWidth)
+        props.setWidth(props.applet.position, newWidth)
+    }
+
     return(
         <Wrapper 
             position={props.applet.position} 
@@ -46,8 +57,8 @@ const Applet = (props) => {
                 position={props.applet.position}
                 setPosition={props.setPosition}
                 applets={props.applets}
-                setWidth={setWidth}
-                setHeight={setHeight}
+                setWidth={setParentWidth}
+                setHeight={setParentHeight}
                 width={width}
                 height={height}
                 moveApplet={props.moveApplet}

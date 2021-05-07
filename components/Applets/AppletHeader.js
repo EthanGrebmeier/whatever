@@ -28,37 +28,73 @@ const ModuleHeaderControl = styled.button`
 
 const AppletHeader = (props) => {
 
-    console.log(props)
-
-    const setWidth = () => {
-
-    }
-
-    const checkPosition = (expandPositionY, expandPositionX) => {
-        const checkedPosition = `${expandPositionY} ${expandPositionX}`
-        // Check directly in the position
+    const getAppletAtPosition = (y, x) => {
+        const checkedPosition = `${y} ${x}`
         for (let applet in props.applets) {
-            if (props.applets[applet].position == checkedPosition){
-                return false
+            const checkedApplet = props.applets[applet]
+            if (checkedApplet.position == checkedPosition){
+                return checkedApplet
             }
         }
-        
-        return true
+        return undefined
     }
 
+    const checkPosition = (expandPositionY, expandPositionX, direction) => {
+        // Check directly in the position
+        const applet = getAppletAtPosition(expandPositionY, expandPositionX)
+        return typeof applet == 'undefined' ? true : (false)
+    }
+
+    const getOpposite = (position) => {
+        switch (position) {
+            case 'top':
+                return 'bottom'
+            case 'bottom' : 
+                return 'top'
+            case 'left' : 
+                return 'right'
+            case 'right' :
+                return 'left'
+            default:
+                break;
+        }
+    }
+
+    const checkHeight = (y, x) => {
+        const position = [getOpposite(y),x]
+        console.log(position)
+        const applet = getAppletAtPosition(position[0], position[1])
+        console.log(applet)
+        console.log(props)
+        if (props.height == '100%' && applet){
+            return false
+        }
+        return typeof applet == 'undefined' ? true : applet.height !== '100%'
+    }
+
+    const checkWidth = (y, x) => {
+        const position = [y,getOpposite(x)]
+        console.log(position)
+        const applet = getAppletAtPosition(position[0], position[1])
+        console.log(applet)
+        if (props.width == '100%' && applet){
+            return false
+        }
+        return typeof applet == 'undefined' ? true : applet.width !== '100%'
+    }
 
 
     const canAppletExpand = (direction) => {
         const [y, x] = props.position.split(' ')
         switch (direction) {
             case 'right':
-                return props.width == '100%' ? false : checkPosition(y, 'right')
+                return props.width == '100%' ? false : (checkPosition(y, 'right') && checkHeight(y, 'right'))
             case 'left':
-                return props.width == '100%' ? false : checkPosition(y, 'left')
+                return props.width == '100%' ? false : (checkPosition(y, 'left') && checkHeight(y, 'left'))
             case 'down':
-                return props.height == '100%' ? false : checkPosition('bottom', x)
+                return props.height == '100%' ? false : (checkPosition('bottom', x) && checkWidth('bottom', x))
             case 'up':
-                return props.height == '100%' ? false : checkPosition('top', x)
+                return props.height == '100%' ? false : (checkPosition('top', x) && checkWidth('top', x))
             default:
                 break;
         }
