@@ -25,8 +25,8 @@ const Colors = styled.div`
 `
 
 const Color = styled.button`
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background: ${props => props.background};
     border-radius: 50px;
     outline: none;
@@ -37,9 +37,9 @@ const Color = styled.button`
 const Background = (props) => {
     const colors = [
         '#F49FBC',
-        '#735CDD',
-        '#FF9F1C',
-        '#60993E'
+        '#A0CA92',
+        '#90C2E7',
+        '#DE8F6E'
     ]
     return (
         <Section>
