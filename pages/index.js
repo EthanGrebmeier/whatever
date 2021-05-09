@@ -60,6 +60,7 @@ const Dashboard = () => {
   }
 
   const closeApplet = (position) => {
+    
     let index = getAppletIndex(position) 
     let current = {...layout}
     console.log(current)
@@ -69,9 +70,7 @@ const Dashboard = () => {
 
   const moveApplet = (oldPosition, newPosition) => {
     let index = getAppletIndex(oldPosition) 
-    console.log(index)
     let current = {...layout}
-    console.log(current)
     current.applets[index].position = newPosition
     setLayout(current)
   }
@@ -79,6 +78,7 @@ const Dashboard = () => {
   const setWidth = (position, width) => {
     let index = getAppletIndex(position)
     let current = {...layout}
+    console.log(current)
     current.applets[index].width = width 
     console.log(current)
     setLayout(current)
@@ -87,6 +87,7 @@ const Dashboard = () => {
   const setHeight = (position, height) => {
     let index = getAppletIndex(position)
     let current = {...layout}
+    console.log(current)
     current.applets[index].height = height
     setLayout(current)
   }
