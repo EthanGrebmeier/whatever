@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Applet from '../Applets/Applet'
-   
+import {getComponent} from '../../applets/applets'
+
 const Wrapper = styled.div`
     width: 100%;
     height: 85vh; 
@@ -37,7 +38,7 @@ const AppletSpace = (props) => {
                     setLayout={props.setLayout}
                     layout={props.layout}
                 >
-                    {applet.component}
+                    {getComponent(applet.id)}
                 </Applet>
             })}
         </Wrapper>

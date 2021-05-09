@@ -7,30 +7,38 @@ const applets = [
         name: 'Notepad',
         width: '49%',
         height: '49%',
-        component: <Notepad/>
     },
     {
         id: 'checklist',
         name: 'Checklist',
         width: '49%',
         height: '49%',
-        component: <Checklist/>
     },
     {
         id: 'checklist',
         name: '3',
         width: '49%',
         height: '49%',
-        component: <Notepad/>
     },
     {
         id: 'checklist',
         name: '4',
         width: '49%',
         height: '49%',
-        component: <Notepad/>
     },
-
 ]
+
+export const getComponent = (id) => {
+    switch (id) {
+        case 'notepad':
+            return <Notepad/>
+        case 'checklist':
+            return <Checklist/>
+        default:
+            console.log('Default Component Returned')
+            return <Checklist/>
+    }
+}
+
 
 export default applets
