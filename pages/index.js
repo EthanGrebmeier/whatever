@@ -29,24 +29,11 @@ const Dashboard = () => {
     name: 'Default',
     applets: [
       {
-        id: 'notes',
-        name: 'Notes',
-        position: 'top left',
-      },
-      {
-        id: 'notes',
-        name: 'Notes',
-        position: 'top right',
-      },
-      {
-        id: 'notes',
-        name: 'Notes',
-        position: 'bottom right',
-      },
-      {
-        id: 'notes', 
-        name: 'Notes',
-        position: 'bottom left',
+        id: 'checklist',
+        name: 'Checklist',
+        width: '49%',
+        height: '49%',
+        position: 'top left'
       },
     ]
   }) 
