@@ -47,8 +47,9 @@ const PickSpot = (props) => {
             <Spaces>
                 {[0,1,2,3].map( (space, index) => {
                     return (<Space
+                        key={index}
                         isSelected={selected === index}
-                        isOccupied={props.getConflictingAppletPosition(props.getAppletPosition(space))}
+                        isOccupied={props.getAppletIndex(props.getAppletPosition(space))}
                         onClick={() => setSelected(index)}
                     />)
                  })}

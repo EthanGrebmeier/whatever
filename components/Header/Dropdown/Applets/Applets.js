@@ -60,7 +60,7 @@ const Applets = (props) => {
     }
 
 
-    const getConflictingAppletPosition = (position) => {
+    const getAppletIndex = (position) => {
         for (let index in props.layout.applets){
             if (props.layout.applets[index].position === position){
                 return index
@@ -70,26 +70,80 @@ const Applets = (props) => {
     }
 
     const checkPositionEmpty = (position) => {
-        return getConflictingAppletPosition(position) == undefined ? true : false
+        return getAppletIndex(position) == undefined ? true : false
+    }
+
+    const checkWideAtIndex = (appletIndex, current) => {
+        return current.applets[appletIndex].width === '100%'
+    }
+
+    const checkTallAtIndex = (appletIndex, current) => {
+        return current.applets[appletIndex].height === '100%'
+    }
+
+    const shrinkTallApplet = (index, current) => {
+        current.applets[index].height = '49%'
+        return current
+    }
+
+    const shrinkWideApplet = (index, current) => {
+        current.applets[index].width = '49%'
+        return current
+    }
+
+    const adjustExpandedApplets = (position, currentLayout) => {
+        const [y, x] = position.split(' ')
+        let wideAppletIndex
+        let tallAppletIndex
+        let widePosition
+        let tallPosition
+        if (y === 'top' && x === 'left'){
+            widePosition = 'top right'
+            tallPosition = 'bottom left'
+        } else if (y === 'top' && x === 'right'){
+            tallPosition = 'bottom right'
+            widePosition = 'top left'
+        } else if (y === 'bottom' && x === 'left'){
+            tallPosition = 'top left'
+            widePosition = 'bottom right'
+        } else if (y === 'bottom' && x === 'right'){
+            tallPosition = 'top right'
+            widePosition = 'bottom left'
+        }
+        wideAppletIndex = getAppletIndex(widePosition)
+        tallAppletIndex = getAppletIndex(tallPosition)
+        console.log(widePosition)
+        console.log(tallPosition)
+        console.log(currentLayout)
+        if (wideAppletIndex && checkWideAtIndex(wideAppletIndex, currentLayout)){
+            currentLayout = shrinkWideApplet(wideAppletIndex, currentLayout)
+        } 
+        if (tallAppletIndex && checkTallAtIndex(tallAppletIndex, currentLayout)){
+            
+            currentLayout = shrinkTallApplet(tallAppletIndex, currentLayout)
+
+        }
+        console.log(currentLayout)
+        return currentLayout
     }
     
     const addApplet = (applet, position, replaceAt) => {
         const newAppletPosition = getAppletPosition(position)
         if (!checkPositionEmpty(newAppletPosition) && !replaceAt){
-            setOldAppletPosition(getConflictingAppletPosition(newAppletPosition))
+            setOldAppletPosition(getAppletIndex(newAppletPosition))
             setNewPosition(position)
             setIsConfirmingSpot(true)
         } else {
             let layout = {...props.layout}
+            console.log(props.layout)
+            layout = adjustExpandedApplets(newAppletPosition, layout)
             applet.position = newAppletPosition
             replaceAt && layout.applets.splice(replaceAt, 1)
-            console.log(applet)
             let newApplet = {...applet}
             newApplet.width = '49%'
             newApplet.height = '49%'
             newApplet.id = newApplet.id + Math.floor(Math.random() * 300);
             layout.applets.push(newApplet)
-            console.log(layout)
             props.setLayout(layout)
             resetState()
         }
@@ -115,7 +169,7 @@ const Applets = (props) => {
                         newApplet={newApplet}
                         setIsPickingSpot={setIsPickingSpot}
                         addApplet={addApplet}
-                        getConflictingAppletPosition={getConflictingAppletPosition}
+                        getAppletIndex={getAppletIndex}
                         getAppletPosition={getAppletPosition}
                     />
                 </Wrapper>
