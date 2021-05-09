@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     ${props => getPosition(props)}
     background: ${props => props.background};
     padding-top: 36px;
-    transition: all .3s ease;
+    transition: all .5s ease;
 `
 
 const Applet = (props) => {
