@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import connectDB from '../../scripts/mongodb'
 import RefreshTokenModel from '../../scripts/schemas/RefreshToken'
 import UserModel from '../../scripts/schemas/User'
-
+import bcrypt from 'bcrypt'
 import {serialize} from 'cookie'
 import {validateEmail, validatePassword} from '../../scripts/validate'
 
@@ -16,13 +16,15 @@ const handler = async (req, res) =>{
     if (!body.email || !validateEmail(body?.email)){ return res.status(400).send('Invalid Email')}
     if (!body.password || !validatePassword(body?.password)){ return res.status(400).send('Invalid Password')}
 
-    const currentUser = UserModel.findOne({email: body.email})
+    const currentUser = await UserModel.findOne({email: body.email})
 
     if (currentUser) { return res.status(400).send()}
 
     bcrypt.hash(body.password, 10, async function(err, hash){
       const user = await UserModel.create(
         {
+          firstName: body.firstName,
+          lastName: body.lastName,
           email: body.email,
           password: hash,
           settings: body.settings,
