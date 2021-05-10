@@ -36,16 +36,6 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
     
     const accessTokenContext = useAccessTokenContext()
 
-    if (accessTokenContext.accessToken && !user){
-        axios.get('/api/user', {
-            headers: {
-                'Authorization' : 'Bearer ' + accessTokenContext.accessToken
-            }
-        }).then(res => {
-            setUser(res.data)
-        }).catch(err => console.log(err))
-    }
-
     const logout = () => {
         setUser()
         accessTokenContext.setAccessToken('')
