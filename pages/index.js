@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Header from '../components/Header/Header'
 import Appletspace from '../components/Appletspace/Appletspace'
+import {AccessTokenProvider, useAccessTokenContext} from '../contexts/AccessTokenContext'
 
 const Site = styled.div`
   width: 100%;
@@ -22,8 +23,35 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;  
 ` 
+export async function getStaticProps(context){
+  /*
+  const accessToken = useAccessTokenContext()
+  if (accessToken.accessToken) {
+      axios.get('/api/user', {
+          headers: {
+              'Authorization' : 'Bearer ' + accessToken
+          }
+      }).then(res => {
+          return {
+              props: {
+                  userProps: res.data
+              }
+          }
+      }).catch(err => {
+          return {
+              props: {}
+          }
+      })
+  }
+  */
+ return {
+   props: {}
+ }
+}
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  const [user, setUser] = useState(props.userProps)
+  const [accessToken, setAccessToken] = useState('')
   const [background, setBackground] = useState('#F49FBC')
   const [layout, setLayout] = useState({
     name: 'Default',
@@ -37,6 +65,11 @@ const Dashboard = () => {
       },
     ]
   }) 
+
+  const accessTokenValue = {
+    accessToken: accessToken,
+    setAccessToken: setAccessToken
+  }
   
   const getAppletIndex = (position) => {
     for (let applet in layout.applets){
@@ -80,24 +113,28 @@ const Dashboard = () => {
   }
   
   return (
-    <Site background={background}>
-      <Wrapper>
-        <Header
-          layout={layout}
-          setLayout={setLayout}
-          setBackground={setBackground}
-          background={background}
-        />
-        <Appletspace
-          layout={layout}
-          setLayout={setLayout}
-          closeApplet={closeApplet}
-          moveApplet={moveApplet}
-          setWidth={setWidth}
-          setHeight={setHeight}
-        />
-      </Wrapper>
-    </Site>
+    <AccessTokenProvider value={accessTokenValue}>
+      <Site background={background}>
+        <Wrapper>
+          <Header
+            layout={layout}
+            setLayout={setLayout}
+            setBackground={setBackground}
+            background={background}
+            user={user}
+            setUser={setUser}
+          />
+          <Appletspace
+            layout={layout}
+            setLayout={setLayout}
+            closeApplet={closeApplet}
+            moveApplet={moveApplet}
+            setWidth={setWidth}
+            setHeight={setHeight}
+          />
+        </Wrapper>
+      </Site>
+    </AccessTokenProvider>
   )
 }
 
