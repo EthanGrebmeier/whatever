@@ -20,18 +20,13 @@ async function handler(req, res){
 
         jwt.verify(reqRefreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) {return res.status(403).send()}
-            let userObj = {
-                _id: user['_id'],
-                username: user['username'],
-            }
-            const accessToken = jwt.sign(userObj, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'})
+            const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'})
             return res.json({
-                firstName: 'Ethan',
-                lastName: 'Grebmeier',
                 accessToken: accessToken
             })
         })
     } catch (e){
+        console.log(e)
         res.status(400).send()
     }
 }
