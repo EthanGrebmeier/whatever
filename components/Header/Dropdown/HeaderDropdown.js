@@ -11,6 +11,10 @@ const Wrapper = styled.div`
     margin-right: 40px;
     cursor: default;
     position: relative;
+
+    p {
+        margin-right: ${props => props.hasSpace ? '20px' : ''};
+    }
 `
 
 const Dropdown = styled.div`
@@ -28,22 +32,24 @@ const Dropdown = styled.div`
 
 const HeaderDropdown = (props) => {
     const [isHovered, setIsHovered] = useState(false)
-    const isText = typeof props.title == 'string'
+
+    const handleMouseLeave = (e) => {
+        if (e.nativeEvent.toElement){
+            setIsHovered(false) 
+        }
+    }
 
     return (
         <>
             <Wrapper 
                 onMouseEnter={() => setIsHovered(true)} 
-                onMouseLeave={() => setIsHovered(false)}
-                isText={isText}
+                onMouseLeave={(e) => {handleMouseLeave(e)}}
+                hasSpace={props.titleIcon && props.titleText}
             >
-                {isText ? (
                 <p>
-                    {props.title}
+                    {props.titleText}
                 </p>
-                ) : (
-                <props.title/>
-                )}
+                {props.titleIcon}
                 {props.showCarrot && <UilAngleDown/>}
                 <Dropdown isHovered={isHovered} height={props.height} right={props.right}>
                     {props.children && cloneElement(props.children, {setIsHovered: setIsHovered})}
