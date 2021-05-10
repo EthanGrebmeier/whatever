@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Header from '../components/Header/Header'
 import Appletspace from '../components/Appletspace/Appletspace'
 import {AccessTokenProvider, useAccessTokenContext} from '../contexts/AccessTokenContext'
+import axios from 'axios'
 
 const Site = styled.div`
   width: 100%;
@@ -23,41 +24,16 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;  
 ` 
-export async function getStaticProps(context){
-  /*
-  const accessToken = useAccessTokenContext()
-  if (accessToken.accessToken) {
-      axios.get('/api/user', {
-          headers: {
-              'Authorization' : 'Bearer ' + accessToken
-          }
-      }).then(res => {
-          return {
-              props: {
-                  userProps: res.data
-              }
-          }
-      }).catch(err => {
-          return {
-              props: {}
-          }
-      })
-  }
-  */
- return {
-   props: {}
- }
-}
 
 const Dashboard = (props) => {
   const [user, setUser] = useState(props.userProps)
-  const [accessToken, setAccessToken] = useState('')
+  const [accessToken, setAccessToken] = useState(props.accessToken || '')
   const [background, setBackground] = useState('#F49FBC')
   const [layout, setLayout] = useState({
     name: 'Default',
     applets: [
       {
-        id: 'checklist',
+        id: 'checklist'+ Math.floor(Math.random() * 300),
         name: 'Checklist',
         width: '49%',
         height: '49%',
@@ -66,9 +42,45 @@ const Dashboard = (props) => {
     ]
   }) 
 
+  useEffect(async () => {
+    let accessToken
+    await axios.get('/api/tokens/refreshToken').then(res => {
+      accessToken = res.data.accessToken
+    }).catch(err => console.log(err))
+    if (accessToken) {
+      setAccessToken(accessToken)
+      axios.get('http://' + process.env.NEXT_PUBLIC_URL  + '/user', {
+          headers: {
+              'Authorization' : 'Bearer ' + accessToken
+          }
+      }).then(res => {
+        setUser(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+    
+  }, [])
+
+  useEffect(() => {
+    if (user) {
+      setLayout(getDefaultLayout(user.layoutMeta.layouts, user.layoutMeta.defaultLayout))
+      setBackground(user.settings.background)
+    }
+  }, [user])
+
   const accessTokenValue = {
     accessToken: accessToken,
     setAccessToken: setAccessToken
+  }
+
+  const getDefaultLayout = (layouts, defaultLayout) => {
+    for (let layout in layouts){
+      if (layouts[layout].name === defaultLayout){
+        return layouts[layout]
+      }
+    }
+    return layouts[0]
   }
   
   const getAppletIndex = (position) => {
