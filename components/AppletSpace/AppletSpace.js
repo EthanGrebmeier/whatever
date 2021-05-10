@@ -38,7 +38,7 @@ const AppletSpace = (props) => {
                     setLayout={props.setLayout}
                     layout={props.layout}
                 >
-                    {getComponent(applet.id)}
+                    {getComponent(applet.id.slice(0, -3))}
                 </Applet>
             })}
         </Wrapper>
