@@ -52,6 +52,7 @@ const Background = (props) => {
                     background={color}
                     isChosen={props.background == color}
                     onClick={() => props.setBackground(color)}
+                    key={color}
                 />
             )}
             </Colors>
