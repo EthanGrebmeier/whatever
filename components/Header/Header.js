@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Applets from './Dropdown/Applets/Applets'
 import HeaderDropdown from './Dropdown/HeaderDropdown'
-import Layout from './Dropdown/Layout'
+import Layout from './Dropdown/Layout/Layout'
 import { UilCog, UilUserCircle } from '@iconscout/react-unicons'
 import Settings from './Settings/Settings'
 import { useAccessTokenContext } from '../../contexts/AccessTokenContext'
@@ -47,7 +47,12 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
             <HeaderSection>
                 <h1> Whatever </h1>
                 <HeaderDropdown titleText='Layout' showCarrot={true}>
-                    <Layout/>
+                    <Layout
+                        layout={layout}
+                        setLayout={setLayout}
+                        user={user}
+                        setUser={setUser}
+                    />
                 </HeaderDropdown>
                 <HeaderDropdown titleText='Modules' showCarrot={true}>
                     <Applets 
