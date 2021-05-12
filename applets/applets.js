@@ -35,7 +35,6 @@ export const getComponent = (id) => {
         case 'checklist':
             return <Checklist/>
         default:
-            console.log('Default Component Returned')
             return <Checklist/>
     }
 }

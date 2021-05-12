@@ -62,10 +62,7 @@ const AppletHeader = (props) => {
 
     const checkHeight = (y, x) => {
         const position = [getOpposite(y),x]
-        console.log(position)
         const applet = getAppletAtPosition(position[0], position[1])
-        console.log(applet)
-        console.log(props)
         if (props.height == '100%' && applet){
             return false
         }
@@ -74,9 +71,9 @@ const AppletHeader = (props) => {
 
     const checkWidth = (y, x) => {
         const position = [y,getOpposite(x)]
-        console.log(position)
+
         const applet = getAppletAtPosition(position[0], position[1])
-        console.log(applet)
+
         if (props.width == '100%' && applet){
             return false
         }

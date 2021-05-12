@@ -44,7 +44,7 @@ const Applets = (props) => {
     }
 
     const getAppletPosition = (position) => {
-        console.log(position)
+  
         switch (position) {
             case 0:
                 return 'top left'
@@ -112,9 +112,7 @@ const Applets = (props) => {
         }
         wideAppletIndex = getAppletIndex(widePosition)
         tallAppletIndex = getAppletIndex(tallPosition)
-        console.log(widePosition)
-        console.log(tallPosition)
-        console.log(currentLayout)
+
         if (wideAppletIndex && checkWideAtIndex(wideAppletIndex, currentLayout)){
             currentLayout = shrinkWideApplet(wideAppletIndex, currentLayout)
         } 
@@ -123,7 +121,7 @@ const Applets = (props) => {
             currentLayout = shrinkTallApplet(tallAppletIndex, currentLayout)
 
         }
-        console.log(currentLayout)
+
         return currentLayout
     }
     
@@ -135,14 +133,14 @@ const Applets = (props) => {
             setIsConfirmingSpot(true)
         } else {
             let layout = {...props.layout}
-            console.log(props.layout)
+
             layout = adjustExpandedApplets(newAppletPosition, layout)
             applet.position = newAppletPosition
             replaceAt && layout.applets.splice(replaceAt, 1)
             let newApplet = {...applet}
             newApplet.width = '49%'
             newApplet.height = '49%'
-            newApplet.id = newApplet.id + Math.floor(Math.random() * 300);
+            newApplet.id = newApplet.id + Math.floor(Math.random() * 800 + 100);
             layout.applets.push(newApplet)
             props.setLayout(layout)
             resetState()
@@ -179,6 +177,7 @@ const Applets = (props) => {
                 {applets.map( applet => (
                 <Applet
                     onClick={() => pickNewApplet(applet)}
+                    key={applet.name}
                 > 
                     {applet.name}
                 </Applet>

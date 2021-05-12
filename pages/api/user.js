@@ -15,7 +15,6 @@ const handler = async (req, res) =>{
         if (err) {return res.status(403).send()}
         req.userId = userObj.id
         const user = await UserModel.findById(req.userId).lean()
-        console.log(user)
         return res.json(user)
     })
 }   

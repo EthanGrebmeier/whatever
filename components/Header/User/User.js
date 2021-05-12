@@ -23,9 +23,7 @@ const User = (props) => {
         } else {
             setCurrentFrame('login')
         }
-        console.log(props.frame)
-        console.log(props.user)
-        console.log(props.accessToken)
+
     }, [props.user])
 
     const renderFrame = (frame) => {

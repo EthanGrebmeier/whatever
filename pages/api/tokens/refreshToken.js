@@ -17,7 +17,6 @@ async function handler(req, res){
         if (!reqRefreshToken){return res.status(400).send()}
         const dbToken = await RefreshTokenModel.findOne({refreshToken: reqRefreshToken})
         if (!dbToken){return res.status(401).send()}
-
         jwt.verify(reqRefreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) {return res.status(403).send()}
             const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'})
