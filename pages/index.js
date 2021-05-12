@@ -26,14 +26,15 @@ const Wrapper = styled.div`
 ` 
 
 const Dashboard = (props) => {
-  const [user, setUser] = useState(props.userProps)
+  const [user, setUser] = useState()
   const [accessToken, setAccessToken] = useState(props.accessToken || '')
   const [background, setBackground] = useState('#F49FBC')
   const [layout, setLayout] = useState({
     name: 'Default',
+    _id: 123456,
     applets: [
       {
-        id: 'checklist'+ Math.floor(Math.random() * 300),
+        id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
         name: 'Checklist',
         width: '49%',
         height: '49%',
@@ -42,32 +43,52 @@ const Dashboard = (props) => {
     ]
   }) 
 
-  useEffect(async () => {
-    let accessToken
-    await axios.get('/api/tokens/refreshToken').then(res => {
-      accessToken = res.data.accessToken
-    }).catch(err => console.log(err))
-    if (accessToken) {
-      setAccessToken(accessToken)
-      axios.get('http://' + process.env.NEXT_PUBLIC_URL  + '/user', {
-          headers: {
-              'Authorization' : 'Bearer ' + accessToken
-          }
-      }).then(res => {
-        setUser(res.data)
-      }).catch(err => {
-        console.log(err)
-      })
-    }
-    
-  }, [])
 
-  useEffect(() => {
+  useEffect(async () => {
     if (user) {
-      setLayout(getDefaultLayout(user.layoutMeta.layouts, user.layoutMeta.defaultLayout))
+      
       setBackground(user.settings.background)
+      if (layout._id == 123456){
+        setLayout({...getDefaultLayout({...user.layoutMeta.layouts}, {...user.layoutMeta.defaultLayout})} || {
+          name: 'Default',
+          applets: [
+            {
+              id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
+              name: 'Checklist',
+              width: '49%',
+              height: '49%',
+              position: 'top left'
+            },
+          ]
+        })
+      }
+    } else {
+      let newToken = accessToken
+
+      if (!newToken){
+        await axios.get('/api/tokens/refreshToken').then(res => {
+          newToken = res.data.accessToken
+          axios.defaults.headers = {
+            'Authorization' : 'Bearer ' + newToken
+          }
+        }).catch(err => console.log(err))
+      }
+
+      if (newToken) {
+        setAccessToken(newToken)
+        axios.get('http://' + process.env.NEXT_PUBLIC_URL  + '/user', {
+            headers: {
+                'Authorization' : 'Bearer ' + newToken
+            }
+        }).then(res => {
+          setUser(res.data)
+        }).catch(err => {
+          console.log(err)
+        })
+      }
     }
-  }, [user])
+  }, [user, accessToken])
+
 
   const accessTokenValue = {
     accessToken: accessToken,
@@ -77,10 +98,10 @@ const Dashboard = (props) => {
   const getDefaultLayout = (layouts, defaultLayout) => {
     for (let layout in layouts){
       if (layouts[layout].name === defaultLayout){
-        return layouts[layout]
+        return {...layouts[layout]}
       }
     }
-    return layouts[0]
+    return {...layouts[0]}
   }
   
   const getAppletIndex = (position) => {
@@ -94,32 +115,32 @@ const Dashboard = (props) => {
   const closeApplet = (position) => {
     
     let index = getAppletIndex(position) 
-    let current = {...layout}
-    console.log(current)
+    let current = {...layout} 
+
     current.applets.splice(index, 1)
     setLayout(current)
   }
 
   const moveApplet = (oldPosition, newPosition) => {
     let index = getAppletIndex(oldPosition) 
-    let current = {...layout}
+    let current = {...layout} 
     current.applets[index].position = newPosition
     setLayout(current)
   }
 
   const setWidth = (position, width) => {
     let index = getAppletIndex(position)
-    let current = {...layout}
-    console.log(current)
+    let current = {...layout} 
+ 
     current.applets[index].width = width 
-    console.log(current)
+
     setLayout(current)
   }
 
   const setHeight = (position, height) => {
     let index = getAppletIndex(position)
-    let current = {...layout}
-    console.log(current)
+    let current = {...layout} 
+
     current.applets[index].height = height
     setLayout(current)
   }
@@ -128,6 +149,9 @@ const Dashboard = (props) => {
     <AccessTokenProvider value={accessTokenValue}>
       <Site background={background}>
         <Wrapper>
+          <button onClick={() => console.log(user)}>
+            test
+          </button>
           <Header
             layout={layout}
             setLayout={setLayout}
