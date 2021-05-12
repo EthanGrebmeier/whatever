@@ -4,10 +4,11 @@ import { UilEyeSlash, UilEye } from '@iconscout/react-unicons'
 
 const Wrapper = styled.label`
     display: flex; 
-    flex-direction: column;
+    flex-direction: ${props => props.flexDirection || 'column'};
     justify-content: space-between;
+    align-items: ${props => props.flexDirection == 'row' ? 'center' : ''};
     height: 50px;
-    width: 100%;
+    width: ${props => props.width || '100%'};
     position: relative;
 `
 
@@ -20,13 +21,17 @@ const Eyeball = styled.button`
     right: 0;
 `
 
-const Label = ({children, showEye}) => {
+const Label = ({children, flexDirection, width, showEye}) => {
 
     const [showPassword, setShowPassword] = useState(false)
 
+
     return (
-        <Wrapper>
+        <Wrapper flexDirection={flexDirection} width={width}>
             {children && children.map(child => {
+                if(child.type == 'p'){
+                    return cloneElement(child)
+                }
                 return cloneElement(child, {hidePassword: showEye && !showPassword})
             })}
             {
