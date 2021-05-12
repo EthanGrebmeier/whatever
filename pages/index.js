@@ -149,9 +149,6 @@ const Dashboard = (props) => {
     <AccessTokenProvider value={accessTokenValue}>
       <Site background={background}>
         <Wrapper>
-          <button onClick={() => console.log(user)}>
-            test
-          </button>
           <Header
             layout={layout}
             setLayout={setLayout}
