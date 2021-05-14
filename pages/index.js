@@ -101,7 +101,7 @@ const Dashboard = (props) => {
         return {...layouts[layout]}
       }
     }
-    return {...layouts[0]}
+    return undefined
   }
   
   const getAppletIndex = (position) => {
