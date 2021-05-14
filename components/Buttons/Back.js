@@ -9,6 +9,7 @@ const Wrapper = styled.button`
    right: ${props => props.right}; 
    top: ${props => props.top}; 
    bottom: ${props => props.bottom}; 
+   margin: 0;
    background: none;
    border: none;
    cursor: pointer;
