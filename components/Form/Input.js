@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.input`
-    width: 88%;
+    width: ${props => props.width || '88%'};
     border: none;
     border-bottom: 2px solid black;
     font-size: 16px;
@@ -11,11 +10,14 @@ const Wrapper = styled.input`
     position: relative;
 `
 
-const Input = (props) => {
+const Input = ({onChange, onSubmit, value, hidePassword, width}) => {
     return(
-        <Wrapper onChange={props.onChange} value={props.value} type={props.hidePassword ? 'password' : 'text'}>
-            
-        </Wrapper>
+        <Wrapper 
+            onKeyPress={(e) => e.key == 'Enter' && onSubmit && onSubmit()}   
+            onChange={onChange} value={value} 
+            type={hidePassword ? 'password' : 'text'}
+            width={width}
+        />
     )
 }
 
