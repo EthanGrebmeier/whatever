@@ -6,18 +6,36 @@ import LayoutMenu from './LayoutMenu'
 import LayoutSave from './LayoutSave'
 
 const Wrapper = styled.div`
-    height: ${props => props.height};
-    width: 300px;
+    height: 240px;
+    width: 550px;
     background: white;
     border: 2px solid black;
     border-radius: 0 0 10px 10px;
     display: flex;
-    flex-direction: column;
-    padding: 40px 20px 40px 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
     position: relative;
-    & button:not(:first-child){
-        margin-top: 10px;
-    }
+`
+
+const MenuFrame = styled.div`
+    width: 47%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+`
+
+const Line = styled.span`
+    width: 2px;
+    height: 100%;
+    background: black;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
 `
 
 const Layout = ({layout, setLayout, user, setUser}) => {
@@ -61,16 +79,6 @@ const Layout = ({layout, setLayout, user, setUser}) => {
                         setLayout={setLayout}
                     />
                 )
-            case 'load':
-                return(
-                    <LayoutLoad
-                        user={user}
-                        setUser={setUser}
-                        layouts={user?.layoutMeta?.layouts || []}
-                        layout={layout}
-                        setLayout={setLayout}
-                    />
-                )
             default:
                 break;
         }
@@ -78,8 +86,20 @@ const Layout = ({layout, setLayout, user, setUser}) => {
 
     return (
         <Wrapper>
-            {frame !== 'menu' && <Back position='absolute' onClick={() => setFrame('menu')} top='5px' left='5px'  />}
-            {renderFrame(frame)}
+            <MenuFrame>
+                <LayoutLoad
+                    user={user}
+                    setUser={setUser}
+                    layouts={user?.layoutMeta?.layouts || []}
+                    layout={layout}
+                    setLayout={setLayout}
+                />
+            </MenuFrame>
+            <Line/>
+            <MenuFrame>
+                {frame !== 'menu' && <Back position='absolute' onClick={() => setFrame('menu')} top='5px' left='0px'  />}
+                {renderFrame(frame)}
+            </MenuFrame>
         </Wrapper>
     )
 }
