@@ -43,7 +43,7 @@ const LayoutSave = (props) => {
 
 
     return (
-        <Form onSubmit={onSubmitNew}>
+        <Form onSubmit={onSubmitNew} width='100%'>
             <Label>
                 <p> Name:  </p>
                 <Input
