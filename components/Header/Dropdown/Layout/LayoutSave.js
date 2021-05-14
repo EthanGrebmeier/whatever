@@ -23,7 +23,7 @@ const LayoutSave = (props) => {
         let currentLayout = {...props.layout}
         currentLayout.name = inputName
         props.setLayout(currentLayout)
-        axios.post('http://localhost:5001/user/layout', {
+        axios.post(process.env.NEXT_PUBLIC_URL + '/user/layout', {
             layout: currentLayout,
             isDefault: isDefaultLayout
         }).then( res => {

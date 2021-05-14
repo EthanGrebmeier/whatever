@@ -49,7 +49,7 @@ const Dashboard = (props) => {
       
       setBackground(user.settings.background)
       if (layout._id == 123456){
-        setLayout({...getDefaultLayout({...user.layoutMeta.layouts}, {...user.layoutMeta.defaultLayout})} || {
+        setLayout({...getDefaultLayout(user.layoutMeta.layouts, user.layoutMeta.defaultLayout)} || {
           name: 'Default',
           applets: [
             {
@@ -76,7 +76,7 @@ const Dashboard = (props) => {
 
       if (newToken) {
         setAccessToken(newToken)
-        axios.get('http://' + process.env.NEXT_PUBLIC_URL  + '/user', {
+        axios.get(process.env.NEXT_PUBLIC_URL + '/user', {
             headers: {
                 'Authorization' : 'Bearer ' + newToken
             }
@@ -97,7 +97,7 @@ const Dashboard = (props) => {
 
   const getDefaultLayout = (layouts, defaultLayout) => {
     for (let layout in layouts){
-      if (layouts[layout].name === defaultLayout){
+      if (layouts[layout]._id === defaultLayout){
         return {...layouts[layout]}
       }
     }

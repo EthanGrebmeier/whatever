@@ -32,7 +32,7 @@ const handler = async (req, res) =>{
         accessToken: accessToken
       })
       
-    })
+    })    
 }   
 
 export default connectDB(handler)
