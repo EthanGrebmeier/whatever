@@ -54,11 +54,9 @@ const Nothing = styled.div`
 const LayoutLoad = (props) => {
 
 
-    const onSelect = (layout) => {
-        let current = {...layout}
-        current.uniqueKey = Math.floor(Math.random() * 800 + 100)
-        console.log(current)
-        props.setLayout(current)
+    const onSelect = async (layout) => {
+        let {data} = await axios.get(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id)
+        props.setLayout(data)
     }
 
     const onFavorite = () => {
