@@ -1,6 +1,7 @@
 import { useState, cloneElement } from 'react'
 import styled from 'styled-components'
 import { UilEyeSlash, UilEye } from '@iconscout/react-unicons'
+import IconButton from '../Buttons/IconButton'
 
 const Wrapper = styled.label`
     display: flex; 
@@ -12,10 +13,7 @@ const Wrapper = styled.label`
     position: relative;
 `
 
-const Eyeball = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
+const Eyeball = styled.div`
     position: absolute;
     bottom: 0;
     right: 0;
@@ -37,11 +35,13 @@ const Label = ({children, flexDirection, width, showEye}) => {
             {
             showEye && (
                 <Eyeball type='button' onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? (
-                    <UilEye/>
-                ) : (
-                    <UilEyeSlash/>
-                )}
+                    <IconButton tooltip={showPassword ? 'Hide Password' : 'Show Password'}>
+                    {showPassword ? (
+                        <UilEye/>
+                    ) : (
+                        <UilEyeSlash/>
+                    )}
+                    </IconButton>
                 </Eyeball>
             )
             }

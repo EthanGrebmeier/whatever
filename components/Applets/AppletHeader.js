@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { UilTimes, UilGripHorizontalLine, UilArrowFromRight, UilLeftArrowFromLeft, UilTopArrowFromTop, UilArrowFromTop } from '@iconscout/react-unicons'
+import IconButton from '../Buttons/IconButton'
 
 const Wrapper = styled.div`
     width: 100%;
@@ -16,14 +17,6 @@ const Wrapper = styled.div`
 const ModuleHeaderControls = styled.div`
     display: flex;
     align-items: center;
-`
-
-const ModuleHeaderControl = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 5px;
 `
 
 const AppletHeader = (props) => {
@@ -137,9 +130,9 @@ const AppletHeader = (props) => {
             props.setHeight('49%')
         }
         return (
-            <ModuleHeaderControl onClick={shrinkComponentUp}>
+            <IconButton tooltip='Shrink Up' onClick={shrinkComponentUp}>
                 <UilTopArrowFromTop title='test'/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -152,9 +145,9 @@ const AppletHeader = (props) => {
             props.setHeight('49%')
         }
         return (
-            <ModuleHeaderControl onClick={shrinkComponentDown}>
+            <IconButton tooltip='Shrink Down' onClick={shrinkComponentDown}>
                 <UilArrowFromTop title='test'/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -167,9 +160,9 @@ const AppletHeader = (props) => {
             props.setWidth('49%')
         }
         return (
-            <ModuleHeaderControl onClick={shrinkComponentLeft}>
+            <IconButton tooltip='Shrink Left' onClick={shrinkComponentLeft}>
                 <UilLeftArrowFromLeft title='test'/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -182,9 +175,9 @@ const AppletHeader = (props) => {
             props.setWidth('49%')
         }
         return (
-            <ModuleHeaderControl onClick={shrinkComponentRight}>
+            <IconButton tooltip='Shrink Right' onClick={shrinkComponentRight}>
                 <UilArrowFromRight/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -193,9 +186,9 @@ const AppletHeader = (props) => {
             props.setHeight('100%')
         }
         return (
-            <ModuleHeaderControl onClick={expandComponentUp}>
+            <IconButton tooltip='Expand Up'  onClick={expandComponentUp}>
                 <UilTopArrowFromTop title='test'/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -204,9 +197,9 @@ const AppletHeader = (props) => {
             props.setWidth('100%')
         }
         return (
-            <ModuleHeaderControl onClick={expandComponentRight}>
+            <IconButton tooltip='Expand Right' onClick={expandComponentRight}>
                 <UilArrowFromRight/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -215,9 +208,9 @@ const AppletHeader = (props) => {
             props.setHeight('100%')
         }
         return (
-            <ModuleHeaderControl onClick={expandComponentDown}>
+            <IconButton tooltip='Expand Down' onClick={expandComponentDown}>
                 <UilArrowFromTop/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -226,9 +219,9 @@ const AppletHeader = (props) => {
             props.setWidth('100%')
         }
         return (
-            <ModuleHeaderControl onClick={expandComponentLeft}>
+            <IconButton tooltip='Expand Left' onClick={expandComponentLeft}>
                 <UilLeftArrowFromLeft/>
-            </ModuleHeaderControl>
+            </IconButton>
         )
     }
 
@@ -239,12 +232,12 @@ const AppletHeader = (props) => {
             </h2>
             <ModuleHeaderControls>
                 {renderArrows()}
-                <ModuleHeaderControl>
+                <IconButton tooltip='Options'>
                     <UilGripHorizontalLine/>
-                </ModuleHeaderControl>
-                <ModuleHeaderControl onClick={() => props.closeApplet(props.position)}>
+                </IconButton>
+                <IconButton tooltip={'Close ' + props.name} onClick={() => props.closeApplet(props.position)}>
                     <UilTimes/>
-                </ModuleHeaderControl>
+                </IconButton>
             </ModuleHeaderControls>
         </Wrapper> 
     )
