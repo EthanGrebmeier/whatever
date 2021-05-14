@@ -1,3 +1,4 @@
+import axios from 'axios'
 import styled from 'styled-components'
 import HeaderDropdown from '../Dropdown/HeaderDropdown'
 
@@ -41,6 +42,14 @@ const Background = (props) => {
         '#90C2E7',
         '#DE8F6E'
     ]
+
+    const setBackground = (color) => {
+        props.setBackground(color)
+        axios.post(process.env.NEXT_PUBLIC_URL + '/user/settings/background', {
+            background: color
+        })
+    }
+
     return (
         <Section>
             <p>
@@ -51,7 +60,7 @@ const Background = (props) => {
                 <Color
                     background={color}
                     isChosen={props.background == color}
-                    onClick={() => props.setBackground(color)}
+                    onClick={() => setBackground(color)}
                     key={color}
                 />
             )}
