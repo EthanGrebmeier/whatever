@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useSnackbarContext } from '../../../../contexts/SnackbarContext'
 import Back from '../../../Buttons/Back'
 import LayoutLoad from './LayoutLoad'
 import LayoutMenu from './LayoutMenu'
@@ -19,7 +20,7 @@ const Wrapper = styled.div`
 `
 
 const MenuFrame = styled.div`
-    width: 47%;
+    width: ${props => props.width || '47%'};
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -32,10 +33,6 @@ const Line = styled.span`
     width: 2px;
     height: 100%;
     background: black;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
 `
 
 const Layout = ({layout, setLayout, user, setUser}) => {
@@ -86,7 +83,7 @@ const Layout = ({layout, setLayout, user, setUser}) => {
 
     return (
         <Wrapper>
-            <MenuFrame>
+            <MenuFrame width='55%'> 
                 <LayoutLoad
                     user={user}
                     setUser={setUser}
@@ -96,7 +93,7 @@ const Layout = ({layout, setLayout, user, setUser}) => {
                 />
             </MenuFrame>
             <Line/>
-            <MenuFrame>
+            <MenuFrame width='40%' >
                 {frame !== 'menu' && <Back position='absolute' onClick={() => setFrame('menu')} top='5px' left='0px'  />}
                 {renderFrame(frame)}
             </MenuFrame>
