@@ -8,7 +8,7 @@ const Wrapper = styled.div`
     bottom: ${props => props.isShowing ? '10px' : '-50px'};
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
+    min-width: 300px;
     padding: 5px 10px 5px 10px;
     display: flex;
     justify-content: space-between;
@@ -19,7 +19,6 @@ const Wrapper = styled.div`
 `
 
 const SnackbarText = styled.p`
-    width: 70%;
     color: white;
 `
 
