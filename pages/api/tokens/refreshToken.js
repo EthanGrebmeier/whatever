@@ -3,6 +3,7 @@ import RefreshTokenModel from '../../../scripts/schemas/RefreshToken'
 import connectDB from '../../../scripts/mongodb'
 
 export const getRefresh = (cookieString) => {
+    if(!cookieString){return false}
     const cookieList = cookieString.split(/[;= ]+/)
     for (let i = 0; i  < cookieList.length; i++){
         if (cookieList[i] == 'refresh'){
@@ -19,7 +20,7 @@ async function handler(req, res){
         if (!dbToken){return res.status(401).send()}
         jwt.verify(reqRefreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) {return res.status(403).send()}
-            const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'})
+            const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30s'})
             return res.json({
                 accessToken: accessToken
             })
