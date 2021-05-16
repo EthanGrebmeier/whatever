@@ -4,6 +4,9 @@ import Header from '../components/Header/Header'
 import Appletspace from '../components/Appletspace/Appletspace'
 import {AccessTokenProvider, useAccessTokenContext} from '../contexts/AccessTokenContext'
 import axios from 'axios'
+import refreshAccessToken from '../scripts/refreshAccessToken'
+import Snackbar from '../components/Snackbar/Snackbar'
+import { SnackbarProvider } from '../contexts/SnackbarContext'
 
 const Site = styled.div`
   width: 100%;
@@ -11,6 +14,7 @@ const Site = styled.div`
   background: ${props => props.background};
   display: flex;
   justify-content: center;
+  overflow: hidden;
 `
 
 const Wrapper = styled.div`
@@ -42,10 +46,18 @@ const Dashboard = (props) => {
       },
     ]
   }) 
+  const [snackbar, setSnackbar] = useState({
+    text: '',
+    actionText: '',
+    actionOnClick: undefined,
+    id: Math.floor(Math.random() * 800 + 100)
+  })
 
 
   useEffect(async () => {
-    if (user) {
+    if (user) { 
+
+      refreshAccessToken(setAccessToken)
       
       setBackground(user.settings.background)
       if (layout._id == 123456){
@@ -68,9 +80,7 @@ const Dashboard = (props) => {
       if (!newToken){
         await axios.get('/api/tokens/refreshToken').then(res => {
           newToken = res.data.accessToken
-          axios.defaults.headers = {
-            'Authorization' : 'Bearer ' + newToken
-          }
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
         }).catch(err => console.log(err))
       }
 
@@ -95,12 +105,36 @@ const Dashboard = (props) => {
     setAccessToken: setAccessToken
   }
 
+  const setSnackbarValues = (text, actionText, actionOnClick) => {
+    let id = Math.floor(Math.random() * 800 + 100)
+    console.log(id)
+    setSnackbar({
+      text: text,
+      actionText: actionText,
+      actionOnClick: actionOnClick,
+      id: id
+    })
+  }
+
+  const snackbarValue = {
+    snackbar: snackbar,
+    setSnackbar: setSnackbarValues
+  }
+
   const getDefaultLayout = (layouts, defaultLayout) => {
+    console.log(layouts)
+    console.log(defaultLayout)
     for (let layout in layouts){
       if (layouts[layout]._id === defaultLayout){
+        console.log(layouts[layout])
         return {...layouts[layout]}
       }
     }
+
+    if (layouts?.len > 0){
+      return layouts[0]
+    }
+
     return undefined
   }
   
@@ -146,28 +180,38 @@ const Dashboard = (props) => {
   }
   
   return (
-    <AccessTokenProvider value={accessTokenValue}>
-      <Site background={background}>
-        <Wrapper>
-          <Header
-            layout={layout}
-            setLayout={setLayout}
-            setBackground={setBackground}
-            background={background}
-            user={user}
-            setUser={setUser}
-          />
-          <Appletspace
-            layout={layout}
-            setLayout={setLayout}
-            closeApplet={closeApplet}
-            moveApplet={moveApplet}
-            setWidth={setWidth}
-            setHeight={setHeight}
-          />
-        </Wrapper>
-      </Site>
-    </AccessTokenProvider>
+    <SnackbarProvider value={snackbarValue}>
+      <AccessTokenProvider value={accessTokenValue}>
+        <Site background={background}>
+          <Wrapper>
+            <Header
+              layout={layout}
+              setLayout={setLayout}
+              setBackground={setBackground}
+              background={background}
+              user={user}
+              setUser={setUser}
+            />
+            <Appletspace
+              layout={layout}
+              setLayout={setLayout}
+              closeApplet={closeApplet}
+              moveApplet={moveApplet}
+              setWidth={setWidth}
+              setHeight={setHeight}
+            />
+            {
+            snackbar.text && 
+            <Snackbar 
+              {...snackbar}
+            />
+            }
+
+          </Wrapper>
+        </Site>
+      </AccessTokenProvider>
+    </SnackbarProvider>
+    
   )
 }
 
