@@ -16,9 +16,8 @@ const Tooltip = styled.div`
     border-radius: 10px;
     color: white;
     padding: 5px;
-    position: absolute;
-    top: -30px;
-    right: 0;
+    position: absolute;    
+    left: -100px;
     display: ${props => props.showTooltip ? 'flex' : 'none'};
     font-family: 'Quicksand'; 
     p {
