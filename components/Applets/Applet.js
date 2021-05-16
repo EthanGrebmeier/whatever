@@ -21,7 +21,7 @@ const Wrapper = styled.div`
     width: ${props => props.width};
     height: ${props => props.height};
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 2px solid black;
     position: absolute;
     ${props => getPosition(props)}
