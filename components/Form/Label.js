@@ -34,7 +34,7 @@ const Label = ({children, flexDirection, width, showEye}) => {
             })}
             {
             showEye && (
-                <Eyeball type='button' onClick={() => setShowPassword(!showPassword)}>
+                <Eyeball type='button' onClick={(e) => { e.preventDefault(); setShowPassword(!showPassword)}}>
                     <IconButton tooltip={showPassword ? 'Hide Password' : 'Show Password'}>
                     {showPassword ? (
                         <UilEye/>
