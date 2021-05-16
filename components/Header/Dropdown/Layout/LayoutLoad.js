@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { UilPen,UilStar, UilSave, UilTrashAlt } from '@iconscout/react-unicons'
+import { UisFavorite } from '@iconscout/react-unicons-solid'
 import styled from 'styled-components'
 import Button from '../../../Buttons/Button'
 import Form from '../../../Form/Form'
@@ -38,6 +39,8 @@ justify-content: space-between;
 `
 
 const Name = styled.p`
+    text-decoration: ${props => props.isSelected ? 'underline' : 'none'};
+
     & :hover{
         cursor: pointer;
         font-weight: 700;
@@ -73,23 +76,26 @@ const LayoutLoad = (props) => {
         console.log(current)
         setEditIndex()
         setInputNewName()
-        /*
+        
         axios.put(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
             layout: current
         }).then( res => {
             console.log(res)
-            props.setUser(res.data)
+            let currentUser = {...props.user}
+            currentUser.layoutMeta = res.data
+            props.setUser(currentUser)
         }).catch(err => console.log(err))
-        */
+        
     }
 
     const onFavorite = (layout) => {
         layout.isDefault = true
         axios.put(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
-            layout: current
+            isDefault: true,
+            layout: layout
         }).then( res => {
             console.log(res)
-            let currentUser = {...user}
+            let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
         }).catch(err => console.log(err))
@@ -97,10 +103,10 @@ const LayoutLoad = (props) => {
 
     const onDelete = (layout) => {
         axios.delete(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
-            layout: current
+            layout: layout
         }).then( res => {
             console.log(res)
-            let currentUser = {...user}
+            let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
         }).catch(err => console.log(err))
@@ -112,18 +118,7 @@ const LayoutLoad = (props) => {
         <p style={{borderBottom: '2px solid black'}}> Load a Layout </p>
         <Wrapper>
             
-            {[{
-      name: 'Default',
-      applets: [
-        {
-          id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
-          name: 'Checklist',
-          width: '49%',
-          height: '49%',
-          position: 'top left'
-        },
-      ]
-    }].map((layout, index) => {
+            {props?.user?.layoutMeta?.layouts?.map((layout, index) => {
                 return (
                     <Layout key={layout._id || layout.name}>
                         {editIndex == index ? (
@@ -136,6 +131,7 @@ const LayoutLoad = (props) => {
                         ) : (
                         <Name 
                         onClick={() => onSelect({...layout})}
+                        isSelected={props.layout._id == layout._id}
                         > 
                             {layout.name}  
                         </Name>  
@@ -153,7 +149,11 @@ const LayoutLoad = (props) => {
                                 )
                             }
                             <IconButton tooltip='Set Favorite' onClick={() => onFavorite(layout)}>
-                                <UilStar/>
+                                {props.user?.layoutMeta?.defaultLayout == layout._id ? (
+                                    <UisFavorite/>
+                                ) : (
+                                    <UilStar/>
+                                )}
                             </IconButton>
                             <IconButton tooltip='Delete Layout' onClick={() => onDelete(layout)}>
                                 <UilTrashAlt color='black'/>
