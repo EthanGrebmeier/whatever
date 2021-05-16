@@ -33,14 +33,25 @@ const ActionText = styled.p`
 const Snackbar = ({text, actionText, actionOnClick, id}) => {
 
     const [isShowing, setIsShowing] = useState(false)
+    const [timeoutArray, setTimeoutArray] = useState([])
 
     useEffect(() => {
         console.log(id)
         setIsShowing(true)
-        setTimeout(() => {
+        clearTimeouts()
+        let currentTimeoutArray = [...timeoutArray]
+        let timeout = setTimeout(() => {
             setIsShowing(false)
         }, actionOnClick ? 8000 : 4000)
+        currentTimeoutArray.push(timeout)
+        setTimeoutArray(currentTimeoutArray)
     }, [id])
+
+    const clearTimeouts = () => {
+        for (let timeout in timeoutArray){
+            clearTimeout(timeoutArray[timeout])
+        }
+    }
 
     return (
         <Wrapper isShowing={isShowing}>
