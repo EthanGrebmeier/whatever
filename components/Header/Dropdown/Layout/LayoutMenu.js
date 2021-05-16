@@ -1,13 +1,16 @@
 import axios from 'axios'
 import styled from 'styled-components'
+import { useSnackbarContext } from '../../../../contexts/SnackbarContext'
 import Button from '../../../Buttons/Button'
 import Emphasis from '../../../Text/Emphasis'
 
 const LayoutMenu = ({setFrame, user, layout}) => {
 
+    const snackbarContext = useSnackbarContext()
+
     const Wrapper = styled.div`
         height: 50%;
-        width: 47%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -38,7 +41,7 @@ const LayoutMenu = ({setFrame, user, layout}) => {
         axios.put(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
             layout: layout
         }).then( res => {
-            console.log(res)
+            snackbarContext.setSnackbar(`Saved ${layout.name}`)
         }).catch(err => console.log(err))
     }
 
