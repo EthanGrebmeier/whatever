@@ -9,6 +9,7 @@ import Label from '../../../Form/Label'
 import Checkbox from '../../../Form/Checkbox'
 import axios from 'axios'
 import IconButton from '../../../Buttons/IconButton'
+import { useSnackbarContext } from '../../../../contexts/SnackbarContext'
 
 const Wrapper = styled.ul`
 display: flex;
@@ -60,7 +61,10 @@ const LayoutLoad = (props) => {
     const [editIndex, setEditIndex] = useState()
     const [inputNewName, setInputNewName] = useState('')
 
+    let snackbarContext = useSnackbarContext()
+
     const onSelect = async (layout) => {
+        snackbarContext.setSnackbar(`Switched to ${layout.name}`)
         let {data} = await axios.get(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id)
         props.setLayout(data)
     }
@@ -81,6 +85,7 @@ const LayoutLoad = (props) => {
             layout: current
         }).then( res => {
             console.log(res)
+            snackbarContext.setSnackbar(`Renamed to ${inputNewName}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
@@ -95,6 +100,7 @@ const LayoutLoad = (props) => {
             layout: layout
         }).then( res => {
             console.log(res)
+            snackbarContext.setSnackbar(`Set ${layout.name} as default layout`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
@@ -106,6 +112,7 @@ const LayoutLoad = (props) => {
             layout: layout
         }).then( res => {
             console.log(res)
+            snackbarContext.setSnackbar(`Deleted ${layout.name}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
