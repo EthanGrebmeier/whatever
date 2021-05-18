@@ -5,7 +5,6 @@ export default function refreshAccessToken(setAccessToken){
         return response
     }, async error => {
         const originalRequest = error.config;
-        console.log('test')
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             return axios.post('/api/tokens/refreshToken')
