@@ -74,30 +74,18 @@ const Dashboard = (props) => {
           ]
         })
       }
-    } else {
-      let newToken = accessToken
-
-      if (!newToken){
-        await axios.get('/api/tokens/refreshToken').then(res => {
-          newToken = res.data.accessToken
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + newToken
-        }).catch(err => console.log(err))
-      }
-
-      if (newToken) {
-        setAccessToken(newToken)
-        axios.get(process.env.NEXT_PUBLIC_URL + '/user', {
-            headers: {
-                'Authorization' : 'Bearer ' + newToken
-            }
-        }).then(res => {
-          setUser(res.data)
-        }).catch(err => {
-          console.log(err)
-        })
-      }
+    } else if (accessToken) {
+      axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
+        setUser(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
     }
-  }, [user, accessToken])
+  }, [accessToken, user])
+
+  useEffect(() => {
+
+  }, [])
 
 
   const accessTokenValue = {
