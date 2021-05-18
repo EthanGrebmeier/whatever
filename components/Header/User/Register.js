@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { useAccessTokenContext } from '../../../contexts/AccessTokenContext'
+import { useSnackbarContext } from '../../../contexts/SnackbarContext'
 import Button from '../../Buttons/Button'
 import Form from '../../Form/Form'
 import Input from '../../Form/Input'
@@ -24,6 +25,7 @@ const Register = (props) => {
     const [inputPassword, setInputPassword] = useState('')
 
     const accessTokenContext = useAccessTokenContext()
+    const snackbarContext = useSnackbarContext()
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -41,7 +43,9 @@ const Register = (props) => {
             }
         }).then( res => {
             accessTokenContext.setAccessToken(res.data.accessToken)
+            snackbarContext.setSnackbar(res.data.message)
         }).catch( err => {
+            snackbarContext.setSnackbar(err.response.data.message)
             console.log(err)
         })
     }
