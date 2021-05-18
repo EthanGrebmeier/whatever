@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { useAccessTokenContext } from '../../../contexts/AccessTokenContext'
+import { useSnackbarContext } from '../../../contexts/SnackbarContext'
 import Button from '../../Buttons/Button'
 import Form from '../../Form/Form'
 import Input from '../../Form/Input'
@@ -20,17 +21,23 @@ const RegisterButton = styled.button`
 const Login = (props) => {
     const [inputEmail, setInputEmail] = useState('kileybrennan@gmail.com')
     const [inputPassword, setInputPassword] = useState('Ds$3023$')
-    const AccessTokenContext = useAccessTokenContext()
+    const accessTokenContext = useAccessTokenContext()
 
-    const onSubmit = (e) => {
+    const snackbarContext = useSnackbarContext()
+
+    const onSubmit = async (e) => {
         e.preventDefault()
-        axios.post('/api/login', {
+        await axios.post('/api/login', {
             email: inputEmail,
             password: inputPassword
         }).then( res => {
-            AccessTokenContext.setAccessToken(res.data.accessToken)
+            console.log(res)
+            accessTokenContext.setAccessToken(res.data.accessToken)
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
+            snackbarContext.setSnackbar('Logged In')
         }).catch( err => {
             console.log(err)
+            snackbarContext.setSnackbar(err.response.data.message)
         })
     }
 
