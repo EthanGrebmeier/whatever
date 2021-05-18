@@ -5,7 +5,7 @@ import IconButton from "../Buttons/IconButton";
 
 const Wrapper = styled.div`
     position: absolute;
-    bottom: ${props => props.isShowing ? '10px' : '-50px'};
+    bottom: ${props => props.isShowing ? '10px' : '-70px'};
     left: 50%;
     transform: translateX(-50%);
     min-width: 300px;
@@ -42,7 +42,7 @@ const Snackbar = ({text, actionText, actionOnClick, id}) => {
         let currentTimeoutArray = [...timeoutArray]
         let timeout = setTimeout(() => {
             setIsShowing(false)
-        }, actionOnClick ? 8000 : 4000)
+        }, 8000)
         currentTimeoutArray.push(timeout)
         setTimeoutArray(currentTimeoutArray)
     }, [id])
