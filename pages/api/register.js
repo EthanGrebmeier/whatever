@@ -11,14 +11,16 @@ const handler = async (req, res) =>{
 
     const body = req.body
 
-    if (!body.firstName || body.firstName.length > 12){ return res.status(400).send('First Name Too Long')}
-    if (!body.lastName || body.firstName.length > 12){ return res.status(400).send('Last Name Too Long')}
-    if (!body.email || !validateEmail(body?.email)){ return res.status(400).send('Invalid Email')}
-    if (!body.password || !validatePassword(body?.password)){ return res.status(400).send('Invalid Password')}
+    if (!body.firstName){ return res.status(400).send({message: 'First name is required'})}
+    if (!body.firstName || body.firstName.length > 12){ return res.status(400).send({message: 'First name too long'})}
+    if (!body.lastName){ return res.status(400).send({message: 'Last name is required'})}
+    if (!body.lastName || body.firstName.length > 12){ return res.status(400).send({message: 'Last name too long'})}
+    if (!body.email || !validateEmail(body?.email)){ return res.status(400).send({message: 'Invalid email'})}
+    if (!body.password || !validatePassword(body?.password)){ return res.status(400).send({message: 'Passwords must be at least 6 characters long and have a capital letter and a number'})}
 
     const currentUser = await UserModel.findOne({email: body.email})
 
-    if (currentUser) { return res.status(400).send()}
+    if (currentUser) { return res.status(400).send({message: 'User already exists'})}
 
     bcrypt.hash(body.password, 10, async function(err, hash){
       const user = await UserModel.create(

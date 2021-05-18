@@ -11,15 +11,15 @@ const handler = async (req, res) =>{
 
     const body = req.body
 
-    if (!body.email || !validateEmail(body?.email)){ return res.status(400).send('Invalid Email')}
+    if (!body.email || !validateEmail(body?.email)){ return res.status(400).send({message:'Invalid Email'})}
 
     const currentUser = await UserModel.findOne({email: body.email})
 
-    if (!currentUser) { return res.status(400).send('User Not Found')}
+    if (!currentUser) { return res.status(400).json({message: 'User Not Found'})}
 
     bcrypt.compare(body.password, currentUser.password, async function(err, result){
       if (err || !result){
-          return res.status(401).send('Incorrect Password')
+          return res.status(401).send({message:'Incorrect Password'})
       }
 
       const accessToken = jwt.sign({id: currentUser._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
