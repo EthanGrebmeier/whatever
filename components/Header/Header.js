@@ -36,10 +36,11 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
     
     const accessTokenContext = useAccessTokenContext()
 
-    const logout = () => {
-        setUser()
+    const logout = async () => {
+        
         accessTokenContext.setAccessToken('')
         axios.post('/api/logout')
+        setUser()
     }
 
     return (
