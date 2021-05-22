@@ -56,24 +56,21 @@ const Dashboard = (props) => {
 
   useEffect(async () => {
     if (user) { 
-
-      refreshAccessToken(setAccessToken)
       
       setBackground(user.settings.background)
-      if (layout._id == 123456){
-        setLayout({...getDefaultLayout(user.layoutMeta.layouts, user.layoutMeta.defaultLayout)} || {
-          name: 'Default',
-          applets: [
-            {
-              id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
-              name: 'Checklist',
-              width: '49%',
-              height: '49%',
-              position: 'top left'
-            },
-          ]
-        })
-      }
+      
+      setLayout({...getDefaultLayout(user.layoutMeta.layouts, user.layoutMeta.defaultLayout)} || {
+        name: 'Default',
+        applets: [
+          {
+            id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
+            name: 'Checklist',
+            width: '49%',
+            height: '49%',
+            position: 'top left'
+          },
+        ]
+      })
     } else if (accessToken) {
       axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
         setUser(res.data)
