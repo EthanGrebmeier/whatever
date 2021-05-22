@@ -43,7 +43,8 @@ const Register = (props) => {
             }
         }).then( res => {
             accessTokenContext.setAccessToken(res.data.accessToken)
-            snackbarContext.setSnackbar(res.data.message)
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
+            snackbarContext.setSnackbar('Logged in')
         }).catch( err => {
             snackbarContext.setSnackbar(err.response.data.message)
             console.log(err)
