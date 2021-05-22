@@ -17,8 +17,8 @@ const Wrapper = styled.header`
     width: 100%;
     border-radius: 10px;
     border: 2px solid black;
-    background: white;
-    position: relative;
+    background: white; 
+    position: relative; 
     h1{
         margin-right: 40px;
         padding: 10px; 
