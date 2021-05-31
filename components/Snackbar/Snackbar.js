@@ -22,12 +22,19 @@ const SnackbarText = styled.p`
     color: white;
 `
 
-const ActionText = styled.p`
-    width: 25%;
+const ActionText = styled.button`
+    width: 20%;
+    padding: 0;
+    font-size: 16px;
     color: #A0CA92;
     overflow: hidden;
-    text-decoration: underline;
-    text-align: end;
+    text-decoration: underline; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
 `
 
 const Snackbar = ({text, actionText, actionOnClick, id}) => {
@@ -53,6 +60,11 @@ const Snackbar = ({text, actionText, actionOnClick, id}) => {
         }
     }
 
+    const handleClick = () => {
+        actionOnClick && actionOnClick()
+        setIsShowing(false)
+    }
+
     return (
         <Wrapper isShowing={isShowing}>
             <SnackbarText>
@@ -60,7 +72,7 @@ const Snackbar = ({text, actionText, actionOnClick, id}) => {
             </SnackbarText>
             {
             actionText && (
-            <ActionText onClick={actionOnClick}>
+            <ActionText onClick={handleClick}>
                 {actionText}
             </ActionText>
             )
