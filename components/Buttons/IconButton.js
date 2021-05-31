@@ -10,17 +10,17 @@ const Wrapper = styled.button`
 `
 
 const Tooltip = styled.div`
-    width: 90px;
+    min-width: 90px;
     text-align: center;
     background: black;
     border-radius: 10px;
     color: white;
     padding: 5px;
     position: absolute;    
-    left: -100px;
+    left: -120px;
     display: ${props => props.showTooltip ? 'flex' : 'none'};
     font-family: 'Quicksand'; 
-    p {
+    && p {
         width: 100%;
         font-size: 12px;
     }  
