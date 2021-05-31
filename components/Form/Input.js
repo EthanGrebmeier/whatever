@@ -8,15 +8,30 @@ const Wrapper = styled.input`
     font-family: 'Quicksand';
     font-weight: 500;
     position: relative;
+    background: none;
 `
 
-const Input = ({onChange, onSubmit, value, hidePassword, width}) => {
+const Input = ({onChange, onSubmit, value, hidePassword, width, type, label, ref, autoFocus}) => {
+
+    if (!type){
+        if (hidePassword){
+            type = 'password'
+        } else {
+            type='text'
+        }
+    }
+
     return(
         <Wrapper 
             onKeyPress={(e) => e.key == 'Enter' && onSubmit && onSubmit()}   
-            onChange={onChange} value={value} 
-            type={hidePassword ? 'password' : 'text'}
+            onChange={onChange} 
+            value={value} 
+            type={type}
             width={width}
+            data-lpignore="true"
+            aria-label={label}
+            ref={ref}
+            autoFocus={autoFocus}
         />
     )
 }
