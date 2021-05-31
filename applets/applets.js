@@ -28,14 +28,14 @@ const applets = [
     },
 ]
 
-export const getComponent = (id) => {
+export const getComponent = (id, props) => {
     switch (id) {
         case 'notepad':
-            return <Notepad/>
+            return <Notepad {...props}/>
         case 'checklist':
-            return <Checklist/>
+            return <Checklist {...props} />
         default:
-            return <Checklist/>
+            return <Checklist {...props} />
     }
 }
 
