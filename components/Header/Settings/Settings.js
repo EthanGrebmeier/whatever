@@ -1,6 +1,7 @@
 import axios from 'axios'
 import styled from 'styled-components'
 import HeaderDropdown from '../Dropdown/HeaderDropdown'
+import {useAccessTokenContext} from '../../../contexts/AccessTokenContext'
 
 
 const Wrapper = styled.div`
@@ -43,11 +44,16 @@ const Background = (props) => {
         '#DE8F6E'
     ]
 
+    const accessTokenContext = useAccessTokenContext()
+
     const setBackground = (color) => {
         props.setBackground(color)
-        axios.post(process.env.NEXT_PUBLIC_URL + '/user/settings/background', {
-            background: color
-        })
+        console.log(accessTokenContext)
+        if (accessTokenContext.accessToken){
+            axios.post(process.env.NEXT_PUBLIC_URL + '/user/settings/background', {
+                background: color
+            })
+        }
     }
 
     return (
