@@ -7,6 +7,8 @@ import axios from 'axios'
 import refreshAccessToken from '../scripts/refreshAccessToken'
 import Snackbar from '../components/Snackbar/Snackbar'
 import { SnackbarProvider } from '../contexts/SnackbarContext'
+import store from '../redux/store'
+import { Provider } from 'react-redux'
 
 const Site = styled.div`
   width: 100%;
@@ -165,37 +167,40 @@ const Dashboard = (props) => {
   }
   
   return (
-    <SnackbarProvider value={snackbarValue}>
-      <AccessTokenProvider value={accessTokenValue}>
-        <Site background={background}>
-          <Wrapper>
-            <Header
-              layout={layout}
-              setLayout={setLayout}
-              setBackground={setBackground}
-              background={background}
-              user={user}
-              setUser={setUser}
-            />
-            <Appletspace
-              layout={layout}
-              setLayout={setLayout}
-              closeApplet={closeApplet}
-              moveApplet={moveApplet}
-              setWidth={setWidth}
-              setHeight={setHeight}
-            />
-            {
-            snackbar.text && 
-            <Snackbar 
-              {...snackbar}
-            />
-            }
+    <Provider store={store}>
+      <SnackbarProvider value={snackbarValue}>
+        <AccessTokenProvider value={accessTokenValue}>
+          <Site background={background}>
+            <Wrapper>
+              <Header
+                layout={layout}
+                setLayout={setLayout}
+                setBackground={setBackground}
+                background={background}
+                user={user}
+                setUser={setUser}
+              />
+              <Appletspace
+                layout={layout}
+                setLayout={setLayout}
+                closeApplet={closeApplet}
+                moveApplet={moveApplet}
+                setWidth={setWidth}
+                setHeight={setHeight}
+              />
+              {
+              snackbar.text && 
+              <Snackbar 
+                {...snackbar}
+              />
+              }
 
-          </Wrapper>
-        </Site>
-      </AccessTokenProvider>
-    </SnackbarProvider>
+            </Wrapper>
+          </Site>
+        </AccessTokenProvider>
+      </SnackbarProvider>
+    </Provider>
+    
     
   )
 }
