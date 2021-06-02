@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { UilRotate360, UilTimes } from '@iconscout/react-unicons'
+import { UilRotate360, UilTimes, UilAngleDown, UilAngleUp } from '@iconscout/react-unicons'
 import styled from 'styled-components'
 import Button from '../../components/Buttons/Button'
 import Input from '../../components/Form/Input'
 import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import Item from './Item'
 import IconButton from '../../components/Buttons/IconButton'
+import NewItemForm from './NewItemForm'
 
 
 const Wrapper = styled.div`
@@ -18,6 +19,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
+    position: relative;
 
     *::-webkit-scrollbar {
         width: 5px;               
@@ -39,6 +41,15 @@ const Wrapper = styled.div`
     
     h2 {
         font-size: ${props => props.isWide ? '32px' : '24px'};
+        @media screen and (max-width: 740px){
+            font-size: ${props => props.isWide ? '18px' : '16px'};
+        }
+    }
+
+    h3{
+        @media screen and (max-width: 740px){
+            font-size: ${props => props.isWide ? '14px' : '12px'};
+        }
     }
 
     ul{
@@ -51,13 +62,17 @@ const Wrapper = styled.div`
 
     p {
         font-size: ${props => props.isWide ? '24px' : '16px'};
+        @media screen and (max-width: 740px){
+            font-size: ${props => props.isWide ? '14px' : '12px'};
+        }
     }
 
 `
 
+const Title = styled.h2`
+`
 
-
-const HeaderSection = styled.div`
+const HeaderSection = styled.span`
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -65,15 +80,27 @@ const HeaderSection = styled.div`
     border-bottom: 2px solid black;
 `
 
-export const Section = styled.div`
+export const Section = styled.span`
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     width: ${props => props.width || '60%'};
     position: relative;
 `
 
-const NewTask = styled.button`
+const SortButton = styled.button`
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Quicksand';
+    cursor: pointer;
+    height: 26px;
+    padding: 0;
+`
+
+const NewItem = styled.button`
     cursor: pointer;
     font-family: 'Quicksand';
     background: none;
@@ -85,299 +112,205 @@ const NewTask = styled.button`
     :hover{
         font-weight: 700;
     }
-`
 
-const NewTaskFormWrapper = styled.form`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0 5px 0;
-`
-
-
-
-
-const Checklist = (props) => {
-
-    const NewTaskForm = () => {
-
-        const titleInput = useRef(null)
-
-        useEffect(() => {
-            titleInput?.current && titleInput.current.focus()
-        }, [])
-
-        return (
-            <NewTaskFormWrapper
-                onKeyDown={e => {
-                    console.log(e.key=='enter')
-                    if (e.key == 'Enter'){
-                        submitForm()
-                    }
-                } }
-                onSubmit={e => {
-                    e.preventDefault()
-                    submitForm()
-                }}
-            >
-                <Section>
-                    <Input
-                        value={inputTaskTitle}
-                        onChange={(e) => setInputTaskTitle(e.target.value) }
-                        width='40%'
-                        label='Task Title'
-                        ref={titleInput}
-                        autoFocus
-                    />
-                    <Input
-                        type='date'
-                        value={inputDate}
-                        onChange={(e) => setInputDate(e.target.value) }
-                        width='37%'
-                        label='Task Date'
-                    />
-                </Section>
-                <Section width={props.applet.width === '100%' ? '12%' : '20%'}>
-                    <Button 
-                        type='submit'
-                    >
-                        Submit
-                    </Button>
-                    <IconButton 
-                        onClick={() => closeForm()}
-                        tooltip='Close'
-                    >
-                        <UilTimes/>
-                    </IconButton>
-                </Section>
-            </NewTaskFormWrapper>
-        )
+    @media screen and (max-width: 740px){
+        font-size: ${props => props.isWide ? '16px' : '14px'};
     }
+`
 
 
-    console.log(props)
+const Checklist = ({applet, items, checkItem, completeItem, createItem, isWide, isTall}) => {
 
-    const [tasks, setTasks] = useState()
-    const [showIncomplete, setShowIncomplete] = useState(true)
-    const [showNewTaskForm, setShowNewTaskForm] = useState(false)
-    const [inputTaskTitle, setInputTaskTitle] = useState('')
-    const [inputDate, setInputDate] = useState('')
+    const [shownItems, setShownItems] = useState('complete')
+    const [sortBy, setSortBy] = useState('complete-descending')
+    const [showNewItemForm, setShowNewItemForm] = useState(false)
+    const [inputItemTitle, setInputItemTitle] = useState('')
+    const [inputItemDate, setInputItemDate] = useState('')
 
     const snackbarContext = useSnackbarContext()
     
-
-    useEffect(() => {
-        setTasks(getData())
-    }, [] )
-
-
-    const getData = () => {
-        //TODO: Axios logic
-        return {
-            incompleteTasks: [
-                {
-                    id: 132345, 
-                    title: 'Eng Reading',
-                    date: new Date('May 22, 2021 03:24:00')
-                },
-                {
-                    id: 132346, 
-                    title: 'Stats Homework',
-                    date: new Date('May 20, 2021 03:24:00')
-                },
-                {
-                    id: 132343, 
-                    title: 'Pay Bills',
-                    date: new Date('May 14, 2021 03:24:00')
-                },
-                {
-                    id: 134345, 
-                    title: 'Eng Reading',
-                    date: new Date('May 22, 2021 03:24:00')
-                },
-                {
-                    id: 132146, 
-                    title: 'Stats Homework',
-                    date: new Date('May 20, 2021 03:24:00')
-                },
-                {
-                    id: 132543, 
-                    title: 'Pay Bills',
-                    date: new Date('May 14, 2021 03:24:00')
-                },
-                {
-                    id: 232146, 
-                    title: 'Stats Homework',
-                    date: new Date('May 20, 2021 03:24:00')
-                },
-                {
-                    id: 132593, 
-                    title: 'Pay Bills',
-                    date: new Date('May 14, 2021 03:24:00')
-                },
-                {
-                    id: 132393, 
-                    title: 'Pay Bills',
-                    date: new Date('May 14, 2021 03:24:00')
-                },
-                {
-                    id: 164345, 
-                    title: 'Eng Reading',
-                    date: new Date('May 22, 2021 03:24:00')
-                },
-                {
-                    id: 130146, 
-                    title: 'Stats Homework',
-                    date: new Date('May 20, 2021 03:24:00')
-                },
-                {
-                    id: 132513, 
-                    title: 'Pay Bills',
-                    date: new Date('May 14, 2021 03:24:00')
-                },
-                {
-                    id: 532146, 
-                    title: 'Stats Homework',
-                    date: new Date('May 20, 2021 03:24:00')
-                },
-                {
-                    id: 138593, 
-                    title: 'Pay Bills',
-                    date: new Date('May 14, 2021 03:24:00')
-                },
-            ],
-            completeTasks: [
-                {
-                    id: 123532, 
-                    title: 'UI Mockups'
-                },
-                {
-                    id: 123435,
-                    title: 'Data Structure Planning',
-                    date: new Date('May 22, 2021 03:24:00')
-                }
-            ]
-        }
-    }
-
-    const completeTask = (completedTask) => {
-        let currentTasks = {...tasks}
-        for (let task in currentTasks.incompleteTasks){
-            if (currentTasks.incompleteTasks[task].id == completedTask.id){
-                currentTasks.incompleteTasks.splice(task, 1)
-                currentTasks.completeTasks.splice(0, 0, completedTask)
-            }  
-        }
-        setTasks(currentTasks)
-    }
-
-    const createTask = (task, index) => {
-        let currentTasks = {...tasks}
-        if (typeof index !== 'undefined') {
-            currentTasks.incompleteTasks.splice(index, 0, task)
-        } else {
-            currentTasks.incompleteTasks.push(task)
-        }
-        
-        setTasks(currentTasks)
-    }
-
-    const moveTask = (movedTask) => {
-        let currentTasks = {...tasks}
-        for (let task in currentTasks.completeTasks){
-            if (currentTasks.completeTasks[task].id == movedTask.id){
-                currentTasks.completeTasks.splice(task, 1)
-                currentTasks.incompleteTasks.splice(0, 0, movedTask)
-            }  
-        }
-        setTasks(currentTasks)
-    }
-
     const submitForm = () =>{
-        if (!inputTaskTitle){
-            return snackbarContext.setSnackbar('Task Name Required')
+        if (!inputItemTitle){
+            return snackbarContext.setSnackbar('Item Name Required')
         }
-        createTask({
-            title: inputTaskTitle,
-            date: inputDate ? new Date(inputDate) : '',
+        createItem({
+            title: inputItemTitle,
+            date: inputItemDate ? new Date(inputItemDate) : '',
             id: Math.floor(Math.random() * 899999 + 100000)
         }, 0)
         closeForm()
     }
 
     const closeForm = () => {
-        setInputDate('')
-        setInputTaskTitle('')
-        setShowNewTaskForm(false)
+        setInputItemDate('')
+        setInputItemTitle('')
+        setShowNewItemForm(false)
     }
 
-    const renderTasks = () => {
-        if (showIncomplete) {
-            return tasks && tasks.incompleteTasks.map( (task, index) => (
-                <Item
-                    key={task.id}
-                    task={task}
-                    index={index}
-                    onClick={completeTask}
-                    createTask={createTask}
-                    isWide={props.applet.width === '100%'}
-                    isTall={props.applet.height === '100%'}
-                />
-            ))
+    const sortItems = (items) => {
+        let sortedItems = [...items]
+        switch (sortBy) {
+            case 'date-ascending':
+                return sortedItems.sort((a, b) => (new Date(a.date || 'Jan 1 2012')) - (new Date(b.date || 'Jan 1 2012')));
+            case 'date-descending':
+                return sortedItems.sort((a, b) => (new Date(b.date || 'Jan 1 2012')) - (new Date(a.date || 'Jan 1 2012')));
+            case 'complete-ascending':
+                return sortedItems.sort((a, b) => a.isCompleted - b.isCompleted)
+            case 'complete-descending':
+                return sortedItems.sort((a, b) => b.isCompleted - a.isCompleted)
+            case 'title-ascending':
+                return sortedItems.sort((a, b) => a.title.localeCompare(b.title))
+            case 'title-descending':
+                return sortedItems.sort((a, b) => b.title.localeCompare(a.title))
+            default:
+                return items;
         }
-        return tasks && tasks.completeTasks.map( (task, index) => (
+    }
+
+    const onNameClick = () => {
+        if (sortBy == 'title-ascending'){
+            setSortBy('title-descending')
+        } else if (sortBy == 'title-descending'){
+            setSortBy('')
+        } else {
+            setSortBy('title-ascending')
+        }
+    }
+
+    const onDateClick = () => {
+        if (sortBy == 'date-ascending'){
+            setSortBy('date-descending')
+        } else if (sortBy == 'date-descending'){
+            setSortBy('')
+        } else {
+            setSortBy('date-ascending')
+        }
+    }
+
+    const onCompleteClick = () => {
+        if (sortBy == 'complete-ascending'){
+            setSortBy('complete-descending')
+        } else if (sortBy == 'complete-descending'){
+            setSortBy('')
+        } else {
+            setSortBy('complete-ascending')
+        }
+    }
+
+    const renderItems = () => {
+        if (!items) {
+            return
+        }
+
+        let filteredItems
+
+        if (shownItems == 'all'){
+            filteredItems = items
+        } else if (shownItems == 'complete'){
+            filteredItems = items.filter((item) => item.isCompleted)
+        } else if (shownItems =='incomplete') {
+            filteredItems = items.filter((item) => !item.isCompleted)
+        }
+
+        filteredItems = sortItems(filteredItems)
+
+        return filteredItems && filteredItems.map( (item, index) => (
             <Item
-                key={task.id}
-                task={task}
-                index={index}
-                onClick={moveTask}
-                createTask={createTask}
-                isWide={props.applet.width === '100%'}
-                isTall={props.applet.height === '100%'}
-                complete={true}
-                moveTask={moveTask}
+                key={item.id}
+                item={item}
+                checkItem={checkItem}
+                completeItem={completeItem}
+                isWide={isWide}
+                isTall={isTall}
             />
         ))
     }
 
+    const cycleLists = () => {
+        if (shownItems == 'all' ){
+            setShownItems('incomplete')
+        } else if (shownItems == 'incomplete'){
+            setShownItems('complete')
+        } else {
+            setShownItems('all')
+        }
+    }
+
     return (
         <Wrapper
-            isWide={props.applet.width === '100%'}
-            isTall={props.applet.height === '100%'}
+            isWide={isWide}
+            isTall={isTall}
         >
+            <Section width='initial'>
+                <h2> {shownItems == 'all' ? 'All Items' : shownItems == 'incomplete' ? 'Incomplete Items' : 'Complete Items'} </h2>
+                <IconButton 
+                    onClick={cycleLists}
+                    tooltip={`View ${shownItems == 'all' ? 'Incomplete' : shownItems == 'incomplete' ? 'Complete' : 'All'} Items`}
+                >
+                    <UilRotate360/>
+                </IconButton>
+            </Section>
             <HeaderSection>
                 <Section>
-                    <Section width={props.applet.width === '100%' ? '40%' : '60%'}>
-                        <h2> {showIncomplete ? 'Incomplete Tasks' : 'Complete Tasks'} </h2>
-                        <IconButton 
-                            onClick={() => setShowIncomplete(!showIncomplete)}
-                            tooltip={showIncomplete ? 'View Completed Tasks' : 'View Incomplete Tasks'}
-                        >
-                            <UilRotate360/>
-                        </IconButton>
+                    <Section width={isWide ? '40%' : '60%'}>
+                        <SortButton onClick={onNameClick}>
+                            <h3> Title </h3> 
+                            {
+                                sortBy == 'title-descending' && <UilAngleUp/>
+                            }
+                            {
+                                sortBy == 'title-ascending' && <UilAngleDown/>
+                            }
+                        </SortButton>
                     </Section>
-                    <h3> Date </h3> 
+                    <SortButton onClick={onDateClick}>
+                        <h3>  Date </h3> 
+                        {
+                            sortBy == 'date-descending' && <UilAngleUp/>
+                        }
+                        {
+                            sortBy == 'date-ascending' && <UilAngleDown/>
+                        }
+                    </SortButton>
+                    
                 </Section>
-                <h3> Complete </h3>
+                <SortButton onClick={onCompleteClick}>
+                    <h3> Complete </h3>
+                    {
+                        sortBy == 'complete-descending' && <UilAngleUp/>
+                    }
+                    {
+                        sortBy == 'complete-ascending' && <UilAngleDown/>
+                    }
+                </SortButton>
+                
             </HeaderSection>
             
             {
-            showNewTaskForm ? (
-                <NewTaskForm/>
+            showNewItemForm ? (
+                <NewItemForm
+                    submitForm={submitForm}
+                    inputItemTitle={inputItemTitle}
+                    setInputItemTitle={setInputItemTitle}
+                    inputItemDate={inputItemDate}
+                    setInputItemDate={setInputItemDate}
+                    isWide={isWide}
+                    closeForm={closeForm}
+                />
             ) : (
-                <NewTask 
-                    isWide={props.applet.width === '100%'} 
+                <NewItem 
+                    isWide={isWide} 
                     onClick={() => {
-                        setShowNewTaskForm(true)
+                        setShowNewItemForm(true)
                     }}
                 > 
-                    + Create Task 
-                </NewTask> 
+                    + Create Item 
+                </NewItem> 
             )
             }
 
             <ul>
-                {renderTasks()}
+                {renderItems()}
             </ul>
 
         </Wrapper>
