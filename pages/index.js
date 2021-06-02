@@ -9,6 +9,8 @@ import Snackbar from '../components/Snackbar/Snackbar'
 import { SnackbarProvider } from '../contexts/SnackbarContext'
 import store from '../redux/store'
 import { Provider } from 'react-redux'
+import { ContextMenuProvider } from '../contexts/ContextMenuContext'
+import ContextMenu from '../components/Menu/ContextMenu'
 
 const Site = styled.div`
   width: 100%;
@@ -34,6 +36,12 @@ const Wrapper = styled.div`
 const Dashboard = (props) => {
   const [user, setUser] = useState()
   const [accessToken, setAccessToken] = useState(props.accessToken || '')
+  const [contextMenu, setContextMenu] = useState({
+    isShowing: false,
+    options: [],
+    xPos: 0,
+    yPos: 0,
+  })
   const [background, setBackground] = useState('#F49FBC')
   const [layout, setLayout] = useState({
     name: 'Default',
@@ -83,9 +91,18 @@ const Dashboard = (props) => {
   }, [accessToken, user])
 
   useEffect(() => {
-
+    document.addEventListener('click', () => setContextMenu({
+      isShowing: false,
+      options: [],
+      xPos: 0,
+      yPos: 0,
+    }))
   }, [])
 
+  const contextMenuValue = {
+    contextMenu: contextMenu,
+    setContextMenu: setContextMenu
+  }
 
   const accessTokenValue = {
     accessToken: accessToken,
@@ -170,33 +187,37 @@ const Dashboard = (props) => {
     <Provider store={store}>
       <SnackbarProvider value={snackbarValue}>
         <AccessTokenProvider value={accessTokenValue}>
-          <Site background={background}>
-            <Wrapper>
-              <Header
-                layout={layout}
-                setLayout={setLayout}
-                setBackground={setBackground}
-                background={background}
-                user={user}
-                setUser={setUser}
-              />
-              <Appletspace
-                layout={layout}
-                setLayout={setLayout}
-                closeApplet={closeApplet}
-                moveApplet={moveApplet}
-                setWidth={setWidth}
-                setHeight={setHeight}
-              />
-              {
-              snackbar.text && 
-              <Snackbar 
-                {...snackbar}
-              />
-              }
-
-            </Wrapper>
-          </Site>
+          <ContextMenuProvider value={contextMenuValue}>
+            <Site background={background}>
+              <Wrapper>
+                <Header
+                  layout={layout}
+                  setLayout={setLayout}
+                  setBackground={setBackground}
+                  background={background}
+                  user={user}
+                  setUser={setUser}
+                />
+                <Appletspace
+                  layout={layout}
+                  setLayout={setLayout}
+                  closeApplet={closeApplet}
+                  moveApplet={moveApplet}
+                  setWidth={setWidth}
+                  setHeight={setHeight}
+                />
+                {
+                snackbar.text && 
+                <Snackbar 
+                  {...snackbar}
+                />
+                }
+                <ContextMenu
+                  {...contextMenu}
+                />
+              </Wrapper>
+            </Site>
+          </ContextMenuProvider>
         </AccessTokenProvider>
       </SnackbarProvider>
     </Provider>
