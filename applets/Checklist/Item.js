@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import {Section} from './Checklist'
+import { useContextMenuContext } from '../../contexts/ContextMenuContext'
 
 const Wrapper = styled.li`
     padding: ${props => props.isWide ? '5px 0 5px 0' : '7px 0 7px 0'};
@@ -44,11 +45,13 @@ const Line = styled.span`
 `
 
 
-const Item = ({item, isWide, isTall, checkItem, completeItem}) => {
+const Item = ({item, isWide, isTall, checkItem, completeItem, isCompleteFrame}) => {
 
     const [timeouts, setTimeouts] = useState([])
 
     const snackbarContext = useSnackbarContext()
+
+    const contextMenuContext = useContextMenuContext()
 
     const getDateString = (date) => {
         return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`
@@ -75,10 +78,26 @@ const Item = ({item, isWide, isTall, checkItem, completeItem}) => {
     return (
         <Wrapper
             isWide={isWide}
+            onContextMenu={(e) => {
+                e.preventDefault()
+                contextMenuContext.setContextMenu({
+                    isShowing: true,
+                    xPos: e.pageX + 'px',
+                    yPos: e.pageY + 'px',
+                    options: [
+                        {
+                            prompt: `Delete '${item.title}'`,
+                            onClick: (e) => {
+                                e.stopPropagation();
+                                console.log('Deleted')
+                            }
+                        }
+                    ]
+                })
+            }}
         >
             <Section>
                     <p>
-
                         {item.title}
                     </p>
                 {
