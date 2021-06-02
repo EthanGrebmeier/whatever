@@ -100,7 +100,7 @@ const SortButton = styled.button`
     padding: 0;
 `
 
-const NewItem = styled.button`
+const MenuButton = styled.button`
     cursor: pointer;
     font-family: 'Quicksand';
     background: none;
@@ -110,7 +110,7 @@ const NewItem = styled.button`
     transition: none;
     font-weight: 500;
     :hover{
-        font-weight: 700;
+        text-decoration: underline;
     }
 
     @media screen and (max-width: 740px){
@@ -119,9 +119,9 @@ const NewItem = styled.button`
 `
 
 
-const Checklist = ({applet, items, checkItem, completeItem, createItem, isWide, isTall}) => {
+const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall}) => {
 
-    const [shownItems, setShownItems] = useState('complete')
+    const [shownItems, setShownItems] = useState('all')
     const [sortBy, setSortBy] = useState('complete-descending')
     const [showNewItemForm, setShowNewItemForm] = useState(false)
     const [inputItemTitle, setInputItemTitle] = useState('')
@@ -220,6 +220,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, isWide, 
                 item={item}
                 checkItem={checkItem}
                 completeItem={completeItem}
+                deleteItem={deleteItem}
                 isWide={isWide}
                 isTall={isTall}
             />
@@ -250,6 +251,41 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, isWide, 
                     <UilRotate360/>
                 </IconButton>
             </Section>
+            <Section>
+                {
+                showNewItemForm ? (
+                    <NewItemForm
+                        submitForm={submitForm}
+                        inputItemTitle={inputItemTitle}
+                        setInputItemTitle={setInputItemTitle}
+                        inputItemDate={inputItemDate}
+                        setInputItemDate={setInputItemDate}
+                        isWide={isWide}
+                        closeForm={closeForm}
+                    />
+                ) : (
+                    <MenuButton 
+                        isWide={isWide} 
+                        onClick={() => {
+                            setShowNewItemForm(true)
+                        }}
+                    > 
+                        + Create Item 
+                    </MenuButton> 
+                )
+                }
+                {
+                shownItems == 'complete' && !showNewItemForm && (
+                <MenuButton 
+                    isWide={isWide} 
+                    onClick={deleteAllItems}
+                > 
+                    Delete Completed Items 
+                </MenuButton> 
+                )
+                }
+            </Section>
+
             <HeaderSection>
                 <Section>
                     <Section width={isWide ? '40%' : '60%'}>
@@ -285,29 +321,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, isWide, 
                 </SortButton>
                 
             </HeaderSection>
-            
-            {
-            showNewItemForm ? (
-                <NewItemForm
-                    submitForm={submitForm}
-                    inputItemTitle={inputItemTitle}
-                    setInputItemTitle={setInputItemTitle}
-                    inputItemDate={inputItemDate}
-                    setInputItemDate={setInputItemDate}
-                    isWide={isWide}
-                    closeForm={closeForm}
-                />
-            ) : (
-                <NewItem 
-                    isWide={isWide} 
-                    onClick={() => {
-                        setShowNewItemForm(true)
-                    }}
-                > 
-                    + Create Item 
-                </NewItem> 
-            )
-            }
+
 
             <ul>
                 {renderItems()}
