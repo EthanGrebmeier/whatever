@@ -19,8 +19,8 @@ const RegisterButton = styled.button`
 `
 
 const Login = (props) => {
-    const [inputEmail, setInputEmail] = useState('kileybrennan@gmail.com')
-    const [inputPassword, setInputPassword] = useState('Ds$3023$')
+    const [inputEmail, setInputEmail] = useState('ethangrebmeier@gmail.com')
+    const [inputPassword, setInputPassword] = useState('')
     const accessTokenContext = useAccessTokenContext()
 
     const snackbarContext = useSnackbarContext()
