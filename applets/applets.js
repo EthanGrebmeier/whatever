@@ -1,5 +1,5 @@
 import Notepad from "./Notepad/Notepad";
-import Checklist from './Checklist/Checklist'
+import ChecklistController from './Checklist/ChecklistController'
 
 const applets = [
     {
@@ -33,9 +33,9 @@ export const getComponent = (id, props) => {
         case 'notepad':
             return <Notepad {...props}/>
         case 'checklist':
-            return <Checklist {...props} />
+            return <ChecklistController {...props} />
         default:
-            return <Checklist {...props} />
+            return  <ChecklistController {...props} />
     }
 }
 
