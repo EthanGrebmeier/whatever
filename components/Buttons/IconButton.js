@@ -1,6 +1,12 @@
 import { useState } from "react"
 import styled from 'styled-components'
 
+
+const ButtonWrapper = styled.span`
+    position: relative;
+
+`
+
 const Wrapper = styled.button`
     background: none;
     border: none;
@@ -17,13 +23,19 @@ const Tooltip = styled.div`
     color: white;
     padding: 5px;
     position: absolute;    
-    left: -120px;
+    right: 25px;
+    top: 0;
+    z-index: 10;
     display: ${props => props.showTooltip ? 'flex' : 'none'};
     font-family: 'Quicksand'; 
     && p {
         width: 100%;
         font-size: 12px;
     }  
+    
+    @media screen and (max-width: 740px){
+        display: none;
+    }
    
 `
 
@@ -32,7 +44,10 @@ const IconButton = ({children, onClick, tooltip}) => {
     const [isHovered, setIsHovered] = useState(false)
 
     return (
-        <Wrapper onMouseLeave={() => setIsHovered(false)} onMouseEnter={() => setIsHovered(true)} onClick={onClick}>
+        <ButtonWrapper>
+            <Wrapper onMouseLeave={() => setIsHovered(false)} onMouseEnter={() => setIsHovered(true)} onClick={onClick}>
+                {children}
+            </Wrapper>
             {tooltip && (
             <Tooltip
             showTooltip={isHovered}
@@ -40,8 +55,7 @@ const IconButton = ({children, onClick, tooltip}) => {
                 <p> {tooltip} </p>
             </Tooltip>
             )}
-            {children}
-        </Wrapper>
+        </ButtonWrapper>
     )
 } 
 
