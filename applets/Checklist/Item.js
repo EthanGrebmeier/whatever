@@ -45,7 +45,7 @@ const Line = styled.span`
 `
 
 
-const Item = ({item, isWide, isTall, checkItem, completeItem, isCompleteFrame}) => {
+const Item = ({item, isWide, isTall, checkItem, completeItem, deleteItem}) => {
 
     const [timeouts, setTimeouts] = useState([])
 
@@ -86,12 +86,20 @@ const Item = ({item, isWide, isTall, checkItem, completeItem, isCompleteFrame}) 
                     yPos: e.pageY + 'px',
                     options: [
                         {
+                            prompt: `Mark '${item.title}' ${item.isCompleted ? 'Incomplete' : 'Complete'}`,
+                            onClick: (e) => {
+                                e.stopPropagation();
+                                handleChecked()
+                            } 
+                        },
+                        {
                             prompt: `Delete '${item.title}'`,
                             onClick: (e) => {
                                 e.stopPropagation();
-                                console.log('Deleted')
+                                deleteItem(item)
+                                snackbarContext.setSnackbar( `Deleted '${item.title}'`)
                             }
-                        }
+                        }                        
                     ]
                 })
             }}
