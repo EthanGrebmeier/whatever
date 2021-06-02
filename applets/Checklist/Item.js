@@ -20,8 +20,14 @@ const Checkbox = styled.button`
     border-radius: 50%;
     margin-right: 10px;
     cursor: pointer;
-    :hover{
-        background: ${props => props.isChecked ? 'none' : 'black'};
+    @media screen and (min-width: 741px){
+        :hover{
+            background: ${props => props.isChecked ? 'none' : 'black'};
+        }
+    }
+    @media screen and (max-width: 740px){
+        width: 14px;
+        height: 14px;
     }
 `
 
@@ -38,9 +44,8 @@ const Line = styled.span`
 `
 
 
-const Item = ({task, isWide, isTall, index, onClick, createTask, moveTask, complete}) => {
+const Item = ({item, isWide, isTall, checkItem, completeItem}) => {
 
-    const [isChecked, setIsChecked] = useState(complete || false)
     const [timeouts, setTimeouts] = useState([])
 
     const snackbarContext = useSnackbarContext()
@@ -50,17 +55,10 @@ const Item = ({task, isWide, isTall, index, onClick, createTask, moveTask, compl
     }
 
     const handleChecked = () => {
-        console.log(task)
-        console.log(index)
-        if (!isChecked || (complete && isChecked)){
+        if (!item.isChecked || (item.isCompleted && item.isChecked)){
             let currentTimeouts = [...timeouts]
             currentTimeouts.push(setTimeout(() => {
-                onClick(task)
-                if (!complete){
-                    snackbarContext.setSnackbar(`Completed ${task.title}`, 'Undo', () => {createTask(task, index)} )
-                } else {
-                    snackbarContext.setSnackbar(`Marked ${task.title} incomplete`, 'Undo', () => {moveTask(task)} )
-                }
+                completeItem(item)
             }, 2000))
             setTimeouts(currentTimeouts)
         } else {
@@ -71,7 +69,7 @@ const Item = ({task, isWide, isTall, index, onClick, createTask, moveTask, compl
             setTimeouts([])
         }
         
-        setIsChecked(!isChecked)
+        checkItem(item)
     }
 
     return (
@@ -81,23 +79,23 @@ const Item = ({task, isWide, isTall, index, onClick, createTask, moveTask, compl
             <Section>
                     <p>
 
-                        {task.title}
+                        {item.title}
                     </p>
                 {
-                task.date && (
+                item.date && (
                     <p>
-                        {getDateString(task.date)}
+                        {getDateString(new Date(item.date))}
                     </p>
                 )
                 }
 
                 <Line
-                    isChecked={isChecked}
+                    isChecked={item.isChecked}
                 />
             </Section>
 
             <Checkbox
-                isChecked={isChecked}
+                isChecked={item.isChecked}
                 isWide={isWide}
                 isTall={isTall}
                 onClick={handleChecked}
