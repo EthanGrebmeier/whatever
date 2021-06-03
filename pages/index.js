@@ -90,7 +90,7 @@ const Dashboard = (props) => {
         ]
       })
     }
-  }, [accessToken, user])
+  }, [accessToken])
 
   useEffect(() => {
     refreshAccessToken(setAccessToken)
