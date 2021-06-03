@@ -20,7 +20,7 @@ async function handler(req, res){
         if (!dbToken){return res.status(401).send()}
         jwt.verify(reqRefreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) {return res.status(403).send()}
-            const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30s'})
+            const accessToken = jwt.sign({id: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
             return res.json({
                 accessToken: accessToken
             })
