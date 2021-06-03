@@ -16,11 +16,11 @@ export const checklistSlice = createSlice({
         error: null
       }
     },
-    fetchItemsSucces: (state, action) => {
+    fetchItemsSuccess: (state, action) => {
       return {
         ...state,
         loading: false,
-        items: action.payload.items
+        items: action.payload
       }
     },
     fetchItemsFailure: (state, action) => {
@@ -34,14 +34,15 @@ export const checklistSlice = createSlice({
     checkItem: (state, action) => {
       console.log(action)
       for (let item in state.items){
-          if (state.items[item].id == action.payload.id){
+          if (state.items[item]._id == action.payload._id){
               state.items[item].isChecked = !state.items[item].isChecked
           }  
       }
     },
     completeItem: (state, action) => {
+      console.log(action)
       for (let item in state.items){
-          if (state.items[item].id == action.payload.id){
+          if (state.items[item]._id == action.payload._id){
               state.items[item].isCompleted = !state.items[item].isCompleted
           }  
       }
@@ -58,7 +59,7 @@ export const checklistSlice = createSlice({
     deleteItem: (state, action) => {
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload.id)
+        items: state.items.filter(item => item._id !== action.payload._id)
       } 
     },
     deleteAllItems: (state, action) => {
@@ -73,7 +74,7 @@ export const checklistSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { 
   fetchItemsBegin,
-  fetchItemsSucces,
+  fetchItemsSuccess,
   fetchItemsFailure,
   checkItem, 
   completeItem, 
