@@ -122,7 +122,7 @@ const MenuButton = styled.button`
 const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall}) => {
 
     const [shownItems, setShownItems] = useState('all')
-    const [sortBy, setSortBy] = useState('complete-descending')
+    const [sortBy, setSortBy] = useState('')
     const [showNewItemForm, setShowNewItemForm] = useState(false)
     const [inputItemTitle, setInputItemTitle] = useState('')
     const [inputItemDate, setInputItemDate] = useState('')
@@ -136,8 +136,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
         createItem({
             title: inputItemTitle,
             date: inputItemDate ? new Date(inputItemDate) : '',
-            id: Math.floor(Math.random() * 899999 + 100000)
-        }, 0)
+        })
         closeForm()
     }
 
