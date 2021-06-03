@@ -43,19 +43,7 @@ const Dashboard = (props) => {
     yPos: 0,
   })
   const [background, setBackground] = useState('#F49FBC')
-  const [layout, setLayout] = useState({
-    name: 'Default',
-    _id: 123456,
-    applets: [
-      {
-        id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
-        name: 'Checklist',
-        width: '49%',
-        height: '49%',
-        position: 'top left'
-      },
-    ]
-  }) 
+  const [layout, setLayout] = useState() 
   const [snackbar, setSnackbar] = useState({
     text: '',
     actionText: '',
@@ -65,7 +53,7 @@ const Dashboard = (props) => {
 
 
   useEffect(async () => {
-    if (user) { 
+    if (user && !layout) { 
       
       setBackground(user.settings.background)
       
@@ -87,10 +75,25 @@ const Dashboard = (props) => {
       }).catch(err => {
         console.log(err)
       })
+    } else {
+      setLayout({
+        name: 'Default',
+        _id: 123456,
+        applets: [
+          {
+            id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
+            name: 'Checklist',
+            width: '49%',
+            height: '49%',
+            position: 'top left'
+          },
+        ]
+      })
     }
   }, [accessToken, user])
 
   useEffect(() => {
+    refreshAccessToken(setAccessToken)
     document.addEventListener('click', () => setContextMenu({
       isShowing: false,
       options: [],
@@ -198,14 +201,19 @@ const Dashboard = (props) => {
                   user={user}
                   setUser={setUser}
                 />
-                <Appletspace
-                  layout={layout}
-                  setLayout={setLayout}
-                  closeApplet={closeApplet}
-                  moveApplet={moveApplet}
-                  setWidth={setWidth}
-                  setHeight={setHeight}
-                />
+                {
+                  layout && (
+                  <Appletspace
+                    layout={layout}
+                    setLayout={setLayout}
+                    closeApplet={closeApplet}
+                    moveApplet={moveApplet}
+                    setWidth={setWidth}
+                    setHeight={setHeight}
+                  />
+                  )
+                }
+
                 {
                 snackbar.text && 
                 <Snackbar 
