@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Header from '../components/Header/Header'
-import Appletspace from '../components/Appletspace/Appletspace'
+import AppletSpace from '../components/Appletspace/AppletSpace'
 import {AccessTokenProvider, useAccessTokenContext} from '../contexts/AccessTokenContext'
 import axios from 'axios'
 import refreshAccessToken from '../scripts/refreshAccessToken'
@@ -222,7 +222,7 @@ const Dashboard = (props) => {
                 />
                 {
                   layout && (
-                  <Appletspace
+                  <AppletSpace
                     layout={layout}
                     setLayout={setLayout}
                     closeApplet={closeApplet}
