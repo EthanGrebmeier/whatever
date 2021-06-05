@@ -27,3 +27,9 @@ p {
   margin-block-start: 0;
   margin-block-end: 0;
 }
+
+@media screen and (max-width: 740px){
+  h2 {
+    font-size: 18px;
+  }
+}
