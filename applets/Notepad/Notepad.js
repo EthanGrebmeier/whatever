@@ -111,6 +111,7 @@ const Notepad = ({applet}) => {
                 setTimeout(() => {
                     setCanSave(true)
                 }, 60000)
+                return snackbarContext.setSnackbar('Saved Notes')
             }
         } else {
             snackbarContext.setSnackbar('There is a limit of one save per minute')
