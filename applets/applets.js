@@ -1,5 +1,7 @@
 import Notepad from "./Notepad/Notepad";
 import ChecklistController from './Checklist/ChecklistController'
+import patchNotes from "./PatchNotes/patchNotesContent";
+import PatchNotes from "./PatchNotes/patchNotes";
 
 const applets = [
     {
@@ -15,16 +17,10 @@ const applets = [
         height: '49%',
     },
     {
-        id: 'checklist',
-        name: '3',
+        id: 'patchnotes',
+        name: 'Patch Notes',
         width: '49%',
-        height: '49%',
-    },
-    {
-        id: 'checklist',
-        name: '4',
-        width: '49%',
-        height: '49%',
+        height: '49%'
     },
 ]
 
@@ -34,6 +30,8 @@ export const getComponent = (id, props) => {
             return <Notepad {...props}/>
         case 'checklist':
             return <ChecklistController {...props} />
+        case 'patchnotes':
+            return <PatchNotes {...props}/>
         default:
             return  <ChecklistController {...props} />
     }
