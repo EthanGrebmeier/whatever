@@ -150,14 +150,14 @@ const Applets = (props) => {
     return (
         isPickingSpot ? (
             isConfirmingSpot ? (
-                <Wrapper height='120px'>
+                <Wrapper height='160px'>
                     <ConfirmSpot
                         oldApplet={props.layout.applets[oldAppletPosition]}
                         replaceAt={oldAppletPosition}
                         newApplet={newApplet}
                         addApplet={addApplet}
                         position={newPosition}
-                        
+                        setIsConfirmingSpot={setIsConfirmingSpot}
                     />
                 </Wrapper>
             ) : (
