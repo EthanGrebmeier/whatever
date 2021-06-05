@@ -9,6 +9,9 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    p{
+        text-align: center;
+    }
 `
 
 const Buttons = styled.div`
@@ -26,6 +29,9 @@ const ConfirmSpot = (props) => {
                 <Button 
                     width='100px'
                     secondary
+                    onClick={() => {
+                        props.setIsConfirmingSpot(false)
+                    }}
                 >
                     Cancel
                 </Button>
