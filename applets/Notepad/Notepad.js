@@ -101,8 +101,6 @@ const Notepad = ({applet}) => {
                     title: title,
                     text: text
                 }
-            }).then((res) => {
-                console.log(res)
             }).catch((err) => {
                 console.log(err)
                 return snackbarContext.setSnackbar('Error Saving...')

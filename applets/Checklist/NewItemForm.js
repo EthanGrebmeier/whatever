@@ -17,7 +17,6 @@ const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputI
     return (
         <NewItemFormWrapper
             onKeyDown={e => {
-                console.log(e.key=='enter')
                 if (e.key == 'Enter'){
                     submitForm()
                 }

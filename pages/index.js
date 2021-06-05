@@ -104,7 +104,6 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     refreshAccessToken(setAccessToken)
-    console.log(defaultApplets)
     document.addEventListener('click', () => setContextMenu({
       isShowing: false,
       options: [],
@@ -138,7 +137,6 @@ const Dashboard = (props) => {
 
   const setSnackbarValues = (text, actionText, actionOnClick) => {
     let id = Math.floor(Math.random() * 800 + 100)
-    console.log(id)
     setSnackbar({
       text: text,
       actionText: actionText,
@@ -155,7 +153,6 @@ const Dashboard = (props) => {
   const getDefaultLayout = (layouts, defaultLayout) => {
     for (let layout in layouts){
       if (layouts[layout]._id === defaultLayout){
-        console.log(layouts[layout])
         return {...layouts[layout]}
       }
     }

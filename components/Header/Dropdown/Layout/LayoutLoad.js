@@ -78,19 +78,16 @@ const LayoutLoad = (props) => {
     const onSave = (layout) => {
         let current = {...layout}
         current.name = inputNewName
-        console.log(current)
         setEditIndex()
         setInputNewName()
         
         axios.put(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
             layout: current
         }).then( res => {
-            console.log(res)
             snackbarContext.setSnackbar(`Renamed to ${inputNewName}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
-            console.log(currentUser)
-            //props.setUser(currentUser)
+            props.setUser(currentUser)
         }).catch(err => console.log(err))
         
     }
@@ -101,7 +98,6 @@ const LayoutLoad = (props) => {
             isDefault: true,
             layout: layout
         }).then( res => {
-            console.log(res)
             snackbarContext.setSnackbar(`Set ${layout.name} as default layout`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
@@ -115,7 +111,6 @@ const LayoutLoad = (props) => {
         }
         
         axios.delete(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id).then( res => {
-            console.log(res)
             snackbarContext.setSnackbar(`Deleted ${layout.name}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data

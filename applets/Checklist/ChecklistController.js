@@ -51,7 +51,6 @@ const ChecklistController = ({applet}) => {
                     isChecked: false
                 }
             }).then(res => {
-                console.log(res.data)
                 dispatch(createItem(res.data))
                 snackbarContext.setSnackbar(`${res.data.title} created`)
             }).catch(err => {
@@ -77,16 +76,14 @@ const ChecklistController = ({applet}) => {
                     isCompleted: !item.isCompleted,
                     isChecked: !item.isChecked
                 }
-            }).then(res => console.log(res)).catch(err => console.log(err))
+            }).catch(err => console.log(err))
         }
         dispatch(completeItem(item))
     }
 
     const deleteItemRequest = async (item) => {
-        console.log(item)
         if (accessTokenContext.accessToken){
             axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + item._id).then(res => {
-                console.log(res)
                 dispatch(deleteItem(item))
             }).catch(err => console.log(err))
         } else {
@@ -97,7 +94,6 @@ const ChecklistController = ({applet}) => {
     const deleteCompletedRequest = async (item) => {
         if (accessTokenContext.accessToken){
             axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/').then(res => {
-                console.log(res)
                 dispatch(deleteAllItems(item))
             }).catch(err => console.log(err))
         } else {

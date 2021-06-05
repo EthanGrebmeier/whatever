@@ -32,7 +32,6 @@ export const checklistSlice = createSlice({
       }
     },
     checkItem: (state, action) => {
-      console.log(action)
       for (let item in state.items){
           if (state.items[item]._id == action.payload._id){
               state.items[item].isChecked = !state.items[item].isChecked
@@ -40,7 +39,6 @@ export const checklistSlice = createSlice({
       }
     },
     completeItem: (state, action) => {
-      console.log(action)
       for (let item in state.items){
           if (state.items[item]._id == action.payload._id){
               state.items[item].isCompleted = !state.items[item].isCompleted
@@ -48,7 +46,6 @@ export const checklistSlice = createSlice({
       }
     },
     createItem: (state, action) => {
-      console.log(action)
       let newItem = {
         isChecked: false,
         isCompleted: false,

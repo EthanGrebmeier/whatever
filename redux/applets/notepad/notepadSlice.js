@@ -18,7 +18,6 @@ export const notepadSlice = createSlice({
       }
     },
     updateNotes: (state, action) => {
-      console.log(action.payload)
       return {
         ...state,
         ...action.payload

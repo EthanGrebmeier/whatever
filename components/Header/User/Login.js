@@ -34,7 +34,6 @@ const Login = (props) => {
             password: inputPassword
         }).then( res => {
             props.setLayout()
-            console.log(res)
             accessTokenContext.setAccessToken(res.data.accessToken)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
             snackbarContext.setSnackbar('Logged In')

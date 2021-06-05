@@ -66,7 +66,6 @@ const Item = ({item, isWide, isTall, checkItem, completeItem, deleteItem}) => {
             setTimeouts(currentTimeouts)
         } else {
             for (let timeout in timeouts){
-                console.log(timeouts[timeout])
                 clearTimeout(timeouts[timeout])
             }
             setTimeouts([])

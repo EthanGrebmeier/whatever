@@ -48,7 +48,6 @@ const Background = (props) => {
 
     const setBackground = (color) => {
         props.setBackground(color)
-        console.log(accessTokenContext)
         if (accessTokenContext.accessToken){
             axios.post(process.env.NEXT_PUBLIC_URL + '/user/settings/background', {
                 background: color

@@ -26,10 +26,8 @@ const LayoutSave = (props) => {
             layout: currentLayout,
         }).then( res => {
             snackbarContext.setSnackbar(`Saved ${currentLayout.name}`)
-            console.log(res)
             let user = {...props.user}
             user.layoutMeta = res.data
-            console.log(user)
             props.setUser(user)
             props.setFrame('menu')
         }).catch( err => {

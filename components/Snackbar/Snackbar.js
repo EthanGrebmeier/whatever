@@ -43,7 +43,6 @@ const Snackbar = ({text, actionText, actionOnClick, id}) => {
     const [timeoutArray, setTimeoutArray] = useState([])
 
     useEffect(() => {
-        console.log(id)
         setIsShowing(true)
         clearTimeouts()
         let currentTimeoutArray = [...timeoutArray]

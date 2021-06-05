@@ -33,8 +33,6 @@ const LayoutMenu = ({setFrame, user, layout}) => {
     }
 
     const saveLayout = async () => {
-        console.log('1')
-        console.log(layout)
         axios.put(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
             layout: layout
         }).then( res => {
