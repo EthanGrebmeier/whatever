@@ -23,10 +23,12 @@ const AppletHeader = (props) => {
 
     const getAppletAtPosition = (y, x) => {
         const checkedPosition = `${y} ${x}`
-        for (let applet in props.applets) {
-            const checkedApplet = props.applets[applet]
-            if (checkedApplet.position == checkedPosition){
-                return checkedApplet
+        if (props?.applets){
+            for (let applet in props.applets) {
+                const checkedApplet = props.applets[applet]
+                if (checkedApplet.position == checkedPosition){
+                    return checkedApplet
+                }
             }
         }
         return undefined
@@ -232,9 +234,6 @@ const AppletHeader = (props) => {
             </h2>
             <ModuleHeaderControls>
                 {renderArrows()}
-                <IconButton tooltip='Options'>
-                    <UilGripHorizontalLine/>
-                </IconButton>
                 <IconButton tooltip={'Close ' + props.name} onClick={() => props.closeApplet(props.position)}>
                     <UilTimes/>
                 </IconButton>
