@@ -11,6 +11,8 @@ import store from '../redux/store'
 import { Provider } from 'react-redux'
 import { ContextMenuProvider } from '../contexts/ContextMenuContext'
 import ContextMenu from '../components/Menu/ContextMenu'
+import defaultApplets from '../applets/defaultApplets'
+import hiddenBaseLayout from '../applets/hiddenBaseLayout'
 
 const Site = styled.div`
   width: 100%;
@@ -31,9 +33,28 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;  
+
+  *::-webkit-scrollbar {
+    width: 5px;               
+  }
+  
+  *::-webkit-scrollbar-track {
+      background: none;        
+  }
+
+  *::-webkit-scrollbar-thumb {
+      background-color: none;    
+      border-radius: 50px;      
+      border: 2px solid black;  
+  }
+
+  @media screen and (max-width: 740px){
+    padding: 30px 15px 30px 15px;
+  }
 ` 
 
 const Dashboard = (props) => {
+  const [isMobile, setIsMobile] = useState()
   const [user, setUser] = useState()
   const [accessToken, setAccessToken] = useState(props.accessToken || '')
   const [contextMenu, setContextMenu] = useState({
@@ -53,54 +74,57 @@ const Dashboard = (props) => {
 
 
   useEffect(async () => {
-    if (user && !layout) { 
-      
+    if (user && accessToken) { 
       setBackground(user.settings.background)
-      
-      setLayout({...getDefaultLayout(user.layoutMeta.layouts, user.layoutMeta.defaultLayout)} || {
-        name: 'Default',
-        applets: [
-          {
-            id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
-            name: 'Checklist',
-            width: '49%',
-            height: '49%',
-            position: 'top left'
-          },
-        ]
-      })
-    } else if (accessToken) {
+      let defaultLayout = getDefaultLayout(user.layoutMeta.layouts, user.layoutMeta.defaultLayout)
+      if (defaultLayout) {
+        setLayout({...defaultLayout})
+      } else if ( user.layoutMeta.layouts && user.layoutMeta.layouts.length > 0 ){
+        setLayout(user.layoutMeta.layouts[0])
+      } else if (!layout?.applets || layout.applets.length == 0){
+        setLayout(defaultApplets)
+      } else {
+        setLayout(hiddenBaseLayout)
+      }
+    } else {
+      setAccessToken('')
+      setLayout(defaultApplets)
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (!user && accessToken){
       axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
         setUser(res.data)
       }).catch(err => {
         console.log(err)
-      })
-    } else {
-      setLayout({
-        name: 'Default',
-        _id: 123456,
-        applets: [
-          {
-            id: 'checklist'+ Math.floor(Math.random() * 800 + 100),
-            name: 'Checklist',
-            width: '49%',
-            height: '49%',
-            position: 'top left'
-          },
-        ]
       })
     }
   }, [accessToken])
 
   useEffect(() => {
     refreshAccessToken(setAccessToken)
+    console.log(defaultApplets)
     document.addEventListener('click', () => setContextMenu({
       isShowing: false,
       options: [],
       xPos: 0,
       yPos: 0,
     }))
+
+    setIsMobile(window.innerWidth < 740)
+    window.addEventListener('resize', handleWindowResizeChange)
+    handleWindowResizeChange()
+
   }, [])
+
+  const handleWindowResizeChange = () => {
+    if (window.innerWidth < 740){
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }
 
   const contextMenuValue = {
     contextMenu: contextMenu,
@@ -129,8 +153,6 @@ const Dashboard = (props) => {
   }
 
   const getDefaultLayout = (layouts, defaultLayout) => {
-    console.log(layouts)
-    console.log(defaultLayout)
     for (let layout in layouts){
       if (layouts[layout]._id === defaultLayout){
         console.log(layouts[layout])
@@ -210,6 +232,7 @@ const Dashboard = (props) => {
                     moveApplet={moveApplet}
                     setWidth={setWidth}
                     setHeight={setHeight}
+                    isMobile={isMobile}
                   />
                   )
                 }
