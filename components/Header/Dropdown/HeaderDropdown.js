@@ -15,6 +15,10 @@ const Wrapper = styled.div`
     p {
         margin-right: ${props => props.hasSpace ? '20px' : ''};
     }
+
+    @media screen and (max-width: 740px){
+        display: none;
+    }
 `
 
 const Dropdown = styled.div`
