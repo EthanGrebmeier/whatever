@@ -43,7 +43,10 @@ const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputI
                     label='Item Date'
                 />
             </Section>
-            <Section width={isWide === '100%' ? '12%' : '20%'}>
+            <Section 
+                width={isWide === '100%' ? '12%' : '35%'}
+                maxWidth='150px'
+            >
                 <Button 
                     type='submit'
                 >
