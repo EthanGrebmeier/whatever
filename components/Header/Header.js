@@ -38,9 +38,9 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
 
     const logout = async () => {
         
-        accessTokenContext.setAccessToken('')
         axios.post('/api/logout')
         setUser()
+        accessTokenContext.setAccessToken('')
     }
 
     return (
@@ -72,6 +72,7 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
                 </HeaderDropdown>
                 <HeaderDropdown titleIcon={<UilUserCircle/>} titleText={user && `${user?.firstName} ${user?.lastName}` || 'Sign In'} right={'-30px'}>
                     <User
+                        setLayout={setLayout}
                         layout={layout}
                         background={background}
                         user={user}
