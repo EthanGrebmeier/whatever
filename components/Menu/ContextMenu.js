@@ -31,7 +31,6 @@ const Option = styled.button`
 `
 
 const ContextMenu = ({isShowing, options, xPos, yPos}) => {
-    console.log('Im here')
 
     const contextMenuContext = useContextMenuContext()
 
