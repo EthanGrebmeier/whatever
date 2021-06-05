@@ -23,7 +23,10 @@ const ConfirmSpot = (props) => {
         <Wrapper>
             <p> Replace <Emphasis> {props.oldApplet?.name} </Emphasis> with <Emphasis> {props.newApplet?.name} </Emphasis>? </p>
             <Buttons>
-                <Button width='100px'>
+                <Button 
+                    width='100px'
+                    secondary
+                >
                     Cancel
                 </Button>
                 <Button width='100px' onClick={() => props.addApplet(props.newApplet, props.position, props.replaceAt)}>
