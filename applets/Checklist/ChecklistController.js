@@ -59,8 +59,12 @@ const ChecklistController = ({applet}) => {
                 snackbarContext.setSnackbar('Something went wrong')
             })
         } else {
-            dispatch(createItem(res.data))
-            snackbarContext.setSnackbar(`${res.data.title} created`)
+            dispatch(createItem({
+                ...item,
+                isCompleted: false,
+                isChecked: false
+            }))
+            snackbarContext.setSnackbar(`${item.title} created`)
         }
 
     }
