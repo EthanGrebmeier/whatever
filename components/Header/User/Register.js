@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useAccessTokenContext } from '../../../contexts/AccessTokenContext'
 import { useSnackbarContext } from '../../../contexts/SnackbarContext'
 import Button from '../../Buttons/Button'
+import Eyeball from '../../Form/Eyeball'
 import Form from '../../Form/Form'
 import Input from '../../Form/Input'
 import Label from '../../Form/Label'
@@ -25,7 +26,7 @@ const Register = (props) => {
     const [inputEmail, setInputEmail] = useState('')
     const [inputPassword, setInputPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-
+    const [showPassword, setShowPassword] = useState(false)
     const accessTokenContext = useAccessTokenContext()
     const snackbarContext = useSnackbarContext()
 
@@ -79,7 +80,15 @@ const Register = (props) => {
             </Label>
             <Label showEye={true}>
                 <p> Password </p>
-                <Input value={inputPassword} onChange={e => setInputPassword(e.target.value)}/>
+                <Input 
+                    value={inputPassword} 
+                    onChange={e => setInputPassword(e.target.value)}
+                    hidePassword={!showPassword}
+                />
+                <Eyeball
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                />
             </Label>
             <Button
                 primary

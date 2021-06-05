@@ -19,7 +19,7 @@ const handler = async (req, res) =>{
 
     bcrypt.compare(body.password, currentUser.password, async function(err, result){
       if (err || !result){
-          return res.status(401).send({message:'Incorrect Password'})
+          return res.status(400).send({message:'Incorrect Password'})
       }
 
       const accessToken = jwt.sign({id: currentUser._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useAccessTokenContext } from '../../../contexts/AccessTokenContext'
 import { useSnackbarContext } from '../../../contexts/SnackbarContext'
 import Button from '../../Buttons/Button'
+import Eyeball from '../../Form/Eyeball'
 import Form from '../../Form/Form'
 import Input from '../../Form/Input'
 import Label from '../../Form/Label'
@@ -21,6 +22,7 @@ const RegisterButton = styled.button`
 const Login = (props) => {
     const [inputEmail, setInputEmail] = useState('')
     const [inputPassword, setInputPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const accessTokenContext = useAccessTokenContext()
 
@@ -40,7 +42,7 @@ const Login = (props) => {
             setIsLoading(false)
             props.setIsHovered(false)
         }).catch( err => {
-            console.log(err)
+            console.log(err.response)
             snackbarContext.setSnackbar(err.response.data.message)
             setIsLoading(false)
         })
@@ -49,12 +51,22 @@ const Login = (props) => {
     return (
         <Form onSubmit={onSubmit} width='230px' height='220px'>
             <Label>
-                <p> Email </p>
-                <Input value={inputEmail} onSubmit={onSubmit} onChange={e => setInputEmail(e.target.value)}/>
+                Email 
+                <Input id='email' aria-label='email' value={inputEmail} onSubmit={onSubmit} onChange={e => setInputEmail(e.target.value)}/>
             </Label>
             <Label showEye={true}>
-                <p> Password </p>
-                <Input value={inputPassword} onSubmit={onSubmit} onChange={e => setInputPassword(e.target.value)}/>
+                 Password 
+                <Input 
+                    aria-label='password' 
+                    value={inputPassword} 
+                    onSubmit={onSubmit} 
+                    onChange={e => setInputPassword(e.target.value)}
+                    hidePassword={!showPassword}
+                />
+                <Eyeball
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                />
             </Label>
             <Button
                 primary
