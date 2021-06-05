@@ -10,6 +10,7 @@ import Checkbox from '../../../Form/Checkbox'
 import axios from 'axios'
 import IconButton from '../../../Buttons/IconButton'
 import { useSnackbarContext } from '../../../../contexts/SnackbarContext'
+import hiddenBaseLayout from '../../../../applets/hiddenBaseLayout'
 
 const Wrapper = styled.ul`
 display: flex;
@@ -88,7 +89,8 @@ const LayoutLoad = (props) => {
             snackbarContext.setSnackbar(`Renamed to ${inputNewName}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
-            props.setUser(currentUser)
+            console.log(currentUser)
+            //props.setUser(currentUser)
         }).catch(err => console.log(err))
         
     }
@@ -108,15 +110,18 @@ const LayoutLoad = (props) => {
     }
 
     const onDelete = (layout) => {
-        axios.delete(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
-            layout: layout
-        }).then( res => {
+        if (props.layout._id == layout._id){
+            props.setLayout(hiddenBaseLayout)
+        }
+        
+        axios.delete(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id).then( res => {
             console.log(res)
             snackbarContext.setSnackbar(`Deleted ${layout.name}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
         }).catch(err => console.log(err))
+        
     }
 
 
@@ -124,8 +129,8 @@ const LayoutLoad = (props) => {
         <>
         <p style={{borderBottom: '2px solid black'}}> Load a Layout </p>
         <Wrapper>
-            
-            {props?.user?.layoutMeta?.layouts?.map((layout, index) => {
+        
+            {props?.user?.layoutMeta?.layouts && props.layout && props?.user?.layoutMeta?.layouts?.map((layout, index) => {
                 return (
                     <Layout key={layout._id || layout.name}>
                         {editIndex == index ? (
@@ -173,7 +178,7 @@ const LayoutLoad = (props) => {
                     </Layout>
                 )
             })}
-            {props.layouts.length == 0 && 
+            {props.layouts && props.layouts.length == 0 && 
             <Nothing>
                 <p> No Saved Layouts </p> 
             </Nothing>}
