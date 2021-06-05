@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     transition: all .3s ease;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
     *:disabled{
         color: black;
         cursor: text;
