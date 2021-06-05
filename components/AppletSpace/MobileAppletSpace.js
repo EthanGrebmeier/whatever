@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    background: white;
+    background: #F7934C;
     border-radius: 10px;
     border: 2px solid black;
     padding: 10px;
