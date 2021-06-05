@@ -11,14 +11,10 @@ import { useSnackbarContext } from '../../../../contexts/SnackbarContext'
 
 const LayoutSave = (props) => {
 
-    const [isDefaultLayout, setIsDefaultLayout] = useState(false)
     const [inputName, setInputName] = useState('')
 
     const snackbarContext = useSnackbarContext()
 
-    const handleCheck = (e) => {
-        e.target.value == 'false' ? setIsDefaultLayout(true) : setIsDefaultLayout(false)
-    }
 
     const onSubmitNew = (e) => {
         if (!inputName){ return }
@@ -28,12 +24,12 @@ const LayoutSave = (props) => {
         props.setLayout(currentLayout)
         axios.post(process.env.NEXT_PUBLIC_URL + '/user/layout', {
             layout: currentLayout,
-            isDefault: isDefaultLayout
         }).then( res => {
             snackbarContext.setSnackbar(`Saved ${currentLayout.name}`)
             console.log(res)
             let user = {...props.user}
             user.layoutMeta = res.data
+            console.log(user)
             props.setUser(user)
             props.setFrame('menu')
         }).catch( err => {
@@ -42,18 +38,14 @@ const LayoutSave = (props) => {
     }
 
     return (
-        <Form onSubmit={onSubmitNew} width='100%'>
+        <Form onSubmit={onSubmitNew} width='100%' height='140px'>
             <Label>
                 <p> Name:  </p>
                 <Input
                     onChange={(e) => setInputName(e.target.value)}
                 />
             </Label>
-            <Label flexDirection='row' width='80%'>
-                <Checkbox handleChange={handleCheck} value={isDefaultLayout} />
-                <p> Set as default? </p>
-            </Label>
-            <Button onClick={() => console.log(isDefaultLayout)}>
+            <Button>
                 Save {props.new && 'New'} Layout
             </Button>
         </Form>
