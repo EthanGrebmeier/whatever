@@ -23,7 +23,7 @@ const Input = ({onChange, onSubmit, value, hidePassword, width, type, label, ref
 
     return(
         <Wrapper 
-            onKeyPress={(e) => e.key == 'Enter' && onSubmit && onSubmit()}   
+            onKeyPress={(e) => e.key == 'Enter' && onSubmit && onSubmit(e)}   
             onChange={onChange} 
             value={value} 
             type={type}
