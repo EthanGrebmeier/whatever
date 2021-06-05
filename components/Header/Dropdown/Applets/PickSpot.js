@@ -26,7 +26,7 @@ const Space = styled.div`
     height: 48%;
     border-radius: 10px;
     border: 2px solid black;
-    background: ${props => props.isSelected ? (props.isOccupied != undefined ? '#EA844A' : '#43D051') : 'white'};
+    background: ${props => props.isSelected ? (typeof props.isOccupied !== 'undefined' ? '#EA844A' : '#A0CA92') : 'white'};
     cursor: pointer;
     &:hover{
         border: 3px solid black;
