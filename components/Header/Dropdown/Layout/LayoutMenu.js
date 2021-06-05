@@ -32,9 +32,6 @@ const LayoutMenu = ({setFrame, user, layout}) => {
         return false
     }
 
-
-    const isSavedLayout = checkIsSavedLayout(layout._id)
-
     const saveLayout = async () => {
         console.log('1')
         console.log(layout)
@@ -47,12 +44,16 @@ const LayoutMenu = ({setFrame, user, layout}) => {
 
     return (
         <Wrapper>
-            {isSavedLayout && (
+            {layout && checkIsSavedLayout(layout._id) && (
             <Button width='100%' onClick={saveLayout}>
                 Save <Emphasis> {layout.name} </Emphasis> 
             </Button>
             )}
-            <Button width='100%'  onClick={() => setFrame('save-new')}>
+            <Button 
+                width='100%'  
+                onClick={() => setFrame('save-new')}
+                secondary
+            >
                 Save As
             </Button>
         </Wrapper>
