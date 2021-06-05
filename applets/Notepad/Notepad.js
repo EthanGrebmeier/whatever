@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { UilSave } from '@iconscout/react-unicons'
+import { UilSave, UilCheck } from '@iconscout/react-unicons'
 import IconButton from '../../components/Buttons/IconButton'
 import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import { useSelector, useDispatch } from 'react-redux'
@@ -68,6 +68,10 @@ const Notepad = ({applet}) => {
 
     let text = useSelector(state => state.notepad.text)
     let title = useSelector(state => state.notepad.title)
+
+    let [savedText, setSavedText] = useState('')
+    let [savedTitle, setSavedTitle] = useState('')
+
     
     useEffect(() => {
         fetchNotepadRequest()
@@ -77,6 +81,8 @@ const Notepad = ({applet}) => {
         if (accessTokenContext.accessToken){
             axios.get(process.env.NEXT_PUBLIC_URL + '/applets/notepad/').then( res => {
                 dispatch(fetchNotepadSuccess(res.data.notepad))
+                savedTitle = res.data.notepad.title
+                savedText = res.data.notepad.text
             }).catch(err => {
                 console.log(err)
             })
@@ -101,6 +107,10 @@ const Notepad = ({applet}) => {
                     title: title,
                     text: text
                 }
+            }).then((res) => {
+                setSavedTitle(res.data.notepad.title)
+                setSavedText(res.data.notepad.text)
+                
             }).catch((err) => {
                 console.log(err)
                 return snackbarContext.setSnackbar('Error Saving...')
@@ -110,7 +120,7 @@ const Notepad = ({applet}) => {
                 setCanSave(false)
                 setTimeout(() => {
                     setCanSave(true)
-                }, 60000)
+                }, 600)
                 return snackbarContext.setSnackbar('Saved Notes')
             }
         } else {
@@ -132,13 +142,23 @@ const Notepad = ({applet}) => {
                 />
 
                 <IconButton
-                tooltip='Save Notes'
-                onClick={onSave}
+                tooltip={title == savedTitle && text == savedText ? 'Changes Saved' : 'Save Notes'}
+                onClick={title == savedTitle && text == savedText ? undefined : onSave}
                 >
-                    <UilSave
-                        size={applet.width == '100%' ? '32' : '24'}
-                        color={canSave ? 'black' : 'grey'}
-                    />
+                    {
+                    title == savedTitle && text == savedText ? (
+                        <UilCheck
+                            size={applet.width == '100%' ? '32' : '24'}
+                        />
+                    ) : (
+                        <UilSave
+                            size={applet.width == '100%' ? '32' : '24'}
+                            color={canSave ? 'black' : 'grey'}
+                        />
+                    )
+
+                    }
+
                 </IconButton>
 
 
