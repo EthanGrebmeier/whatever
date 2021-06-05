@@ -21,20 +21,6 @@ const Wrapper = styled.div`
     align-items: start;
     position: relative;
 
-    *::-webkit-scrollbar {
-        width: 5px;               
-      }
-      
-    *::-webkit-scrollbar-track {
-        background: none;        
-    }
-
-    *::-webkit-scrollbar-thumb {
-        background-color: none;    
-        border-radius: 50px;      
-        border: 2px solid black;  
-      }
-
     * {
         transition: all .2s ease;
     }
@@ -85,6 +71,8 @@ export const Section = styled.span`
     justify-content: space-between;
     align-items: center;
     width: ${props => props.width || '60%'};
+    min-width: ${props => props.minWidth};
+    max-width: ${props => props.maxWidth};
     position: relative;
 `
 
@@ -250,7 +238,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                     <UilRotate360/>
                 </IconButton>
             </Section>
-            <Section>
+            <Section width='100%'>
                 {
                 showNewItemForm ? (
                     <NewItemForm
