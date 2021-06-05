@@ -16,7 +16,6 @@ const Wrapper = styled.div`
 
 const User = (props) => {
     const [currentFrame, setCurrentFrame] = useState('')
-
     useEffect(() => {
         if (props.user && props.accessToken){
             setCurrentFrame('profile')
@@ -24,7 +23,7 @@ const User = (props) => {
             setCurrentFrame('login')
         }
 
-    }, [props.user])
+    }, [props.user, props.accessToken])
 
     const renderFrame = (frame) => {
         switch (frame) {
@@ -32,6 +31,8 @@ const User = (props) => {
                 return (
                 <Login
                     setCurrentFrame={setCurrentFrame}
+                    setLayout={props.setLayout}
+                    setIsHovered={props.setIsHovered}
                 />
                 )
             case 'register':
