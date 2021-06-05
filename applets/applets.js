@@ -1,6 +1,5 @@
 import Notepad from "./Notepad/Notepad";
 import ChecklistController from './Checklist/ChecklistController'
-import patchNotes from "./PatchNotes/patchNotesContent";
 import PatchNotes from "./PatchNotes/patchNotes";
 
 const applets = [
