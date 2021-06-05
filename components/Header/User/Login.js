@@ -19,7 +19,7 @@ const RegisterButton = styled.button`
 `
 
 const Login = (props) => {
-    const [inputEmail, setInputEmail] = useState('test@gmail.com')
+    const [inputEmail, setInputEmail] = useState('')
     const [inputPassword, setInputPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const accessTokenContext = useAccessTokenContext()
