@@ -38,7 +38,7 @@ const Color = styled.button`
 
 const Background = (props) => {
     const colors = [
-        '#F49FBC',
+        '#EFCEFA',
         '#A0CA92',
         '#90C2E7',
         '#DE8F6E'
