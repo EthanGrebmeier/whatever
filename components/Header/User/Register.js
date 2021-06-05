@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useAccessTokenContext } from '../../../contexts/AccessTokenContext'
 import { useSnackbarContext } from '../../../contexts/SnackbarContext'
@@ -23,29 +24,40 @@ const Register = (props) => {
     const [inputLastName, setInputLastName] = useState('')
     const [inputEmail, setInputEmail] = useState('')
     const [inputPassword, setInputPassword] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const accessTokenContext = useAccessTokenContext()
     const snackbarContext = useSnackbarContext()
 
+    const items = useSelector(state => state.checklist.items)
+
     const onSubmit = (e) => {
         e.preventDefault()
+        setIsLoading(true)
         axios.post('/api/register', {
             firstName: inputFirstName,
             lastName: inputLastName,
             email: inputEmail,
             password: inputPassword,
             layoutMeta: {
-                defaultLayout: 'Default',
-                layouts: [props.layout]
+                defaultLayout: '',
+                layouts: []
             },
             settings: {
                 background: props.background
+            },
+            appletMeta: {
+                checklist: {
+                    items: items.filter(item => !item.isPlaceholder )
+                }
             }
         }).then( res => {
+            setIsLoading(false)
             accessTokenContext.setAccessToken(res.data.accessToken)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
             snackbarContext.setSnackbar('Logged in')
         }).catch( err => {
+            setIsLoading(false)
             snackbarContext.setSnackbar(err.response.data.message)
             console.log(err)
         })
@@ -69,8 +81,10 @@ const Register = (props) => {
                 <p> Password </p>
                 <Input value={inputPassword} onChange={e => setInputPassword(e.target.value)}/>
             </Label>
-            <Button>
-                Register
+            <Button
+                primary
+            >
+                {isLoading ? 'Loading...' : 'Register'}
             </Button>
             <RegisterButton type='button' onClick={() => props.setCurrentFrame('login')}>
                 Already Registered?

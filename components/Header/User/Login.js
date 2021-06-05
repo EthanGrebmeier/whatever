@@ -19,25 +19,31 @@ const RegisterButton = styled.button`
 `
 
 const Login = (props) => {
-    const [inputEmail, setInputEmail] = useState('ethangrebmeier@gmail.com')
+    const [inputEmail, setInputEmail] = useState('test@gmail.com')
     const [inputPassword, setInputPassword] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const accessTokenContext = useAccessTokenContext()
 
     const snackbarContext = useSnackbarContext()
 
     const onSubmit = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
         await axios.post('/api/login', {
             email: inputEmail,
             password: inputPassword
         }).then( res => {
+            props.setLayout()
             console.log(res)
             accessTokenContext.setAccessToken(res.data.accessToken)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
             snackbarContext.setSnackbar('Logged In')
+            setIsLoading(false)
+            props.setIsHovered(false)
         }).catch( err => {
             console.log(err)
             snackbarContext.setSnackbar(err.response.data.message)
+            setIsLoading(false)
         })
     }
 
@@ -45,18 +51,24 @@ const Login = (props) => {
         <Form onSubmit={onSubmit} width='230px' height='220px'>
             <Label>
                 <p> Email </p>
-                <Input value={inputEmail} onChange={e => setInputEmail(e.target.value)}/>
+                <Input value={inputEmail} onSubmit={onSubmit} onChange={e => setInputEmail(e.target.value)}/>
             </Label>
             <Label showEye={true}>
                 <p> Password </p>
-                <Input value={inputPassword} onChange={e => setInputPassword(e.target.value)}/>
+                <Input value={inputPassword} onSubmit={onSubmit} onChange={e => setInputPassword(e.target.value)}/>
             </Label>
-            <Button>
-                Log In
+            <Button
+                primary
+            >
+                {isLoading ? 'Loading...' : 'Log In'}
             </Button>
-            <RegisterButton type="button" onClick={() => props.setCurrentFrame('register')}>
+            <Button 
+                type="button" 
+                onClick={() => props.setCurrentFrame('register')}
+                secondary
+            >
                 Register
-            </RegisterButton>
+            </Button>
         </Form>
     )
 }
