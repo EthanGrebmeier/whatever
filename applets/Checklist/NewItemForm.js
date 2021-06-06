@@ -12,18 +12,20 @@ const NewItemFormWrapper = styled.form`
     padding: 5px 0 5px 0;
 `
 
-const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputItemDate, submitForm, closeForm, isWide}) => {
+const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputItemDate, submitForm, toggleForm, isWide}) => {
 
     return (
         <NewItemFormWrapper
             onKeyDown={e => {
                 if (e.key == 'Enter'){
-                    submitForm()
+                    inputItemTitle && submitForm()
+                    toggleForm()
+                    e.stopPropagation()
                 }
             } }
             onSubmit={e => {
                 e.preventDefault()
-                submitForm()
+                inputItemTitle && submitForm()
             }}
         >
             <Section>
@@ -52,7 +54,7 @@ const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputI
                     Submit
                 </Button>
                 <IconButton 
-                    onClick={() => closeForm()}
+                    onClick={() => toggleForm()}
                     tooltip='Close'
                 >
                     <UilTimes/>

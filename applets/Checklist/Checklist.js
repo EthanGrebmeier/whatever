@@ -116,6 +116,8 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
     const [inputItemDate, setInputItemDate] = useState('')
 
     const snackbarContext = useSnackbarContext()
+
+    const checklistRef = useRef(null)
     
     const submitForm = () =>{
         if (!inputItemTitle){
@@ -125,13 +127,13 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
             title: inputItemTitle,
             date: inputItemDate ? new Date(inputItemDate) : '',
         })
-        closeForm()
     }
 
-    const closeForm = () => {
+    const toggleForm = () => {
         setInputItemDate('')
         setInputItemTitle('')
-        setShowNewItemForm(false)
+        setShowNewItemForm(!showNewItemForm)
+        checklistRef.current.focus()
     }
 
     const sortItems = (items) => {
@@ -228,6 +230,12 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
         <Wrapper
             isWide={isWide}
             isTall={isTall}
+            onKeyDown={e => {
+                e.stopPropagation()
+                setShowNewItemForm(true)
+            } }
+            tabIndex='0'
+            ref={checklistRef}
         >
             <Section width={isWide ? '22%' : '36%'} >
                 <h2> {shownItems == 'all' ? 'All Items' : shownItems == 'incomplete' ? 'Incomplete Items' : 'Complete Items'} </h2>
@@ -235,7 +243,9 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                     onClick={cycleLists}
                     tooltip={`View ${shownItems == 'all' ? 'Incomplete' : shownItems == 'incomplete' ? 'Complete' : 'All'} Items`}
                 >
-                    <UilRotate360/>
+                    <UilRotate360
+                        size='28'
+                    />
                 </IconButton>
             </Section>
             <Section width='100%'>
@@ -248,7 +258,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                         inputItemDate={inputItemDate}
                         setInputItemDate={setInputItemDate}
                         isWide={isWide}
-                        closeForm={closeForm}
+                        toggleForm={toggleForm}
                     />
                 ) : (
                     <MenuButton 
