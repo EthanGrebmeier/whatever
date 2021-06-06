@@ -102,6 +102,7 @@ const Dashboard = (props) => {
   }, [accessToken])
 
   useEffect(() => {
+
     refreshAccessToken(setAccessToken)
     document.addEventListener('click', () => setContextMenu({
       isShowing: false,
@@ -113,6 +114,12 @@ const Dashboard = (props) => {
     setIsMobile(window.innerWidth < 740)
     window.addEventListener('resize', handleWindowResizeChange)
     handleWindowResizeChange()
+
+    axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
+      setUser(res.data)
+    }).catch(err => {
+      console.log(err)
+    })
 
   }, [])
 
