@@ -15,9 +15,11 @@ const Wrapper = styled.header`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    height: 65px;
+    padding: 0 10px 0 10px;
     border-radius: 10px;
     border: 2px solid black;
-    padding: 10px;
+    
     background: white; 
     position: relative; 
     margin-bottom: 10px;

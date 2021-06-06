@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     margin-right: ${props => !props.noMargin ? '40px' : ''};
     cursor: default;
     position: relative;
-
+    padding: 10px;
     p {
         margin-right: ${props => props.hasSpace ? '20px' : ''};
     }
@@ -33,7 +33,7 @@ const Dropdown = styled.div`
     z-index: ${props => props.isHovered ? '200' : '100'};
     display: ${props => props.isHovered ? 'initial' : 'none'};
     position: absolute;
-    top: 50px;
+    top: 56px;
     left: ${props => props.left};
     right: ${props => props.right};
 `
