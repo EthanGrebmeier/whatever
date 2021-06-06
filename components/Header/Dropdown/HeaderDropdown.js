@@ -8,7 +8,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-right: 40px;
+    margin-right: ${props => !props.noMargin ? '40px' : ''};
     cursor: default;
     position: relative;
 
@@ -16,9 +16,14 @@ const Wrapper = styled.div`
         margin-right: ${props => props.hasSpace ? '20px' : ''};
     }
 
-    @media screen and (max-width: 740px){
+    @media screen and (max-width: 780px) {
         display: none;
+        p {
+            margin-right: ${props => props.hasSpace ? '10px' : ''};
+            font-size: 14px;
+        }
     }
+
 `
 
 const Dropdown = styled.div`
@@ -28,7 +33,7 @@ const Dropdown = styled.div`
     z-index: ${props => props.isHovered ? '200' : '100'};
     display: ${props => props.isHovered ? 'initial' : 'none'};
     position: absolute;
-    top: 60px;
+    top: 50px;
     left: ${props => props.left};
     right: ${props => props.right};
 `
@@ -49,13 +54,18 @@ const HeaderDropdown = (props) => {
                 onMouseEnter={() => setIsHovered(true)} 
                 onMouseLeave={(e) => {handleMouseLeave(e)}}
                 hasSpace={props.titleIcon && props.titleText}
+                noMargin={props.noMargin}
             >
                 <p>
                     {props.titleText}
                 </p>
                 {props.titleIcon}
                 {props.showCarrot && <UilAngleDown/>}
-                <Dropdown isHovered={isHovered} height={props.height} right={props.right}>
+                <Dropdown 
+                    isHovered={isHovered} 
+                    height={props.height} 
+                    right={props.right}
+                >
                     {props.children && cloneElement(props.children, {setIsHovered: setIsHovered})}
                 </Dropdown>
             </Wrapper>
