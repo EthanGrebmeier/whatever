@@ -61,7 +61,8 @@ const ChecklistController = ({applet}) => {
             dispatch(createItem({
                 ...item,
                 isCompleted: false,
-                isChecked: false
+                isChecked: false,
+                _id: Math.floor(Math.random() * 800 + 100)
             }))
             snackbarContext.setSnackbar(`${item.title} created`)
         }
