@@ -6,33 +6,44 @@ import bcrypt from 'bcrypt'
 
 import {serialize} from 'cookie'
 import {validateEmail} from '../../scripts/validate'
+import rateLimit from 'express-rate-limit'
+import runMiddleware from '../../scripts/runMiddleware'
+
+const apiLimiter = rateLimit({
+  max: 5,
+  windowMs: 10 * 60 * 1000, // 10 Minutes
+  message: 'Please try again in a few minutes'
+})
+
 
 const handler = async (req, res) =>{
 
-    const body = req.body
+  await runMiddleware(req, res, apiLimiter)
 
-    if (!body.email || !validateEmail(body?.email)){ return res.status(400).send({message:'Invalid Email'})}
+  const body = req.body
 
-    const currentUser = await UserModel.findOne({email: body.email})
+  if (!body.email || !validateEmail(body?.email)){ return res.status(400).send('Invalid Email')}
 
-    if (!currentUser) { return res.status(400).json({message: 'User Not Found'})}
+  const currentUser = await UserModel.findOne({email: body.email})
 
-    bcrypt.compare(body.password, currentUser.password, async function(err, result){
-      if (err || !result){
-          return res.status(400).send({message:'Incorrect Password'})
-      }
+  if (!currentUser) { return res.status(400).send('User Not Found')}
 
-      const accessToken = jwt.sign({id: currentUser._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
-      const refreshToken = jwt.sign({id: currentUser._id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '2w'})
+  bcrypt.compare(body.password, currentUser.password, async function(err, result){
+    if (err || !result){
+        return res.status(400).send('Incorrect Password')
+    }
 
-      await RefreshTokenModel.create({refreshToken: refreshToken})
-      res.setHeader('Set-Cookie', serialize('refresh', refreshToken, {path: '/', maxAge: 1209600000}))
+    const accessToken = jwt.sign({id: currentUser._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
+    const refreshToken = jwt.sign({id: currentUser._id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '2w'})
 
-      return res.json({
-        accessToken: accessToken
-      })
-      
-    })    
+    await RefreshTokenModel.create({refreshToken: refreshToken})
+    res.setHeader('Set-Cookie', serialize('refresh', refreshToken, {path: '/', maxAge: 1209600000}))
+
+    return res.json({
+      accessToken: accessToken
+    })
+    
+  })    
 }   
 
 export default connectDB(handler)

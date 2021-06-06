@@ -43,7 +43,7 @@ const Login = (props) => {
             props.setIsHovered(false)
         }).catch( err => {
             console.log(err.response)
-            snackbarContext.setSnackbar(err.response.data.message)
+            snackbarContext.setSnackbar(err.response.data)
             setIsLoading(false)
         })
     }
