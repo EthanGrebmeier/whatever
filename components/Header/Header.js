@@ -17,12 +17,12 @@ const Wrapper = styled.header`
     width: 100%;
     border-radius: 10px;
     border: 2px solid black;
+    padding: 10px;
     background: white; 
     position: relative; 
     margin-bottom: 10px;
     h1{
         margin-right: 40px;
-        padding: 10px; 
     }
 `
 
@@ -71,7 +71,12 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
                         setBackground={setBackground}
                     />
                 </HeaderDropdown>
-                <HeaderDropdown titleIcon={<UilUserCircle/>} titleText={user && `${user?.firstName} ${user?.lastName}` || 'Sign In'} right={'-30px'}>
+                <HeaderDropdown 
+                    titleIcon={<UilUserCircle/>} 
+                    titleText={user && `${user?.firstName} ${user?.lastName}` || 'Sign In'} 
+                    right={'0px'}
+                    noMargin
+                >
                     <User
                         setLayout={setLayout}
                         layout={layout}
