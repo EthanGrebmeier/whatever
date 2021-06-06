@@ -34,7 +34,7 @@ const HeaderSection = styled.div`
     position: relative;
 `
 
-const Header = ({layout, setLayout, background, setBackground, user, setUser}) => {
+const Header = ({layout, setLayout, background, setBackground, user, setUser, loading}) => {
     
     
     const accessTokenContext = useAccessTokenContext()
@@ -75,7 +75,7 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
                 </HeaderDropdown>
                 <HeaderDropdown 
                     titleIcon={<UilUserCircle/>} 
-                    titleText={user && `${user?.firstName} ${user?.lastName}` || 'Sign In'} 
+                    titleText={user ? `${user?.firstName} ${user?.lastName}` : loading ? 'Loading...' : 'Sign In'} 
                     right={'0px'}
                     noMargin
                 >
@@ -86,6 +86,7 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser}) =
                         user={user}
                         logout={logout} 
                         accessToken={accessTokenContext.accessToken}
+                        
                     />
                 </HeaderDropdown>
             </HeaderSection>
