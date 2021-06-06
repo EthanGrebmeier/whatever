@@ -4,7 +4,7 @@ import {getComponent} from '../../applets/applets'
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 85vh; 
+    height: 100%; 
     position: relative;
 `     
 

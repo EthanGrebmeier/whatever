@@ -28,6 +28,7 @@ const Wrapper = styled.div`
     background: ${props => props.background};
     padding-top: 36px;
     transition: all .5s ease;
+    overflow: hidden;
 `
 
 const Applet = (props) => {
