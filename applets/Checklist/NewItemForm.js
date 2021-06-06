@@ -20,8 +20,13 @@ const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputI
                 if (e.key == 'Enter'){
                     inputItemTitle && submitForm()
                     toggleForm()
-                    e.stopPropagation()
+                    
                 }
+
+                if (e.key == 'Escape'){
+                    toggleForm()
+                }
+                e.stopPropagation()
             } }
             onSubmit={e => {
                 e.preventDefault()
