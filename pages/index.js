@@ -53,6 +53,7 @@ const Wrapper = styled.div`
 ` 
 
 const Dashboard = (props) => {
+  const [loading, setLoading] = useState(false)
   const [isMobile, setIsMobile] = useState()
   const [user, setUser] = useState()
   const [accessToken, setAccessToken] = useState(props.accessToken || '')
@@ -93,10 +94,13 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     if (!user && accessToken){
+      setLoading(true)
       axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
         setUser(res.data)
+        setLoading(false)
       }).catch(err => {
         console.log(err)
+        setLoading(false)
       })
     }
   }, [accessToken])
@@ -114,11 +118,13 @@ const Dashboard = (props) => {
     setIsMobile(window.innerWidth < 740)
     window.addEventListener('resize', handleWindowResizeChange)
     handleWindowResizeChange()
-
+    setLoading(true)
     axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
       setUser(res.data)
+      setLoading(false)
     }).catch(err => {
       console.log(err)
+      setLoading(false)
     })
 
   }, [])
@@ -225,6 +231,7 @@ const Dashboard = (props) => {
                   background={background}
                   user={user}
                   setUser={setUser}
+                  loading={loading}
                 />
                 {
                   layout && (
@@ -236,6 +243,7 @@ const Dashboard = (props) => {
                     setWidth={setWidth}
                     setHeight={setHeight}
                     isMobile={isMobile}
+                    loading={loading}
                   />
                   )
                 }
