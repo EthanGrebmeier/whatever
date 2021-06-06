@@ -13,6 +13,9 @@ const Wrapper = styled.button`
     cursor: pointer;
     padding: 0;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const Tooltip = styled.div`
