@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 1500px;
   box-sizing: border-box;
-  padding: 30px 2vw 10px 2vw;
+  padding: 2vh 2vw 10px 2vw;
   display: flex;
   flex-direction: column;
 
