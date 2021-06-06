@@ -9,7 +9,6 @@ export default function refreshAccessToken(setAccessToken){
             originalRequest._retry = true;
             return axios.post('/api/tokens/refreshToken')
                 .then(res => {
-                    console.log(res)
                     if (res.status === 200) {
                         // 1) put token to LocalStorage
                         setAccessToken(res.data.accessToken);
