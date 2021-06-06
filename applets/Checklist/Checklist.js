@@ -232,7 +232,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
             isTall={isTall}
             onKeyDown={e => {
                 e.stopPropagation()
-                if ((/^[a-zA-Z0-9_.-]$/).test(e.key) ){
+                if ((/^[a-zA-Z0-9_.-]$/).test(e.key) || e.key=='Enter' ){
                     setShowNewItemForm(true)
                 }
             } }
