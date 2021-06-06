@@ -16,12 +16,16 @@ const Wrapper = styled.div`
         margin-right: ${props => props.hasSpace ? '20px' : ''};
     }
 
-    @media screen and (max-width: 780px) {
-        display: none;
+    @media screen and (max-width: 850px) {
+        
         p {
             margin-right: ${props => props.hasSpace ? '10px' : ''};
             font-size: 14px;
         }
+    }
+
+    @media screen and (max-width: 740px){
+        display: none;
     }
 
 `

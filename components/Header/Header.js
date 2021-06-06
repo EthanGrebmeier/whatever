@@ -26,6 +26,12 @@ const Wrapper = styled.header`
     h1{
         margin-right: 40px;
     }
+    @media screen and (max-width: 850px) {
+        
+        h1{
+            font-size: 24px;
+        }
+    }
 `
 
 const HeaderSection = styled.div`
