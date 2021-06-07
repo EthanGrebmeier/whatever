@@ -31,6 +31,7 @@ const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputI
             onSubmit={e => {
                 e.preventDefault()
                 inputItemTitle && submitForm()
+                toggleForm()
             }}
         >
             <Section>
