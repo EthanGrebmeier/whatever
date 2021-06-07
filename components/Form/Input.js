@@ -11,7 +11,7 @@ const Wrapper = styled.input`
     background: none;
 `
 
-const Input = ({onChange, onSubmit, value, hidePassword, width, type, label, ref, autoFocus}) => {
+const Input = ({onChange, onSubmit, onKeyDown, value, hidePassword, width, type, label, ref, autoFocus}) => {
 
     if (!type){
         if (hidePassword){
@@ -32,6 +32,7 @@ const Input = ({onChange, onSubmit, value, hidePassword, width, type, label, ref
             aria-label={label}
             ref={ref}
             autoFocus={autoFocus}
+            onKeyDown={onKeyDown}
         />
     )
 }

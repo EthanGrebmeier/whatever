@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { UilPen,UilStar, UilSave, UilTrashAlt } from '@iconscout/react-unicons'
+import { UilPen,UilStar, UilSave, UilTrashAlt, UilTimes } from '@iconscout/react-unicons'
 import { UisFavorite } from '@iconscout/react-unicons-solid'
 import styled from 'styled-components'
 import Button from '../../../Buttons/Button'
@@ -119,6 +119,11 @@ const LayoutLoad = (props) => {
         
     }
 
+    const onCancel = () => {
+        setEditIndex()
+        setInputNewName()
+    }
+
 
     return (
         <>
@@ -134,6 +139,13 @@ const LayoutLoad = (props) => {
                             onChange={(e) => setInputNewName(e.target.value)}
                             onSubmit={() => onSave(layout)}
                             width='50%'
+                            onKeyDown={(e) => {
+                                console.log(e)
+                                if (e.key == 'Escape'){
+                                    onCancel()
+                                }
+                            } }
+                            autoFocus
                         />
                         ) : (
                         <Name 
@@ -145,7 +157,7 @@ const LayoutLoad = (props) => {
                         )}
                         <LayoutButtons>
                             {
-                                editIndex == index ? (
+                                editIndex == index ?  (
                                 <IconButton tooltip='Save Name' onClick={() => onSave(layout)}>
                                     <UilSave/>
                                 </IconButton>
@@ -155,6 +167,9 @@ const LayoutLoad = (props) => {
                                 </IconButton>
                                 )
                             }
+
+                            {
+                            editIndex != index && (
                             <IconButton tooltip='Set Favorite' onClick={() => onFavorite(layout)}>
                                 {props.user?.layoutMeta?.defaultLayout == layout._id ? (
                                     <UisFavorite/>
@@ -162,9 +177,22 @@ const LayoutLoad = (props) => {
                                     <UilStar/>
                                 )}
                             </IconButton>
+                            )
+                            }
+
+                            {
+                            editIndex == index ? (
+                            <IconButton tooltip='Cancel Edit' onClick={onCancel} >
+                                <UilTimes/>
+                            </IconButton>
+                            ) : (
                             <IconButton tooltip='Delete Layout' onClick={() => onDelete(layout)}>
                                 <UilTrashAlt color='black'/>
                             </IconButton>
+                            )
+                            }
+                            
+                            
                             
                             
                             
