@@ -120,7 +120,7 @@ const Notepad = ({applet}) => {
                 setCanSave(false)
                 setTimeout(() => {
                     setCanSave(true)
-                }, 600)
+                }, 60000)
                 return snackbarContext.setSnackbar('Saved Notes')
             }
         } else {
