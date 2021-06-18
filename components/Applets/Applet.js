@@ -29,6 +29,12 @@ const Wrapper = styled.div`
     padding-top: 36px;
     transition: all .5s ease;
     overflow: hidden;
+
+    @media screen and (max-width: 740px){
+        border-radius: 0;
+        border: none;
+    }
+
 `
 
 const Applet = (props) => {
