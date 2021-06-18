@@ -18,7 +18,7 @@ const defaultApplets = {
       width: '49%',
       height: '100%',
       position: 'top right',
-      background: '#92B9BD',
+      background: '#FFC590',
     }
   ]
 }
