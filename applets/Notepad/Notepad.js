@@ -17,7 +17,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     padding: 10px;
-    background: #FFC590;
+    background: ${props => props.background};
     border-radius: 0 0 10px 10px;
     transition: all .3s ease;
     display: flex;
@@ -130,6 +130,7 @@ const Notepad = ({applet}) => {
 
     return (
         <Wrapper  
+            background={applet.background}
         >
             <Section>
                 <Title

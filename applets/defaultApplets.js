@@ -9,14 +9,16 @@ const defaultApplets = {
       name: 'Checklist',
       width: '49%',
       height: '49%',
-      position: 'top left'
+      position: 'top left',
+      background: '#77BA99'
     },
     {
       id: 'patchnotes'+ Math.floor(Math.random() * 800 + 100),
       name: 'Patch Notes',
       width: '49%',
       height: '100%',
-      position: 'top right'
+      position: 'top right',
+      background: '#92B9BD',
     }
   ]
 }
