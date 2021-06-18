@@ -116,7 +116,7 @@ const Header = ({layout, setLayout, mobileAppletId, setMobileAppletId, mobileMen
             </HeaderSection>
 
             <MobileHeader>
-                <h1> {getMobileComponentObject(mobileAppletId).name} </h1>
+                <h1> { mobileMenuOpen ? 'Select an Applet' : getMobileComponentObject(mobileAppletId).name} </h1>
                 <MobileBurger
                     toggleOpen={() => {
                         setMobileMenuOpen(!mobileMenuOpen)
