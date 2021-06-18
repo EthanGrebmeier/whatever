@@ -63,7 +63,7 @@ const Dashboard = (props) => {
   const [accessToken, setAccessToken] = useState(props.accessToken || '')
   const [background, setBackground] = useState('#F49FBC')
   const [layout, setLayout] = useState() 
-  const [mobileAppletId, setMobileAppletId] = useState('checklist')
+  const [mobileAppletId, setMobileAppletId] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [contextMenu, setContextMenu] = useState({
     isShowing: false,
