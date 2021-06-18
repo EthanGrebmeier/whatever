@@ -2,6 +2,7 @@ import Notepad from "./Notepad/Notepad";
 import ChecklistController from './Checklist/ChecklistController'
 import PatchNotes from "./PatchNotes/PatchNotes";
 import MobileWelcome from "./Mobile/MobileWelcome/MobileWelcome";
+import MobileMenu from "./Mobile/MobileMenu/MobileMenu";
 
 const applets = [
     {
@@ -30,12 +31,16 @@ const applets = [
         name: 'Whatever',
         background: '#EFCEFA',
         mobileOnly: true,
+        width: '49%',
+        height: '49%',
     },
     {
         id: 'mobile-menu',
         name: 'Select an Applet',
         backround: '#CED0FA',
         mobileOnly: true,
+        width: '49%',
+        height: '49%',
     }
 ]
 
@@ -47,13 +52,14 @@ export const getComponent = (id, props) => {
             return <ChecklistController {...props} />
         case 'patchnotes':
             return <PatchNotes {...props}/>
+        case 'mobile-menu':
+            return <MobileMenu {...props} />
         default:
             return  <ChecklistController {...props} />
     }
 }
 
 export const getMobileComponent = (id, props) => {
-    console.log(id)
     switch (id) {
         case 'notepad':
             return <Notepad {...props}/>
@@ -61,6 +67,8 @@ export const getMobileComponent = (id, props) => {
             return <ChecklistController {...props} />
         case 'patchnotes':
             return <PatchNotes {...props}/>
+        case 'mobile-menu':
+            return <MobileMenu {...props} />
         default:
             return  <MobileWelcome />
     }
