@@ -53,6 +53,10 @@ const Wrapper = styled.div`
         }
     }
 
+    @media screen and (max-width: 740px){
+        padding: 0;
+    }
+
 `
 
 const Title = styled.h2`
@@ -118,6 +122,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
     const snackbarContext = useSnackbarContext()
 
     const checklistRef = useRef(null)
+
     
     const submitForm = () =>{
         if (!inputItemTitle){

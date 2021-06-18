@@ -28,6 +28,10 @@ const Wrapper = styled.div`
         cursor: text;
     }
 
+    @media screen and (max-width: 740px){
+        padding: 0;
+    }
+
 `
 
 const Section = styled.div`
