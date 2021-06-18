@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import { getMobileComponent } from '../../applets/applets'
 import MobileMenu from '../../applets/Mobile/MobileMenu/MobileMenu'
@@ -9,7 +10,14 @@ const Wrapper = styled.div`
     padding-bottom: 10px;
 `     
 
-const MobileAppletSpace = ({mobileMenuOpen, setMobileMenuOpen, mobileAppletId, setMobileAppletId, ...rest}) => {
+const MobileAppletSpace = ({mobileMenuOpen, setMobileMenuOpen, mobileAppletId, setMobileAppletId, layout, ...rest}) => {
+    
+    useEffect(() => {
+        if (layout?.applets && layout.applets.length > 0){
+            setMobileAppletId(layout.applets[0].id.slice(0, -3))
+        }
+    }, [])
+    
     return (
         <Wrapper>
             {getMobileComponent(mobileAppletId, {
