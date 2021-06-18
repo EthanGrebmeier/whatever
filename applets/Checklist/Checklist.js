@@ -78,6 +78,9 @@ export const Section = styled.span`
     min-width: ${props => props.minWidth};
     max-width: ${props => props.maxWidth};
     position: relative;
+    @media screen and (max-width: 740px){
+        width: ${props => props.mobileWidth};
+    }
 `
 
 const SortButton = styled.button`
@@ -245,7 +248,10 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
             ref={checklistRef}
             background={applet.background}
         >
-            <Section width={isWide ? '22%' : '36%'} >
+            <Section 
+                width={isWide ? '22%' : '36%'}
+                mobileWidth='36%'
+            >
                 <h2> {shownItems == 'all' ? 'All Items' : shownItems == 'incomplete' ? 'Incomplete Items' : 'Complete Items'} </h2>
                 <IconButton 
                     onClick={cycleLists}
