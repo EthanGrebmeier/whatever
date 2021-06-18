@@ -174,7 +174,7 @@ const Applets = (props) => {
             )
         ) : (
             <Wrapper height='200px'>
-                {applets.map( applet => (
+                {applets.filter((applet) => !applet.mobileOnly).map( applet => (
                 <Applet
                     onClick={() => pickNewApplet(applet)}
                     key={applet.name}
