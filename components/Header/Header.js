@@ -64,7 +64,7 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser, lo
                         setUser={setUser}
                     />
                 </HeaderDropdown>
-                <HeaderDropdown titleText='Modules' showCarrot={true}>
+                <HeaderDropdown titleText='Applets' showCarrot={true}>
                     <Applets 
                         layout={layout}
                         setLayout={setLayout}

@@ -55,7 +55,7 @@ const PickSpot = (props) => {
                  })}
             </Spaces>
             <Button onClick={() => props.addApplet(props.newApplet, selected)}>
-                Add Module
+                Add Applet
             </Button>
         </Wrapper>
     )

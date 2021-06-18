@@ -56,7 +56,7 @@ const PatchNotes = ({applet}) => {
             <Notes
                 isWide={applet.width == '100%'}
             >
-                This is the first release of Whatever, my desktop assistant!<br/>(Name may or may not change in the future) <br/><br/>Whatever allows you to place applets in a 2x2 grid, enabling you to create a workspace that works for you! Try adding a module, or messing around with the ones on your screen to get started.<br/><br/>  
+                This is the first release of Whatever, my desktop assistant!<br/>(Name may or may not change in the future) <br/><br/>Whatever allows you to place applets in a 2x2 grid, enabling you to create a workspace that works for you! Try adding an applet, or messing around with the ones on your screen to get started.<br/><br/>  
     
                 <br/>Checklist (NEW) <br/>
                     
