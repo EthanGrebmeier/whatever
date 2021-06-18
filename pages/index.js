@@ -13,6 +13,7 @@ import { ContextMenuProvider } from '../contexts/ContextMenuContext'
 import ContextMenu from '../components/Menu/ContextMenu'
 import defaultApplets from '../applets/defaultApplets'
 import hiddenBaseLayout from '../applets/hiddenBaseLayout'
+import { getMobileComponentObject } from '../applets/applets'
 
 const Site = styled.div`
   width: 100%;
@@ -21,6 +22,9 @@ const Site = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
+  @media screen and (max-width: 740px){
+    background: ${props => props.mobileBackground};
+  }
 `
 
 const Wrapper = styled.div`
@@ -57,20 +61,25 @@ const Dashboard = (props) => {
   const [isMobile, setIsMobile] = useState()
   const [user, setUser] = useState()
   const [accessToken, setAccessToken] = useState(props.accessToken || '')
+  const [background, setBackground] = useState('#F49FBC')
+  const [layout, setLayout] = useState() 
+  const [mobileAppletId, setMobileAppletId] = useState('checklist')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [contextMenu, setContextMenu] = useState({
     isShowing: false,
     options: [],
     xPos: 0,
     yPos: 0,
   })
-  const [background, setBackground] = useState('#F49FBC')
-  const [layout, setLayout] = useState() 
+
   const [snackbar, setSnackbar] = useState({
     text: '',
     actionText: '',
     actionOnClick: undefined,
     id: Math.floor(Math.random() * 800 + 100)
   })
+
+  
 
 
   useEffect(async () => {
@@ -98,6 +107,7 @@ const Dashboard = (props) => {
       axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
         setUser(res.data)
         setLoading(false)
+        refreshAccessToken(setAccessToken)
       }).catch(err => {
         console.log(err)
         setLoading(false)
@@ -107,7 +117,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
 
-    refreshAccessToken(setAccessToken)
+    
     document.addEventListener('click', () => setContextMenu({
       isShowing: false,
       options: [],
@@ -115,7 +125,7 @@ const Dashboard = (props) => {
       yPos: 0,
     }))
 
-    setIsMobile(window.innerWidth < 740)
+    setIsMobile(window.innerWidth <= 740)
     window.addEventListener('resize', handleWindowResizeChange)
     handleWindowResizeChange()
     setLoading(true)
@@ -222,7 +232,10 @@ const Dashboard = (props) => {
       <SnackbarProvider value={snackbarValue}>
         <AccessTokenProvider value={accessTokenValue}>
           <ContextMenuProvider value={contextMenuValue}>
-            <Site background={background}>
+            <Site 
+              background={background}
+              mobileBackground={mobileMenuOpen ? '#CED0FA' : getMobileComponentObject(mobileAppletId).background}
+            >
               <Wrapper>
                 <Header
                   layout={layout}
@@ -232,6 +245,10 @@ const Dashboard = (props) => {
                   user={user}
                   setUser={setUser}
                   loading={loading}
+                  mobileAppletId={mobileAppletId}
+                  setMobileAppletId={setMobileAppletId}
+                  mobileMenuOpen={mobileMenuOpen}
+                  setMobileMenuOpen={setMobileMenuOpen}
                 />
                 {
                   layout && (
@@ -244,6 +261,10 @@ const Dashboard = (props) => {
                     setHeight={setHeight}
                     isMobile={isMobile}
                     loading={loading}
+                    mobileAppletId={mobileAppletId}
+                    setMobileAppletId={setMobileAppletId}
+                    mobileMenuOpen={mobileMenuOpen}
+                    setMobileMenuOpen={setMobileMenuOpen}
                   />
                   )
                 }
