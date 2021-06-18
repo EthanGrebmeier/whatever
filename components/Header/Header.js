@@ -8,6 +8,8 @@ import { useAccessTokenContext } from '../../contexts/AccessTokenContext'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import User from './User/User'
+import { getMobileComponentObject } from '../../applets/applets'
+import MobileBurger from '../Buttons/MobileBurger'
 
 
 
@@ -26,11 +28,13 @@ const Wrapper = styled.header`
     h1{
         margin-right: 40px;
     }
-    @media screen and (max-width: 850px) {
-        
-        h1{
-            font-size: 24px;
-        }
+    @media screen and (max-width: 740px){
+        background: none;
+        padding: 0;
+        border-radius: 0;
+        border: none;
+        border-bottom: 2px solid black;
+
     }
 `
 
@@ -38,9 +42,23 @@ const HeaderSection = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+    @media screen and (max-width: 740px){
+        display: none;
+    }
 `
 
-const Header = ({layout, setLayout, background, setBackground, user, setUser, loading}) => {
+const MobileHeader = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media screen and (min-width: 740px){
+        display: none;
+    }
+`
+
+const Header = ({layout, setLayout, mobileAppletId, setMobileAppletId, mobileMenuOpen, setMobileMenuOpen, background, setBackground, user, setUser, loading}) => {
     
     
     const accessTokenContext = useAccessTokenContext()
@@ -55,7 +73,7 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser, lo
     return (
         <Wrapper>
             <HeaderSection>
-                <h1> Whatever </h1>
+                <h1 className='title'> Whatever </h1>
                 <HeaderDropdown titleText='Layout' showCarrot={true}>
                     <Layout
                         layout={layout}
@@ -97,6 +115,15 @@ const Header = ({layout, setLayout, background, setBackground, user, setUser, lo
                 </HeaderDropdown>
             </HeaderSection>
 
+            <MobileHeader>
+                <h1> {getMobileComponentObject(mobileAppletId).name} </h1>
+                <MobileBurger
+                    toggleOpen={() => {
+                        setMobileMenuOpen(!mobileMenuOpen)
+                    }}
+                    isOpen={mobileMenuOpen}
+                />
+            </MobileHeader>
         </Wrapper>
     )
 }
