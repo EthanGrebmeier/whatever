@@ -24,6 +24,7 @@ const Site = styled.div`
   overflow: hidden;
   @media screen and (max-width: 740px){
     background: ${props => props.mobileBackground};
+    overflow: scroll;
   }
 `
 
