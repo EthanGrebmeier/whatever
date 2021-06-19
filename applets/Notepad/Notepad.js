@@ -51,6 +51,8 @@ const TextArea = styled.textarea`
     background: transparent;
     border: none;
     resize: none;
+    padding: 0;
+    padding-top: 10px;
 `
 
 const Title = styled.input`
