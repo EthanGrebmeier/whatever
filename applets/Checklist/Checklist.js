@@ -116,7 +116,7 @@ const MenuButton = styled.button`
 
 const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall}) => {
 
-    const [shownItems, setShownItems] = useState('all')
+    const [shownItems, setShownItems] = useState('incomplete')
     const [sortBy, setSortBy] = useState('')
     const [showNewItemForm, setShowNewItemForm] = useState(false)
     const [inputItemTitle, setInputItemTitle] = useState('')
