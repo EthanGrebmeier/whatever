@@ -250,7 +250,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
         >
             <Section 
                 width={isWide ? '22%' : '36%'}
-                mobileWidth='36%'
+                mobileWidth='60%'
             >
                 <h2> {shownItems == 'all' ? 'All Items' : shownItems == 'incomplete' ? 'Incomplete Items' : 'Complete Items'} </h2>
                 <IconButton 
