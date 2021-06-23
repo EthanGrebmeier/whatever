@@ -80,8 +80,16 @@ const Notepad = ({applet}) => {
 
     
     useEffect(() => {
-        fetchNotepadRequest()
-    }, [])
+        if (accessTokenContext.accessToken){
+            fetchNotepadRequest()
+        } else {
+            dispatch(fetchNotepadSuccess({
+                title: 'Change Me!',
+                text: 'Type down here to begin!'
+            }))
+        }
+        
+    }, [accessTokenContext.accessToken])
 
     const fetchNotepadRequest = () => {
         if (accessTokenContext.accessToken){
