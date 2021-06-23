@@ -17,6 +17,9 @@ const Wrapper = styled.div`
     background: black;
     font-size: 14px;
     transition: bottom .3s ease;
+    @media screen and (max-width: 740px){
+        display: ${props => props.isShowing ? 'flex' : 'none'};
+    }
 `
 
 const SnackbarText = styled.p`
