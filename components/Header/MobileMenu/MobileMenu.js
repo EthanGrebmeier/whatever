@@ -56,7 +56,7 @@ const MobileMenu = (props) => {
             {
             props.user ? (
                 <div>
-                    <h1> {props.user.firstName} {props.user.lastName} </h1>
+                    <h1> {props.loading ? 'Loading...' : `${props.user.firstName} ${props.user.lastName}`} </h1>
                     <Button
                         secondary
                         onClick={props.logout}
