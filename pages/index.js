@@ -107,7 +107,7 @@ const Dashboard = (props) => {
       axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
         setUser(res.data)
         setLoading(false)
-        refreshAccessToken(setAccessToken)
+        
       }).catch(err => {
         console.log(err)
         setLoading(false)
@@ -115,8 +115,10 @@ const Dashboard = (props) => {
     }
   }, [accessToken])
 
+
   useEffect(() => {
 
+    refreshAccessToken(setAccessToken)
     
     document.addEventListener('click', () => setContextMenu({
       isShowing: false,
