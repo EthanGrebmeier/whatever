@@ -51,6 +51,8 @@ const TextArea = styled.textarea`
     background: transparent;
     border: none;
     resize: none;
+    padding: 0;
+    padding-top: 10px;
 `
 
 const Title = styled.input`
@@ -78,8 +80,16 @@ const Notepad = ({applet}) => {
 
     
     useEffect(() => {
-        fetchNotepadRequest()
-    }, [])
+        if (accessTokenContext.accessToken){
+            fetchNotepadRequest()
+        } else {
+            dispatch(fetchNotepadSuccess({
+                title: 'Change Me!',
+                text: 'Type down here to begin!'
+            }))
+        }
+        
+    }, [accessTokenContext.accessToken])
 
     const fetchNotepadRequest = () => {
         if (accessTokenContext.accessToken){

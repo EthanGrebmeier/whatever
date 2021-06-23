@@ -21,6 +21,7 @@ const Checkbox = styled.button`
     border-radius: 50%;
     margin-right: 10px;
     cursor: pointer;
+    padding: 0;
     @media screen and (min-width: 741px){
         :hover{
             background: ${props => props.isChecked ? 'none' : 'black'};

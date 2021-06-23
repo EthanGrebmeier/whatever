@@ -27,7 +27,13 @@ const ChecklistController = ({applet}) => {
     }, [])
 
     useEffect(() => {
-        fetchItemsRequest()
+        console.log(accessTokenContext)
+        if (accessTokenContext.accessToken){
+            fetchItemsRequest()
+        } else {
+            dispatch(fetchItemsSuccess([]))
+        }
+        
     }, [accessTokenContext.accessToken])
 
     const fetchItemsRequest = () => {

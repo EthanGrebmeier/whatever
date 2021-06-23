@@ -21,9 +21,11 @@ const Site = styled.div`
   background: ${props => props.background};
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  overflow: hidden; 
   @media screen and (max-width: 740px){
     background: ${props => props.mobileBackground};
+    overflow: scroll;
+    height: 105vh;
   }
 `
 
@@ -257,6 +259,7 @@ const Dashboard = (props) => {
                   <AppletSpace
                     layout={layout}
                     setLayout={setLayout}
+                    background={background}
                     closeApplet={closeApplet}
                     moveApplet={moveApplet}
                     setWidth={setWidth}
@@ -267,6 +270,8 @@ const Dashboard = (props) => {
                     setMobileAppletId={setMobileAppletId}
                     mobileMenuOpen={mobileMenuOpen}
                     setMobileMenuOpen={setMobileMenuOpen}
+                    user={user}
+                    setUser={setUser}
                   />
                   )
                 }

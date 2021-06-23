@@ -40,16 +40,20 @@ const Login = (props) => {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
             snackbarContext.setSnackbar('Logged In')
             setIsLoading(false)
-            props.setIsHovered(false)
+            props.setIsHovered && props.setIsHovered(false)
         }).catch( err => {
-            console.log(err.response)
-            snackbarContext.setSnackbar(err.response.data)
+            console.log(err)
+            if (err.response){
+                console.log(err.response)
+                snackbarContext.setSnackbar(err.response.data)
+            }
+
             setIsLoading(false)
         })
     }
 
     return (
-        <Form onSubmit={onSubmit} width='230px' height='220px'>
+        <Form onSubmit={onSubmit} width={props.fullWidth ? '100%' : '230px'} height='220px'>
             <Label>
                 Email 
                 <Input id='email' aria-label='email' value={inputEmail} onSubmit={onSubmit} onChange={e => setInputEmail(e.target.value)}/>

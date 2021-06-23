@@ -24,7 +24,7 @@ const handler = async (req, res) =>{
 
   if (!body.email || !validateEmail(body?.email)){ return res.status(400).send('Invalid Email')}
 
-  const currentUser = await UserModel.findOne({email: body.email})
+  const currentUser = await UserModel.findOne({email: body.email.toLowerCase()})
 
   if (!currentUser) { return res.status(400).send('User Not Found')}
 

@@ -14,9 +14,12 @@ const Wrapper = styled.button`
    background: none;
    border: none;
    cursor: pointer;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
 `
 
-const Back = ({onClick, width, position, left, right, top, bottom}) => {
+const Back = ({onClick, width, position, left, right, top, bottom, withText}) => {
     return (
         <Wrapper
             onClick={onClick} 
@@ -28,6 +31,7 @@ const Back = ({onClick, width, position, left, right, top, bottom}) => {
             bottom={bottom}
         >
             <UilArrowLeft/>
+            {withText && (<h2> Back </h2>)}
         </Wrapper>
     )
 } 
