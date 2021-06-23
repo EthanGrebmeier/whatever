@@ -38,7 +38,7 @@ const handler = async (req, res) =>{
       {
         firstName: body.firstName,
         lastName: body.lastName,
-        email: body.email,
+        email: body.email.toLowerCase(),
         password: hash,
         settings: body.settings,
         layoutMeta: {
