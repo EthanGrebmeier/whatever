@@ -1,7 +1,9 @@
+import axios from 'axios'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 import { getMobileComponent } from '../../applets/applets'
-import MobileMenu from '../../applets/Mobile/MobileMenu/MobileMenu'
+import { useAccessTokenContext } from '../../contexts/AccessTokenContext'
+import MobileMenu from '../Header/MobileMenu/MobileMenu'
 
 const Wrapper = styled.div`
     width: 100%;
@@ -10,14 +12,22 @@ const Wrapper = styled.div`
     padding-bottom: 10px;
 `     
 
-const MobileAppletSpace = ({mobileMenuOpen, setMobileMenuOpen, mobileAppletId, setMobileAppletId, layout, ...rest}) => {
+const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mobileAppletId, setMobileAppletId, layout, setLayout, background, ...rest}) => {
     
     useEffect(() => {
         if (layout?.applets && layout.applets.length > 0){
             setMobileAppletId(layout.applets[0].id.slice(0, -3))
         }
     }, [])
-    
+
+    const accessTokenContext = useAccessTokenContext()
+
+    const logout = async () => {
+        axios.post('/api/logout')
+        setUser()
+        accessTokenContext.setAccessToken('')
+    }
+
     return (
         <Wrapper>
             {getMobileComponent(mobileAppletId, {
@@ -35,6 +45,12 @@ const MobileAppletSpace = ({mobileMenuOpen, setMobileMenuOpen, mobileAppletId, s
                         setMobileAppletId={setMobileAppletId}
                         mobileAppletId={mobileAppletId}
                         setMobileMenuOpen={setMobileMenuOpen}
+                        user={user}
+                        setLayout={setLayout}
+                        layout={layout}
+                        background={background}
+                        logout={logout} 
+                        accessToken={accessTokenContext.accessToken}
                     />
                 )
             }
