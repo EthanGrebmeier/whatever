@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 90%;
+    height: 100%;
     width: 100%;
     position: absolute;
     z-index: 10;
