@@ -65,7 +65,7 @@ const Register = (props) => {
     }
 
     return (
-        <Form onSubmit={onSubmit} width='230px' height='320px'>
+        <Form onSubmit={onSubmit} width={props.fullWidth ? '100%' : '230px'} height='320px'>
             <Label>
                 <p> First Name </p>
                 <Input value={inputFirstName} onChange={e => setInputFirstName(e.target.value)}/>
