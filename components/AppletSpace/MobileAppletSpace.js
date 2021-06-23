@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     padding-bottom: 10px;
 `     
 
-const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mobileAppletId, setMobileAppletId, layout, setLayout, background, ...rest}) => {
+const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mobileAppletId, setMobileAppletId, layout, loading, setLayout, background, ...rest}) => {
     
     useEffect(() => {
         if (layout?.applets && layout.applets.length > 0){
@@ -51,6 +51,7 @@ const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mo
                         background={background}
                         logout={logout} 
                         accessToken={accessTokenContext.accessToken}
+                        loading={loading}
                     />
                 )
             }
