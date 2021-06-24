@@ -239,9 +239,8 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
             isWide={isWide}
             isTall={isTall}
             onKeyDown={e => {
-                e.stopPropagation()
-                if ((/^[a-zA-Z0-9_.-]$/).test(e.key) || e.key=='Enter' ){
-                    setShowNewItemForm(true)
+                if ( !showNewItemForm && ((/^[a-zA-Z0-9_.-]$/).test(e.key) || e.key==='Enter')){
+                    toggleForm()
                 }
             } }
             tabIndex='0'

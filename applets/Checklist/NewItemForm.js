@@ -21,21 +21,16 @@ const NewItemForm = ({inputItemTitle, setInputItemTitle, setInputItemDate,inputI
     return (
         <NewItemFormWrapper
             onKeyDown={e => {
-                if (e.key == 'Enter'){
-                    inputItemTitle && submitForm()
-                    toggleForm()
-                    
-                }
-
                 if (e.key == 'Escape'){
                     toggleForm()
                 }
-                e.stopPropagation()
             } }
             onSubmit={e => {
                 e.preventDefault()
-                inputItemTitle && submitForm()
-                toggleForm()
+                if (inputItemTitle) {
+                    submitForm()
+                    toggleForm()
+                }
             }}
         >
             <Section>
