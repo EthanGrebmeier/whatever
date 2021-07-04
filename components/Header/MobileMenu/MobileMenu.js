@@ -64,6 +64,10 @@ const MobileMenu = (props) => {
                         Log out
                     </Button>
                 </div>
+            ) : props.loading ? (
+                <h3>
+                    Loading...
+                </h3>
             ) : (
                 <h3
                 onClick={toggleLogin}
