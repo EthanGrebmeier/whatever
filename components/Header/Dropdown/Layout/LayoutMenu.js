@@ -4,21 +4,21 @@ import { useSnackbarContext } from '../../../../contexts/SnackbarContext'
 import Button from '../../../Buttons/Button'
 import Emphasis from '../../../Text/Emphasis'
 
+const Wrapper = styled.div`
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    & button:not(:first-child){
+        margin-top: 10px;
+    }
+`
+
 const LayoutMenu = ({setFrame, user, layout}) => {
 
     const snackbarContext = useSnackbarContext()
-
-    const Wrapper = styled.div`
-        height: 50%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        & button:not(:first-child){
-            margin-top: 10px;
-        }
-    `
     
     const checkIsSavedLayout = (layoutId) => {
         let layouts = user?.layoutMeta?.layouts
