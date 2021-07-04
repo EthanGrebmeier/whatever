@@ -213,7 +213,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
 
         return filteredItems && filteredItems.map( (item, index) => (
             <Item
-                key={item.id}
+                key={item._id}
                 item={item}
                 checkItem={checkItem}
                 completeItem={completeItem}
