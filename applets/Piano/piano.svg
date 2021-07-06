@@ -1,0 +1,53 @@
+<svg width="100" viewBox="0 0 550 223" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 215 1)" stroke="black"/>
+<path d="M46.5 164L0.5 1H72.5L118.5 164H46.5Z" fill="white" class="note-c" />
+<path d="M116 164L70 1H142L188 164H116Z" fill="#FFFFFE" class="note-d" />
+<path d="M188.39 164L142 1H214.61L261 164H188.39Z" fill="white" class="note-e" />
+<path d="M261.39 164L215 1H287.61L334 164H261.39Z" fill="#FFFFFE" class="note-f" />
+<path d="M331.39 164L285 1H357.61L404 164H331.39Z" fill="white" class="note-g" />
+<path d="M403.39 164L357 1H429.61L476 164H403.39Z" fill="#FFFFFE" class="note-a" />
+<path d="M476.39 164L430 1H502.61L549 164H476.39Z" fill="white" class="note-b" />
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 288 1)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 357 1)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 430 1)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 503 1)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 0 58)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 0 1)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 73 1)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 142 1)" stroke="black"/>
+<line y1="-0.5" x2="170.313" y2="-0.5" transform="matrix(0.269046 0.963127 -0.992736 0.120317 215 1)" stroke="black"/>
+<line x1="1" y1="0.5" x2="503" y2="0.5" stroke="black"/>
+<line x1="0.5" y1="58" x2="0.500003" y2="-2.18557e-08" stroke="black"/>
+<path d="M79 97L52 1H92.5L119.5 97H79Z" fill="black" class="note-d-flat" />
+<path d="M119.5 115.5H78.5L47.5 0.5H51.5L78.5 97.5H119.5V115.5Z" fill="black" class="note-d-flat" />
+<path d="M79 97L52 1H92.5L119.5 97H79Z" stroke="black"/>
+<path d="M119.5 115.5H78.5L47.5 0.5H51.5L78.5 97.5H119.5V115.5Z" stroke="black"/>
+<path d="M149 97L122 1H162.5L189.5 97H149Z" fill="black" class="note-e-flat" />
+<path d="M190 115.5H149L118 0.5H122L149 97.5H190V115.5Z" fill="black" class="note-e-flat" />
+<path d="M149 97L122 1H162.5L189.5 97H149Z" stroke="#000001" class="note-e-flat" />
+<path d="M190 115.5H149L118 0.5H122L149 97.5H190V115.5Z" stroke="#000001"/>
+<path d="M292 97L265 1H305.5L332.5 97H292Z" fill="black" class="note-g-flat" />
+<path d="M333 115.5H292L261 0.5H265L292 97.5H333V115.5Z" fill="black" class="note-g-flat" />
+<path d="M292 97L265 1H305.5L332.5 97H292Z" stroke="black"/>
+<path d="M333 115.5H292L261 0.5H265L292 97.5H333V115.5Z" stroke="black"/>
+<path d="M362 97L335 1H375.5L402.5 97H362Z" fill="#000001" class="note-a-flat" />
+<path d="M402.5 115.5H361.5L330.5 0.5H334.5L361.5 97.5H402.5V115.5Z" fill="#000001" class="note-a-flat" />
+<path d="M362 97L335 1H375.5L402.5 97H362Z" stroke="black"/>
+<path d="M402.5 115.5H361.5L330.5 0.5H334.5L361.5 97.5H402.5V115.5Z" stroke="black"/>
+<path d="M437 97L410 1H450.5L477.5 97H437Z" fill="black"  class="note-b-flat" />
+<path d="M478 115.5H437L406 0.5H410L437 97.5H478V115.5Z" fill="black" class="note-b-flat" />
+<path d="M437 97L410 1H450.5L477.5 97H437Z" stroke="#000002" class="note-b-flat" />
+<path d="M478 115.5H437L406 0.5H410L437 97.5H478V115.5Z" stroke="#000002" class="note-b-flat" />
+<line x1="45.9995" y1="164.996" x2="549" y2="164.996" stroke="black"/>
+<line x1="45.9995" y1="221.996" x2="549" y2="221.996" stroke="black"/>
+<line x1="549.5" y1="165" x2="549.5" y2="222" stroke="black"/>
+<line x1="46.5" y1="165" x2="46.5" y2="222" stroke="black"/>
+<path d="M119.5 165H46.5V222H119.5V165Z" fill="white" stroke="black"/>
+<path d="M188 165H119V222H188V165Z" fill="white" stroke="black"/>
+<path d="M261 165H188V222H261V165Z" fill="white" stroke="black"/>
+<path d="M334 165H261V222H334V165Z" fill="white" stroke="black"/>
+<path d="M403 165H334V222H403V165Z" fill="white" stroke="black"/>
+<path d="M476 165H403V222H476V165Z" fill="white" stroke="black"/>
+<path d="M549 165H476V222H549V165Z" fill="white" stroke="black"/>
+<path d="M0.5 1V58.5L46.5 222V165L0.5 1Z" fill="white" stroke="black"/>
+</svg>

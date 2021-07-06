@@ -2,6 +2,7 @@ import Notepad from "./Notepad/Notepad";
 import ChecklistController from './Checklist/ChecklistController'
 import PatchNotes from "./PatchNotes/PatchNotes";
 import MobileWelcome from "./Mobile/MobileWelcome/MobileWelcome";
+import Piano from './Piano/Piano'
 
 const applets = [
     {
@@ -15,6 +16,13 @@ const applets = [
         id: 'checklist',
         name: 'Checklist',
         background: '#77BA99',
+        width: '49%',
+        height: '49%',
+    },
+    {
+        id: 'piano',
+        name: 'Piano',
+        background: '#EC4B4B',
         width: '49%',
         height: '49%',
     },
@@ -51,6 +59,8 @@ export const getComponent = (id, props) => {
             return <ChecklistController {...props} />
         case 'patchnotes':
             return <PatchNotes {...props}/>
+        case 'piano':
+            return <Piano {...props}/>
         default:
             return  <ChecklistController {...props} />
     }
@@ -64,6 +74,8 @@ export const getMobileComponent = (id, props) => {
             return <ChecklistController {...props} />
         case 'patchnotes':
             return <PatchNotes {...props}/>
+        case 'piano':
+            return <Piano {...props}/>
         default:
             return  <MobileWelcome />
     }
