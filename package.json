@@ -11,6 +11,7 @@
     "@iconscout/react-unicons": "^1.1.6",
     "@iconscout/react-unicons-solid": "0.0.3",
     "@reduxjs/toolkit": "^1.5.1",
+    "@svgr/webpack": "^5.5.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "cookie": "^0.4.1",
@@ -23,6 +24,7 @@
     "react-redux": "^7.2.4",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.3",
-    "use-between": "0.0.18"
+    "use-between": "0.0.18",
+    "use-sound": "^4.0.1"
   }
 }
