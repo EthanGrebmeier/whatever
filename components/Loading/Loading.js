@@ -17,8 +17,6 @@ const Wrapper = styled.div`
 const Loading = () => {
     const [text, setText] = useState('')
     const [loadTime, setLoadTime] = useState(0)
-    const [timeouts, setTimeouts] = useState([])
-
     const snackbarContext = useSnackbarContext()
 
     const phrases = [
@@ -34,41 +32,36 @@ const Loading = () => {
         "Developing Impressive Application"
     ]
 
-    const getLoadingText = () => {
-        let oldTimeouts = [...timeouts]
-        let newLoad = Math.floor(Math.random() * 2000) + 1000
-        
-        oldTimeouts.push(setTimeout(() => {
-            setText(phrases[Math.floor(Math.random() * 10)])
-            getLoadingText()
-        }, newLoad))
-    
-        setTimeouts(oldTimeouts)
-        setLoadTime(newLoad)
-    }
-
-    const cleanup = () => {
-        for (const timeout of timeouts){
-            console.log(timeout)
-            clearTimeout(timeout)
-        }
-    }
-
 
 
     useEffect(() => {
+        let timeouts = []
+
+        const getLoadingText = () => {
+            let newLoad = Math.floor(Math.random() * 2000) + 1000
+            
+            timeouts.push(setTimeout(() => {
+                setText(phrases[Math.floor(Math.random() * 10)])
+                getLoadingText()
+            }, newLoad))
+            
+            setLoadTime(newLoad)
+        }
 
         console.log(snackbarContext)
-        setTimeouts([setTimeout(() => {
+        timeouts.push(setTimeout(() => {
             snackbarContext.setSnackbar('Something definitely broke. Thats my bad...')
-        }, 15000)])
+        }, 1500))
 
         setText(phrases[0])
 
         getLoadingText()
 
         return () => {
-            cleanup()
+            for (const timeout of timeouts){
+                console.log(timeout)
+                clearTimeout(timeout)
+            }
         }
     }, [])
     return (
