@@ -13,8 +13,8 @@ const Wrapper = styled.div`
     align-items: center;
     position: relative;
     
-    svg{
-        width: 80%;
+    > svg{
+        width: 60%;
     }
 
     @media screen and (max-width: 740px){
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 
 const Rise = keyframes`
     from {bottom: 40%; opacity: 100%;}
-    to {bottom: 80%; opacity: 0%;}
+    to {bottom: 90%; opacity: 0%;}
 `
 
 const Note = styled.div`
@@ -40,7 +40,7 @@ const Note = styled.div`
     position: absolute;
     left: ${props => props.left}%;
     animation-name: ${Rise};
-    animation-duration: 3s;
+    animation-duration: 2s;
     animation-timing-function: ease;
     animation-fill-mode: forwards;
 `
@@ -128,15 +128,15 @@ const Piano = ({applet}) => {
         switch (noteName) {
             case 'c':
                 playC()
-                addNoteNode('20')        
+                addNoteNode('25')        
                 break
             case 'd':
                 playD()
-                addNoteNode('30')             
+                addNoteNode('35')             
                 break       
             case 'e':
                 playE()
-                addNoteNode('40')       
+                addNoteNode('45')       
                 break       
             case 'f':
                 playF()        
@@ -144,30 +144,35 @@ const Piano = ({applet}) => {
                 break        
             case 'g':
                 playG()          
-                addNoteNode('61')       
+                addNoteNode('58')       
                 break      
             case 'a':
                 playA()         
-                addNoteNode('71')       
+                addNoteNode('65')       
                 break       
             case 'b':
                 playB()         
-                addNoteNode('82')       
+                addNoteNode('75')       
                 break       
             case 'd-flat':
-                playDFlat()         
+                playDFlat()
+                addNoteNode('28')          
                 break       
             case 'a-flat':
-                playAFlat()         
+                playAFlat()   
+                addNoteNode('60')       
                 break       
             case 'b-flat':
-                playBFlat()         
+                playBFlat()   
+                addNoteNode('70')      
                 break       
             case 'e-flat':
-                playEFlat()         
+                playEFlat()
+                addNoteNode('37')         
                 break       
             case 'g-flat':
-                playGFlat()         
+                playGFlat()      
+                addNoteNode('54')   
                 break       
             default:
                 break;
