@@ -120,7 +120,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
 
-    refreshAccessToken(setAccessToken)
+    refreshAccessToken(setAccessToken, setLoading)
     
     document.addEventListener('click', () => setContextMenu({
       isShowing: false,

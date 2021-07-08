@@ -1,12 +1,13 @@
 import axios from 'axios'
 
-export default function refreshAccessToken(setAccessToken){
+export default function refreshAccessToken(setAccessToken, setLoading){
     axios.interceptors.response.use( response => {
         return response
     }, async error => {
         const originalRequest = error.config;
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
+            setLoading && setLoading(true)
             return axios.post('/api/tokens/refreshToken')
                 .then(res => {
                     if (res.status === 200) {
