@@ -1,66 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { UilRotate360, UilTimes, UilAngleDown, UilAngleUp } from '@iconscout/react-unicons'
 import styled from 'styled-components'
-import Button from '../../components/Buttons/Button'
-import Input from '../../components/Form/Input'
 import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import Item from './Item'
 import IconButton from '../../components/Buttons/IconButton'
-import NewItemForm from './NewItemForm'
-
-
-const Wrapper = styled.div`
-    width: 100%;
-    height: 100%;
-    background: ${props => props.background};
-    border-radius: 0 -0 10px 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    position: relative;
-
-    * {
-        transition: all .2s ease;
-    }
-    
-    h2 {
-        font-size: ${props => props.isWide ? '32px' : '24px'};
-        @media screen and (max-width: 740px){
-            font-size: ${props => props.isWide ? '18px' : '16px'};
-        }
-    }
-
-    h3{
-        @media screen and (max-width: 740px){
-            font-size: ${props => props.isWide ? '14px' : '12px'};
-        }
-    }
-
-    ul{
-        list-style-type: none;
-        padding-inline-start: 0;
-        overflow-y: scroll;
-        flex-grow: 2;
-        width: 100%;
-    }
-
-    p {
-        font-size: ${props => props.isWide ? '24px' : '16px'};
-        @media screen and (max-width: 740px){
-            font-size: ${props => props.isWide ? '14px' : '12px'};
-        }
-    }
-
-    @media screen and (max-width: 740px){
-        padding: 0;
-    }
-
-`
-
-const Title = styled.h2`
-`
+import ChecklistForm from './ChecklistForm'
 
 const HeaderSection = styled.span`
     display: flex;
@@ -95,7 +39,7 @@ const SortButton = styled.button`
     padding: 0;
 `
 
-const MenuButton = styled.button`
+export const MenuButton = styled.button`
     cursor: pointer;
     font-family: 'Quicksand';
     background: none;
@@ -114,18 +58,15 @@ const MenuButton = styled.button`
 `
 
 
-const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall}) => {
+const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall, checklistRef}) => {
 
     const [shownItems, setShownItems] = useState('incomplete')
     const [sortBy, setSortBy] = useState('')
-    const [showNewItemForm, setShowNewItemForm] = useState(false)
+    const [showChecklistForm, setShowChecklistForm] = useState(false)
     const [inputItemTitle, setInputItemTitle] = useState('')
     const [inputItemDate, setInputItemDate] = useState('')
 
     const snackbarContext = useSnackbarContext()
-
-    const checklistRef = useRef(null)
-
     
     const submitForm = () =>{
         if (!inputItemTitle){
@@ -140,7 +81,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
     const toggleForm = () => {
         setInputItemDate('')
         setInputItemTitle('')
-        setShowNewItemForm(!showNewItemForm)
+        setShowChecklistForm(!showChecklistForm)
         checklistRef.current.focus()
     }
 
@@ -235,18 +176,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
     }
 
     return (
-        <Wrapper
-            isWide={isWide}
-            isTall={isTall}
-            onKeyDown={e => {
-                if ( !showNewItemForm && ((/^[a-zA-Z0-9_.-]$/).test(e.key) || e.key==='Enter')){
-                    toggleForm()
-                }
-            } }
-            tabIndex='0'
-            ref={checklistRef}
-            background={applet.background}
-        >
+        <>
             <Section 
                 width={isWide ? '22%' : '36%'}
                 mobileWidth='60%'
@@ -263,13 +193,13 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
             </Section>
             <Section width='100%'>
                 {
-                showNewItemForm ? (
-                    <NewItemForm
+                showChecklistForm ? (
+                    <ChecklistForm
                         submitForm={submitForm}
-                        inputItemTitle={inputItemTitle}
-                        setInputItemTitle={setInputItemTitle}
-                        inputItemDate={inputItemDate}
-                        setInputItemDate={setInputItemDate}
+                        inputTitle={inputItemTitle}
+                        setInputTitle={setInputItemTitle}
+                        inputDate={inputItemDate}
+                        setInputDate={setInputItemDate}
                         isWide={isWide}
                         toggleForm={toggleForm}
                     />
@@ -277,7 +207,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                     <MenuButton 
                         isWide={isWide} 
                         onClick={() => {
-                            setShowNewItemForm(true)
+                            setShowChecklistForm(true)
                         }}
                     > 
                         + Create Item 
@@ -285,7 +215,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                 )
                 }
                 {
-                shownItems == 'complete' && !showNewItemForm && (
+                shownItems == 'complete' && !showChecklistForm && (
                 <MenuButton 
                     isWide={isWide} 
                     onClick={deleteAllItems}
@@ -337,7 +267,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                 {renderItems()}
             </ul>
 
-        </Wrapper>
+        </>
     )
 }
 

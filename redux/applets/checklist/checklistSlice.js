@@ -1,68 +1,79 @@
 import { createSlice } from '@reduxjs/toolkit'
-import getItems from './getItems'
 
 export const checklistSlice = createSlice({
   name: 'checklist',
   initialState: {
-    items: [],
+    checklists: {},
     loading: true,
     error: null
   },
   reducers: {
-    fetchItemsBegin: (state) => {
+    fetchChecklistsBegin: (state) => {
       return {
         ...state,
         loading: true,
         error: null
       }
     },
-    fetchItemsSuccess: (state, action) => {
+    fetchChecklistsSuccess: (state, action) => {
       return {
         ...state,
         loading: false,
-        items: action.payload
+        checklists: action.payload
       }
     },
-    fetchItemsFailure: (state, action) => {
+    createChecklist: (state, action) => {
       return {
         ...state,
-        loading: false,
-        error: action.payload.error,
-        items: []
+        checklists: {
+          ...state.checklists,
+          [action.checklist._id]: action.checklist
+        }
+      }
+    },
+    deleteChecklist: (state, action) => {
+      let checklistState = {...state.checklists}
+      delete checklistState[action.checklist._id]
+      return {
+        ...state,
+        checklists: checklistState
       }
     },
     checkItem: (state, action) => {
-      for (let item in state.items){
-          if (state.items[item]._id == action.payload._id){
-              state.items[item].isChecked = !state.items[item].isChecked
+      for (const item of state.checklists[action.payload.checklistID].items){
+          if (item._id == action.payload.item._id){
+              item.isChecked = !item.isChecked
+              console.log('Checked')
+              console.log(item)
           }  
       }
     },
     completeItem: (state, action) => {
-      for (let item in state.items){
-          if (state.items[item]._id == action.payload._id){
-              state.items[item].isCompleted = !state.items[item].isCompleted
+      for (const item of state.checklists[action.payload.checklistID].items){
+          if (item._id == action.payload.item._id){
+              item.isCompleted = !item.isCompleted
           }  
       }
     },
     createItem: (state, action) => {
+      let checklist = state.checklists[action.payload.checklistID]
       let newItem = {
         isChecked: false,
         isCompleted: false,
-        ...action.payload
+        ...action.payload.item
       }
-      state.items.push(newItem)
+      checklist.items.push(newItem)
     },
     deleteItem: (state, action) => {
       return {
         ...state,
-        items: state.items.filter(item => item._id !== action.payload._id)
+        checklists: state.checklists[action.payload.checklistID].items.filter(item => item._id !== action.payload._id)
       } 
     },
     deleteAllItems: (state, action) => {
       return {
         ...state,
-        items: state.items.filter(item => !item.isCompleted)
+        checklists: state.checklists[action.payload.checklistID].items.filter(item => !item.isCompleted)
       }
     }
   }
@@ -70,9 +81,10 @@ export const checklistSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { 
-  fetchItemsBegin,
-  fetchItemsSuccess,
-  fetchItemsFailure,
+  fetchChecklistsBegin,
+  fetchChecklistsSuccess,
+  createChecklist,
+  deleteChecklist,
   checkItem, 
   completeItem, 
   createItem, 
