@@ -67,14 +67,26 @@ export const checklistSlice = createSlice({
     deleteItem: (state, action) => {
       return {
         ...state,
-        checklists: state.checklists[action.payload.checklistID].items.filter(item => item._id !== action.payload._id)
+        checklists: {
+          ...state.checklists,
+          [action.payload.checklistID]: {
+            ...state.checklists[action.payload.checklistID],
+            items: state.checklists[action.payload.checklistID].items.filter(item => item._id !== action.payload.item._id)
+          }
+        }
       } 
     },
     deleteAllItems: (state, action) => {
       return {
         ...state,
-        checklists: state.checklists[action.payload.checklistID].items.filter(item => !item.isCompleted)
-      }
+        checklists: {
+          ...state.checklists,
+          [action.payload.checklistID]: {
+            ...state.checklists[action.payload.checklistID],
+            items: state.checklists[action.payload.checklistID].items.filter(item => !item.isCompleted)
+          }
+        }
+      } 
     }
   }
 })
