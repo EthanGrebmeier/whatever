@@ -2,7 +2,6 @@ import axios from "axios"
 import { useEffect, useRef, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import {
-    fetchChecklistsBegin,
     fetchChecklistsSuccess,
     createChecklist,
     deleteChecklist,
@@ -79,7 +78,6 @@ const ChecklistController = ({applet}) => {
 
     useEffect(() => {
         if (accessTokenContext.accessToken){
-            fetchItemsRequest()
             fetchChecklistsRequest()
         } else {
             //setSelectedChecklistID('default')
@@ -110,7 +108,7 @@ const ChecklistController = ({applet}) => {
             }).then(res => {
                 dispatch(createItem({
                     item: res.data.item,
-                    checklistID: selectedChecklistId
+                    checklistID: selectedChecklistID
                 }))
                 snackbarContext.setSnackbar(`${res.data.item.title} created`)
             }).catch(err => {
@@ -183,6 +181,12 @@ const ChecklistController = ({applet}) => {
 
     const postNewChecklist = async (checklist) => {
         axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
+            dispatch(createChecklist(res.data.checklist))
+        }).catch(err => console.log(err))
+    }
+
+    const deleteChecklist = async (checklist) => {
+        axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
             dispatch(createChecklist(res.data.checklist))
         }).catch(err => console.log(err))
     }

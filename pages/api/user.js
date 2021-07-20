@@ -13,8 +13,8 @@ const handler = async (req, res) =>{
     jwt.verify(reqAccessToken, process.env.ACCESS_TOKEN_SECRET, async (err, userObj) => {
         console.log(err)
         if (err) {return res.status(403).send()}
-        req.userId = userObj.id
-        const user = await UserModel.findById(req.userId).lean()
+        req.userID = userObj.id
+        const user = await UserModel.findByID(req.userID).lean()
         return res.json(user)
     })
 }   

@@ -65,7 +65,7 @@ const Dashboard = (props) => {
   const [accessToken, setAccessToken] = useState(props.accessToken || '')
   const [background, setBackground] = useState('#F49FBC')
   const [layout, setLayout] = useState() 
-  const [mobileAppletId, setMobileAppletId] = useState('')
+  const [mobileAppletID, setMobileAppletID] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [contextMenu, setContextMenu] = useState({
     isShowing: false,
@@ -238,7 +238,7 @@ const Dashboard = (props) => {
           <ContextMenuProvider value={contextMenuValue}>
             <Site 
               background={background}
-              mobileBackground={mobileMenuOpen ? '#CED0FA' : getMobileComponentObject(mobileAppletId).background}
+              mobileBackground={mobileMenuOpen ? '#CED0FA' : getMobileComponentObject(mobileAppletID).background}
             >
               <Wrapper>
                 <Header
@@ -249,8 +249,8 @@ const Dashboard = (props) => {
                   user={user}
                   setUser={setUser}
                   loading={loading}
-                  mobileAppletId={mobileAppletId}
-                  setMobileAppletId={setMobileAppletId}
+                  mobileAppletID={mobileAppletID}
+                  setMobileAppletID={setMobileAppletID}
                   mobileMenuOpen={mobileMenuOpen}
                   setMobileMenuOpen={setMobileMenuOpen}
                 />
@@ -266,8 +266,8 @@ const Dashboard = (props) => {
                     setHeight={setHeight}
                     isMobile={isMobile}
                     loading={loading}
-                    mobileAppletId={mobileAppletId}
-                    setMobileAppletId={setMobileAppletId}
+                    mobileAppletID={mobileAppletID}
+                    setMobileAppletID={setMobileAppletID}
                     mobileMenuOpen={mobileMenuOpen}
                     setMobileMenuOpen={setMobileMenuOpen}
                     user={user}
