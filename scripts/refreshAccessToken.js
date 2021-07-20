@@ -18,6 +18,7 @@ export default function refreshAccessToken(setAccessToken, setLoading){
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
                         originalRequest.headers['Authorization'] = 'Bearer ' + res.data.accessToken
                         // 3) return originalRequest object with Axios.
+                        setLoading && setLoading(false)
                         return axios(originalRequest);
                     }
                 })
