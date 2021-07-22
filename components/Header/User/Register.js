@@ -30,7 +30,8 @@ const Register = (props) => {
     const accessTokenContext = useAccessTokenContext()
     const snackbarContext = useSnackbarContext()
 
-    const items = useSelector(state => state.checklist.items)
+    const checklists = useSelector(state => state.checklist.checklists)
+
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -48,9 +49,7 @@ const Register = (props) => {
                 background: props.background
             },
             appletMeta: {
-                checklist: {
-                    items: items.filter(item => !item.isPlaceholder )
-                }
+                checklist: checklists
             }
         }).then( res => {
             setIsLoading(false)
