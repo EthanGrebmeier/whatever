@@ -17,6 +17,12 @@ const Wrapper = styled.button`
    display: flex;
    justify-content: space-between;
    align-items: center;
+   
+   && {
+       h2 {
+           font-size: initial;
+       }
+   }
 `
 
 const Back = ({onClick, width, position, left, right, top, bottom, withText}) => {
