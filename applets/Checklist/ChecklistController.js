@@ -16,6 +16,7 @@ import {useAccessTokenContext} from '../../contexts/AccessTokenContext'
 import { useSnackbarContext } from "../../contexts/SnackbarContext"
 import styled from "styled-components"
 import ChecklistMenu from "./ChecklistMenu"
+import mongoose  from "mongoose"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -119,11 +120,13 @@ const ChecklistController = ({applet}) => {
                 snackbarContext.setSnackbar('Something went wrong')
             })
         } else {
+            let newItemID = new mongoose.Types.ObjectId()
+            let idString = newItemID.toString()
             dispatch(createItem({
-                checklistID: 'default',
+                checklistID: selectedChecklistID,
                 item: {
                     ...item,
-                    _id: Math.floor(Math.random() * 800 + 100),
+                    _id: idString,
                     isCompleted: false,
                     isChecked: false
                 }
@@ -187,20 +190,38 @@ const ChecklistController = ({applet}) => {
     }
 
     const postNewChecklist = async (checklist) => {
-        console.log(checklist)
-        axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
-            console.log(res.data)
-            dispatch(createChecklist(res.data))
-        }).catch(err => console.log(err))
+        if (accessTokenContext.accessToken){
+            axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
+                console.log(res.data)
+                dispatch(createChecklist(res.data))
+            }).catch(err => console.log(err))
+        } else {
+            let newCheckListID = new mongoose.Types.ObjectId()
+            let idString = newCheckListID.toString()
+            dispatch(createChecklist({
+                checklist: {
+                    name: checklist.name,
+                    _id: idString,
+                    items: []
+                }
+            }))
+            console.log(checklist)
+        }
     }
 
     const deleteChecklistRequest = async (checklist) => {
-        axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + checklist._id).then(res => {
+        if (accessTokenContext.accessToken){
+            axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + checklist._id).then(res => {
+                dispatch(deleteChecklist({
+                    checklistID: checklist._id
+                }))
+                snackbarContext.setSnackbar('Deleted ' + checklist.name)
+            }).catch(err => console.log(err))
+        } else {
             dispatch(deleteChecklist({
                 checklistID: checklist._id
             }))
-            snackbarContext.setSnackbar('Deleted ' + checklist.name)
-        }).catch(err => console.log(err))
+        }
     }
 
     const editChecklist = async (checklist) => {
