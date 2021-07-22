@@ -14,7 +14,7 @@ const handler = async (req, res) =>{
         console.log(err)
         if (err) {return res.status(403).send()}
         req.userID = userObj.id
-        const user = await UserModel.findByID(req.userID).lean()
+        const user = await UserModel.findById(req.userID).lean()
         return res.json(user)
     })
 }   
