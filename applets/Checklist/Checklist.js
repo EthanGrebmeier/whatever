@@ -5,6 +5,7 @@ import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import Item from './Item'
 import IconButton from '../../components/Buttons/IconButton'
 import ChecklistForm from './ChecklistForm'
+import Back from '../../components/Buttons/Back'
 
 const HeaderSection = styled.span`
     display: flex;
@@ -58,7 +59,7 @@ export const MenuButton = styled.button`
 `
 
 
-const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall, checklistRef}) => {
+const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall, checklistRef, exitChecklist}) => {
 
     const [shownItems, setShownItems] = useState('incomplete')
     const [sortBy, setSortBy] = useState('')
@@ -176,21 +177,28 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
     }
 
     return (
-        <>
-            <Section 
-                width={isWide ? '22%' : '36%'}
-                mobileWidth='60%'
-            >
-                <h2> {shownItems == 'all' ? 'All Items' : shownItems == 'incomplete' ? 'Incomplete Items' : 'Complete Items'} </h2>
-                <IconButton 
-                    onClick={cycleLists}
-                    tooltip={`View ${shownItems == 'all' ? 'Incomplete' : shownItems == 'incomplete' ? 'Complete' : 'All'} Items`}
+        <>  
+            <Section width='100%'>
+                <Section 
+                    width={isWide ? '22%' : '36%'}
+                    mobileWidth='60%'
                 >
-                    <UilRotate360
-                        size='28'
-                    />
-                </IconButton>
+                    <h2> {shownItems == 'all' ? 'All Items' : shownItems == 'incomplete' ? 'Incomplete Items' : 'Complete Items'} </h2>
+                    <IconButton 
+                        onClick={cycleLists}
+                        tooltip={`View ${shownItems == 'all' ? 'Incomplete' : shownItems == 'incomplete' ? 'Complete' : 'All'} Items`}
+                    >
+                        <UilRotate360
+                            size='28'
+                        />
+                    </IconButton>
+                </Section>
+                <Back
+                    onClick={exitChecklist}
+                    withText
+                />
             </Section>
+
             <Section width='100%'>
                 {
                 showChecklistForm ? (

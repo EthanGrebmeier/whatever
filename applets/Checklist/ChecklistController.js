@@ -57,15 +57,23 @@ const Wrapper = styled.div`
     p {
         font-size: ${props => props.isWide ? '24px' : '16px'};
         @media screen and (max-width: 740px){
-            font-size: ${props => props.isWide ? '14px' : '12px'};
+            font-size: 18px;
         }
     }
 
     @media screen and (max-width: 740px){
         padding: 0;
     }
-
 `
+
+const getChecklistIndex = (selectedChecklistID, checklists) => {
+    for (let i in checklists){
+        if (checklists[i]._id == selectedChecklistID){
+            return i
+        }
+    }
+    return false
+}
 
 const ChecklistController = ({applet}) => {
     
@@ -81,19 +89,13 @@ const ChecklistController = ({applet}) => {
             fetchChecklistsRequest()
         } else {
             //setSelectedChecklistID('default')
-            dispatch(fetchChecklistsSuccess({
-                'default': {
-                    _id: 'default',
-                    name: 'default',
-                    items: []
-                }
-            }))
+            dispatch(fetchChecklistsSuccess({checklists: []}))
         }
     }, [accessTokenContext.accessToken])
 
     const fetchChecklistsRequest = () => {
         axios.get(process.env.NEXT_PUBLIC_URL + '/applets/checklist').then(res => {
-            dispatch(fetchChecklistsSuccess(res.data.checklists))
+            dispatch(fetchChecklistsSuccess({checklists: res.data.checklists}))
         }).catch(err => console.log(err))
     }
 
@@ -106,6 +108,7 @@ const ChecklistController = ({applet}) => {
                     isChecked: false
                 }
             }).then(res => {
+                console.log(checklists)
                 dispatch(createItem({
                     item: res.data.item,
                     checklistID: selectedChecklistID
@@ -153,9 +156,13 @@ const ChecklistController = ({applet}) => {
     }
 
     const deleteItemRequest = async (item) => {
+        console.log(item)
         if (accessTokenContext.accessToken){
             axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklistID + '/item/' + item._id).then(res => {
-                dispatch(deleteItem(item))
+                dispatch(deleteItem({
+                    item,
+                    checklistID: selectedChecklistID
+                }))
             }).catch(err => console.log(err))
         } else {
             dispatch(deleteItem({
@@ -167,7 +174,7 @@ const ChecklistController = ({applet}) => {
 
     const deleteCompletedRequest = async () => {
         if (accessTokenContext.accessToken){
-            axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklistID).then(res => {
+            axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklistID + '/item').then(res => {
                 dispatch(deleteAllItems({
                     checklistID: selectedChecklistID
                 }))
@@ -180,20 +187,25 @@ const ChecklistController = ({applet}) => {
     }
 
     const postNewChecklist = async (checklist) => {
+        console.log(checklist)
         axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
-            dispatch(createChecklist(res.data.checklist))
+            console.log(res.data)
+            dispatch(createChecklist(res.data))
         }).catch(err => console.log(err))
     }
 
-    const deleteChecklist = async (checklist) => {
-        axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
-            dispatch(createChecklist(res.data.checklist))
+    const deleteChecklistRequest = async (checklist) => {
+        axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + checklist._id).then(res => {
+            dispatch(deleteChecklist({
+                checklistID: checklist._id
+            }))
+            snackbarContext.setSnackbar('Deleted ' + checklist.name)
         }).catch(err => console.log(err))
     }
 
     const editChecklist = async (checklist) => {
         axios.put(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + checklist._id).then(res => {
-            dispatch(updateChecklist(res.data.checklist))
+            dispatch(updateChecklist(res.data))
         }).catch(err => console.log(err))
     }
 
@@ -208,19 +220,21 @@ const ChecklistController = ({applet}) => {
             {selectedChecklistID ? (
             <Checklist
                 applet={applet}
-                items={checklists[selectedChecklistID].items}
+                items={checklists[getChecklistIndex(selectedChecklistID, checklists)].items}
                 checkItem={checkItemWrapper}
                 completeItem={putCompletedItemRequest}
                 createItem={postNewItemRequest}
                 deleteItem={deleteItemRequest}
                 deleteAllItems={deleteCompletedRequest}
                 checklistRef={checklistRef}
+                exitChecklist={() => setSelectedChecklistID('')}
             />   
             ) : (    
             <ChecklistMenu
                 submitNewChecklist={postNewChecklist}
                 setSelectedChecklistID={setSelectedChecklistID}
                 checklists={checklists}
+                deleteChecklist={deleteChecklistRequest}
             />
             )}
         </Wrapper>

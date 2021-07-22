@@ -29,7 +29,10 @@ const ChecklistForm = ({inputTitle, setInputTitle, setInputDate,inputDate, submi
             onSubmit={e => {
                 e.preventDefault()
                 if (inputTitle) {
-                    submitForm()
+                    submitForm({
+                        name: inputTitle,
+                        date: inputDate
+                    })
                     toggleForm()
                 }
             }}

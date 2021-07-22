@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const checklistSlice = createSlice({
   name: 'checklist',
   initialState: {
-    checklists: {},
+    checklists: [],
     loading: true,
     error: null
   },
@@ -19,44 +19,28 @@ export const checklistSlice = createSlice({
       return {
         ...state,
         loading: false,
-        checklists: action.payload
+        checklists: action.payload.checklists
       }
     },
     createChecklist: (state, action) => {
-      return {
-        ...state,
-        checklists: {
-          ...state.checklists,
-          [action.checklist._id]: action.checklist
-        }
-      }
+      state.checklists.push(action.payload.checklist)
     },
     deleteChecklist: (state, action) => {
-      let checklistState = {...state.checklists}
-      delete checklistState[action.checklist._id]
-      return {
-        ...state,
-        checklists: checklistState
-      }
+      state.checklists = state.checklists.filter((checklist) => checklist._id != action.payload.checklistID)
     },
     checkItem: (state, action) => {
-      for (const item of state.checklists[action.payload.checklistID].items){
-          if (item._id == action.payload.item._id){
-              item.isChecked = !item.isChecked
-              console.log('Checked')
-              console.log(item)
-          }  
-      }
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      let itemIndex = state.checklists[checklistIndex].items.map(item => (item._id)).indexOf(action.payload.item._id)
+      state.checklists[checklistIndex].items[itemIndex].isChecked = !state.checklists[checklistIndex].items[itemIndex].isChecked
     },
     completeItem: (state, action) => {
-      for (const item of state.checklists[action.payload.checklistID].items){
-          if (item._id == action.payload.item._id){
-              item.isCompleted = !item.isCompleted
-          }  
-      }
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      let itemIndex = state.checklists[checklistIndex].items.map(item => (item._id)).indexOf(action.payload.item._id)
+      state.checklists[checklistIndex].items[itemIndex].isCompleted = !state.checklists[checklistIndex].items[itemIndex].isCompleted
     },
     createItem: (state, action) => {
-      let checklist = state.checklists[action.payload.checklistID]
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      let checklist = state.checklists[checklistIndex]
       let newItem = {
         isChecked: false,
         isCompleted: false,
@@ -65,28 +49,12 @@ export const checklistSlice = createSlice({
       checklist.items.push(newItem)
     },
     deleteItem: (state, action) => {
-      return {
-        ...state,
-        checklists: {
-          ...state.checklists,
-          [action.payload.checklistID]: {
-            ...state.checklists[action.payload.checklistID],
-            items: state.checklists[action.payload.checklistID].items.filter(item => item._id !== action.payload.item._id)
-          }
-        }
-      } 
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      state.checklists[checklistIndex].items = state.checklists[checklistIndex].items.filter(item => item._id != action.payload.item._id)
     },
     deleteAllItems: (state, action) => {
-      return {
-        ...state,
-        checklists: {
-          ...state.checklists,
-          [action.payload.checklistID]: {
-            ...state.checklists[action.payload.checklistID],
-            items: state.checklists[action.payload.checklistID].items.filter(item => !item.isCompleted)
-          }
-        }
-      } 
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      state.checklists[checklistIndex].items = state.checklists[checklistIndex].items.filter(item => !item.isCompleted)
     }
   }
 })
