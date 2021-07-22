@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Layout = require('./Layout.js')
-const Checklist = require('../../applets/Checklist/Checklist.js');
+const Checklist = require('./applets/checklist/Checklist')
 
 const UserSchema = new mongoose.Schema({
     email: String,
