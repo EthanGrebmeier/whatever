@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt'
 import {serialize} from 'cookie'
 import {validateEmail, validatePassword} from '../../scripts/validate'
 import runMiddleware from '../../scripts/runMiddleware'
+import rateLimit from 'express-rate-limit'
 
 
 const apiLimiter = rateLimit({
