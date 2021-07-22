@@ -4,7 +4,7 @@ import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import {Section} from './Checklist'
 import { useContextMenuContext } from '../../contexts/ContextMenuContext'
 
-const Wrapper = styled.li`
+export const Wrapper = styled.li`
     padding: ${props => props.isWide ? '5px 0 5px 0' : '7px 0 7px 0'};
     display: flex;
     align-items: center;

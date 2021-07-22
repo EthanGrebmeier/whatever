@@ -12,11 +12,11 @@ const Wrapper = styled.div`
     padding-bottom: 10px;
 `     
 
-const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mobileAppletId, setMobileAppletId, layout, loading, setLayout, background, ...rest}) => {
+const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mobileAppletID, setMobileAppletID, layout, loading, setLayout, background, ...rest}) => {
     
     useEffect(() => {
         if (layout?.applets && layout.applets.length > 0){
-            setMobileAppletId(layout.applets[0].id.slice(0, -3))
+            setMobileAppletID(layout.applets[0].id.slice(0, -3))
         }
     }, [])
 
@@ -30,9 +30,9 @@ const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mo
 
     return (
         <Wrapper>
-            {getMobileComponent(mobileAppletId, {
-                mobileAppletId, 
-                setMobileAppletId, 
+            {getMobileComponent(mobileAppletID, {
+                mobileAppletID, 
+                setMobileAppletID, 
                 applet: {
                     width: '100%',
                     height: '100%',
@@ -42,8 +42,8 @@ const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mo
             {
                 mobileMenuOpen && (
                     <MobileMenu
-                        setMobileAppletId={setMobileAppletId}
-                        mobileAppletId={mobileAppletId}
+                        setMobileAppletID={setMobileAppletID}
+                        mobileAppletID={mobileAppletID}
                         setMobileMenuOpen={setMobileMenuOpen}
                         user={user}
                         setLayout={setLayout}

@@ -44,7 +44,7 @@ const MobileMenu = (props) => {
                     <h1
                         key={applet.name}
                         onClick={() => {
-                            props.setMobileAppletId(applet.id)
+                            props.setMobileAppletID(applet.id)
                             props.setMobileMenuOpen(false)
                         }}
                     > 

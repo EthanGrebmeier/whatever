@@ -8,4 +8,4 @@ const ChecklistItemSchema = new mongoose.Schema({
 }, {strict: false})
 
 
-module.exports = ChecklistItemSchema
+export default ChecklistItemSchema

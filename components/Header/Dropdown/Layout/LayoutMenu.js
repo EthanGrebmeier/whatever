@@ -20,11 +20,11 @@ const LayoutMenu = ({setFrame, user, layout}) => {
 
     const snackbarContext = useSnackbarContext()
     
-    const checkIsSavedLayout = (layoutId) => {
+    const checkIsSavedLayout = (layoutID) => {
         let layouts = user?.layoutMeta?.layouts
         if (layouts){
             for (let layout in layouts){
-                if (layouts[layout]._id == layoutId){
+                if (layouts[layout]._id == layoutID){
                     return true
                 }
             }

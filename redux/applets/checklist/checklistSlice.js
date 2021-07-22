@@ -1,78 +1,70 @@
 import { createSlice } from '@reduxjs/toolkit'
-import getItems from './getItems'
 
 export const checklistSlice = createSlice({
   name: 'checklist',
   initialState: {
-    items: [],
+    checklists: [],
     loading: true,
     error: null
   },
   reducers: {
-    fetchItemsBegin: (state) => {
+    fetchChecklistsBegin: (state) => {
       return {
         ...state,
         loading: true,
         error: null
       }
     },
-    fetchItemsSuccess: (state, action) => {
+    fetchChecklistsSuccess: (state, action) => {
       return {
         ...state,
         loading: false,
-        items: action.payload
+        checklists: action.payload.checklists
       }
     },
-    fetchItemsFailure: (state, action) => {
-      return {
-        ...state,
-        loading: false,
-        error: action.payload.error,
-        items: []
-      }
+    createChecklist: (state, action) => {
+      state.checklists.push(action.payload.checklist)
+    },
+    deleteChecklist: (state, action) => {
+      state.checklists = state.checklists.filter((checklist) => checklist._id != action.payload.checklistID)
     },
     checkItem: (state, action) => {
-      for (let item in state.items){
-          if (state.items[item]._id == action.payload._id){
-              state.items[item].isChecked = !state.items[item].isChecked
-          }  
-      }
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      let itemIndex = state.checklists[checklistIndex].items.map(item => (item._id)).indexOf(action.payload.item._id)
+      state.checklists[checklistIndex].items[itemIndex].isChecked = !state.checklists[checklistIndex].items[itemIndex].isChecked
     },
     completeItem: (state, action) => {
-      for (let item in state.items){
-          if (state.items[item]._id == action.payload._id){
-              state.items[item].isCompleted = !state.items[item].isCompleted
-          }  
-      }
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      let itemIndex = state.checklists[checklistIndex].items.map(item => (item._id)).indexOf(action.payload.item._id)
+      state.checklists[checklistIndex].items[itemIndex].isCompleted = !state.checklists[checklistIndex].items[itemIndex].isCompleted
     },
     createItem: (state, action) => {
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      let checklist = state.checklists[checklistIndex]
       let newItem = {
         isChecked: false,
         isCompleted: false,
-        ...action.payload
+        ...action.payload.item
       }
-      state.items.push(newItem)
+      checklist.items.push(newItem)
     },
     deleteItem: (state, action) => {
-      return {
-        ...state,
-        items: state.items.filter(item => item._id !== action.payload._id)
-      } 
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      state.checklists[checklistIndex].items = state.checklists[checklistIndex].items.filter(item => item._id != action.payload.item._id)
     },
     deleteAllItems: (state, action) => {
-      return {
-        ...state,
-        items: state.items.filter(item => !item.isCompleted)
-      }
+      let checklistIndex = state.checklists.map((checklist) => (checklist._id)).indexOf(action.payload.checklistID)
+      state.checklists[checklistIndex].items = state.checklists[checklistIndex].items.filter(item => !item.isCompleted)
     }
   }
 })
 
 // Action creators are generated for each case reducer function
 export const { 
-  fetchItemsBegin,
-  fetchItemsSuccess,
-  fetchItemsFailure,
+  fetchChecklistsBegin,
+  fetchChecklistsSuccess,
+  createChecklist,
+  deleteChecklist,
   checkItem, 
   completeItem, 
   createItem, 
