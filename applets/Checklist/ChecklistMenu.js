@@ -10,8 +10,12 @@ const ChecklistMenu = ({submitNewChecklist, checklists, setSelectedChecklistID, 
     const [showForm, setShowForm] = useState(false)
 
     const toggleForm = () => {
-        setShowForm(!showForm)
         setInputTitle('')
+    }
+
+    const closeForm = () => {
+        setShowForm(false)
+        toggleForm()
     }
 
     return (
@@ -24,6 +28,7 @@ const ChecklistMenu = ({submitNewChecklist, checklists, setSelectedChecklistID, 
                     setInputTitle={setInputTitle}
                     submitForm={submitNewChecklist}
                     toggleForm={toggleForm}
+                    closeForm={closeForm}
                 />
                 )
                 : 

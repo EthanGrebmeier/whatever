@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { UilRotate360, UilTimes, UilAngleDown, UilAngleUp } from '@iconscout/react-unicons'
 import styled from 'styled-components'
 import { useSnackbarContext } from '../../contexts/SnackbarContext'
@@ -41,6 +41,7 @@ const SortButton = styled.button`
 `
 
 export const MenuButton = styled.button`
+    display: ${props => props.hidden ? 'none' : 'flex'};
     cursor: pointer;
     font-family: 'Quicksand';
     background: none;
@@ -59,16 +60,16 @@ export const MenuButton = styled.button`
 `
 
 
-const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall, checklistRef, exitChecklist}) => {
+const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteItem, deleteAllItems, isWide, isTall, exitChecklist}) => {
 
     const [shownItems, setShownItems] = useState('incomplete')
     const [sortBy, setSortBy] = useState('')
     const [showChecklistForm, setShowChecklistForm] = useState(false)
     const [inputItemTitle, setInputItemTitle] = useState('')
     const [inputItemDate, setInputItemDate] = useState('')
-
     const snackbarContext = useSnackbarContext()
-    
+    const checklistRef = useRef(null)
+
     const submitForm = () =>{
         if (!inputItemTitle){
             return snackbarContext.setSnackbar('Item Name Required')
@@ -82,8 +83,11 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
     const toggleForm = () => {
         setInputItemDate('')
         setInputItemTitle('')
-        setShowChecklistForm(!showChecklistForm)
-        checklistRef.current.focus()
+    }
+
+    const closeForm = () => {
+        setShowChecklistForm(false)
+        toggleForm()
     }
 
     const sortItems = (items) => {
@@ -178,7 +182,9 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
 
     return (
         <>  
-            <Section width='100%'>
+            <Section width='100%'
+                ref={checklistRef}
+            >
                 <Section 
                     width={isWide ? '22%' : '36%'}
                     mobileWidth='60%'
@@ -210,6 +216,8 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                         setInputDate={setInputItemDate}
                         isWide={isWide}
                         toggleForm={toggleForm}
+                        closeForm={closeForm}
+                        hidden={!showChecklistForm}
                     />
                 ) : (
                     <MenuButton 
@@ -217,6 +225,7 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
                         onClick={() => {
                             setShowChecklistForm(true)
                         }}
+                        hidden={showChecklistForm}
                     > 
                         + Create Item 
                     </MenuButton> 

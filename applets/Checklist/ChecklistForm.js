@@ -7,7 +7,7 @@ import { Section } from './Checklist'
 
 const ChecklistFormWrapper = styled.form`
     width: 100%;
-    display: flex;
+    display: ${props => props.hidden ? 'none' : 'flex'};
     justify-content: space-between;
     padding: 5px 0 5px 0;
 
@@ -17,13 +17,15 @@ const ChecklistFormWrapper = styled.form`
     }
 `
 
-const ChecklistForm = ({inputTitle, setInputTitle, setInputDate,inputDate, submitForm, toggleForm, isWide}) => {
+const ChecklistForm = ({inputTitle, setInputTitle, setInputDate,inputDate, submitForm, toggleForm, closeForm, isWide, hidden}) => {
 
     return (
         <ChecklistFormWrapper
+            hidden={hidden}
             onKeyDown={e => {
                 if (e.key == 'Escape'){
                     toggleForm()
+                    closeForm && closeForm()
                 }
             } }
             onSubmit={e => {
@@ -72,7 +74,7 @@ const ChecklistForm = ({inputTitle, setInputTitle, setInputDate,inputDate, submi
                     Submit
                 </Button>
                 <IconButton 
-                    onClick={() => toggleForm()}
+                    onClick={() => closeForm()}
                     tooltip='Close'
                 >
                     <UilTimes/>
