@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import {
     fetchChecklistsSuccess,
@@ -78,7 +78,6 @@ const getChecklistIndex = (selectedChecklistID, checklists) => {
 
 const ChecklistController = ({applet}) => {
     
-    const checklistRef = useRef(null)
     const dispatch = useDispatch()
     const accessTokenContext = useAccessTokenContext()
     const snackbarContext = useSnackbarContext()
@@ -89,7 +88,6 @@ const ChecklistController = ({applet}) => {
         if (accessTokenContext.accessToken){
             fetchChecklistsRequest()
         } else {
-            //setSelectedChecklistID('default')
             dispatch(fetchChecklistsSuccess({checklists: []}))
         }
     }, [accessTokenContext.accessToken])
@@ -236,7 +234,6 @@ const ChecklistController = ({applet}) => {
             isWide={applet.width === '100%'}
             isTall={applet.height === '100%'}
             background={applet.background}
-            ref={checklistRef}
         >
             {selectedChecklistID ? (
             <Checklist
@@ -247,7 +244,6 @@ const ChecklistController = ({applet}) => {
                 createItem={postNewItemRequest}
                 deleteItem={deleteItemRequest}
                 deleteAllItems={deleteCompletedRequest}
-                checklistRef={checklistRef}
                 exitChecklist={() => setSelectedChecklistID('')}
             />   
             ) : (    
