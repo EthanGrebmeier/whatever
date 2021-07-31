@@ -229,15 +229,20 @@ const Dashboard = (props) => {
   }
 
   const updateApplet = (position, newAppletObject) => {
-    const appletPosition = getAppletIndex(position)
-    let currentApplets = [...layout.applets]
-    currentApplets[appletPosition] = newAppletObject
-    setLayout({
-      ...layout, 
-      applets: currentApplets
-    })
+
+    if (isMobile && newAppletObject) {
+      setMobileApplet(newAppletObject)
+    } else {
+      const appletPosition = getAppletIndex(position)
+      let currentApplets = [...layout.applets]
+      currentApplets[appletPosition] = newAppletObject
+      setLayout({
+        ...layout, 
+        applets: currentApplets
+      })
+    }
   }
-  
+
   return (
     <Provider store={store}>
       <SnackbarProvider value={snackbarValue}>
