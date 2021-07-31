@@ -87,8 +87,6 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
     useEffect(() => {
         if (accessTokenContext.accessToken){
             fetchChecklistsRequest()
-        } else {
-            dispatch(fetchChecklistsSuccess({checklists: []}))
         }
     }, [accessTokenContext.accessToken])
 
