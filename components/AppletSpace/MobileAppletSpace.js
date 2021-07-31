@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import { getMobileComponent } from '../../applets/applets'
+import { getMobileComponent, getMobileComponentObject } from '../../applets/applets'
 import { useAccessTokenContext } from '../../contexts/AccessTokenContext'
 import MobileMenu from '../Header/MobileMenu/MobileMenu'
 
@@ -12,11 +12,11 @@ const Wrapper = styled.div`
     padding-bottom: 10px;
 `     
 
-const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mobileAppletID, setMobileAppletID, layout, loading, setLayout, background, ...rest}) => {
+const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mobileApplet, setMobileApplet, layout, loading, setLayout, background, ...rest}) => {
     
     useEffect(() => {
         if (layout?.applets && layout.applets.length > 0){
-            setMobileAppletID(layout.applets[0].id.slice(0, -3))
+            setMobileApplet(getMobileComponentObject(layout.applets[0].id.slice(0, -3)))
         }
     }, [])
 
@@ -30,9 +30,9 @@ const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mo
 
     return (
         <Wrapper>
-            {getMobileComponent(mobileAppletID, {
-                mobileAppletID, 
-                setMobileAppletID, 
+            {getMobileComponent(mobileApplet.id, {
+                mobileApplet, 
+                setMobileApplet, 
                 applet: {
                     width: '100%',
                     height: '100%',
@@ -42,8 +42,7 @@ const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mo
             {
                 mobileMenuOpen && (
                     <MobileMenu
-                        setMobileAppletID={setMobileAppletID}
-                        mobileAppletID={mobileAppletID}
+                        setMobileApplet={setMobileApplet}
                         setMobileMenuOpen={setMobileMenuOpen}
                         user={user}
                         setLayout={setLayout}

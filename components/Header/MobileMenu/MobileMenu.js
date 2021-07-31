@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import User from '../User/User'
-import applets from '../../../applets/applets'
+import applets, { getMobileComponentObject } from '../../../applets/applets'
 import MobileUser from './MobileUser' 
 import Button from '../../Buttons/Button'
 
@@ -44,7 +44,7 @@ const MobileMenu = (props) => {
                     <h1
                         key={applet.name}
                         onClick={() => {
-                            props.setMobileAppletID(applet.id)
+                            props.setMobileApplet(getMobileComponentObject(applet.id))
                             props.setMobileMenuOpen(false)
                         }}
                     > 

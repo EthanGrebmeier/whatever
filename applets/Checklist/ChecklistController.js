@@ -76,7 +76,7 @@ const getChecklistIndex = (selectedChecklistID, checklists) => {
     return false
 }
 
-const ChecklistController = ({applet, updateApplet}) => {
+const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => {
     
     const dispatch = useDispatch()
     const accessTokenContext = useAccessTokenContext()
@@ -93,15 +93,16 @@ const ChecklistController = ({applet, updateApplet}) => {
     }, [accessTokenContext.accessToken])
 
     useEffect(() => {
+        let newApplet = isMobile ? mobileApplet : applet
         if (selectedChecklistID) {
             updateApplet(applet.position, {
-                ...applet, 
+                ...newApplet, 
                 name: checklists.filter((checklist) => checklist._id == selectedChecklistID)[0].name
             })
             console.log(checklists)
         } else {
             updateApplet(applet.position, {
-                ...applet,
+                ...newApplet,
                 name: 'Checklist'
             })
         }
