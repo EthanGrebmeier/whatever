@@ -76,7 +76,7 @@ const getChecklistIndex = (selectedChecklistID, checklists) => {
     return false
 }
 
-const ChecklistController = ({applet}) => {
+const ChecklistController = ({applet, updateApplet}) => {
     
     const dispatch = useDispatch()
     const accessTokenContext = useAccessTokenContext()
@@ -91,6 +91,21 @@ const ChecklistController = ({applet}) => {
             dispatch(fetchChecklistsSuccess({checklists: []}))
         }
     }, [accessTokenContext.accessToken])
+
+    useEffect(() => {
+        if (selectedChecklistID) {
+            updateApplet(applet.position, {
+                ...applet, 
+                name: checklists.filter((checklist) => checklist._id == selectedChecklistID)[0].name
+            })
+            console.log(checklists)
+        } else {
+            updateApplet(applet.position, {
+                ...applet,
+                name: 'Checklist'
+            })
+        }
+    }, [selectedChecklistID])
 
     const fetchChecklistsRequest = () => {
         axios.get(process.env.NEXT_PUBLIC_URL + '/applets/checklist').then(res => {

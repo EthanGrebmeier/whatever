@@ -230,6 +230,16 @@ const Dashboard = (props) => {
     current.applets[index].height = height
     setLayout(current)
   }
+
+  const updateApplet = (position, newAppletObject) => {
+    const appletPosition = getAppletIndex(position)
+    let currentApplets = [...layout.applets]
+    currentApplets[appletPosition] = newAppletObject
+    setLayout({
+      ...layout, 
+      applets: currentApplets
+    })
+  }
   
   return (
     <Provider store={store}>
@@ -272,6 +282,7 @@ const Dashboard = (props) => {
                     setMobileMenuOpen={setMobileMenuOpen}
                     user={user}
                     setUser={setUser}
+                    updateApplet={updateApplet}
                   />
                   )
                 }
