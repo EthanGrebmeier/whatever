@@ -58,7 +58,7 @@ const MobileHeader = styled.div`
     }
 `
 
-const Header = ({layout, setLayout, mobileAppletID, setMobileAppletID, mobileMenuOpen, setMobileMenuOpen, background, setBackground, user, setUser, loading}) => {
+const Header = ({layout, setLayout, mobileApplet, mobileMenuOpen, setMobileMenuOpen, background, setBackground, user, setUser, loading}) => {
     
     
     const accessTokenContext = useAccessTokenContext()
@@ -116,7 +116,7 @@ const Header = ({layout, setLayout, mobileAppletID, setMobileAppletID, mobileMen
             </HeaderSection>
 
             <MobileHeader>
-                <h1> { mobileMenuOpen ? 'Menu' : getMobileComponentObject(mobileAppletID).name} </h1>
+                <h1> { mobileMenuOpen ? 'Menu' : mobileApplet.name} </h1>
                 <MobileBurger
                     toggleOpen={() => {
                         setMobileMenuOpen(!mobileMenuOpen)
