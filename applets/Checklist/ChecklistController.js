@@ -97,7 +97,6 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                 ...newApplet, 
                 name: checklists.filter((checklist) => checklist._id == selectedChecklistID)[0].name
             })
-            console.log(checklists)
         } else {
             updateApplet(applet.position, {
                 ...newApplet,
@@ -121,7 +120,6 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                     isChecked: false
                 }
             }).then(res => {
-                console.log(checklists)
                 dispatch(createItem({
                     item: res.data.item,
                     checklistID: selectedChecklistID
@@ -204,7 +202,6 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
     const postNewChecklist = async (checklist) => {
         if (accessTokenContext.accessToken){
             axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
-                console.log(res.data)
                 dispatch(createChecklist(res.data))
             }).catch(err => console.log(err))
         } else {
@@ -217,7 +214,6 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                     items: []
                 }
             }))
-            console.log(checklist)
         }
     }
 

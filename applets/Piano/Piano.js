@@ -69,7 +69,6 @@ const Piano = ({applet}) => {
         })
 
         setShownNotes(oldNotes)
-        console.log(oldNotes)
     }
 
     const playNoteFromClick = (event) => {

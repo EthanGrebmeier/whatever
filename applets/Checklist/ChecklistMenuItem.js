@@ -25,7 +25,6 @@ const ChecklistMenuItem = ({checklist, setSelectedChecklistID, deleteChecklist})
                     tooltip={'Delete '+ checklist.name}
                     onClick={(e) => {
                         e.stopPropagation()
-                        console.log(checklist)
                         deleteChecklist(checklist)
                     }}
                 >
