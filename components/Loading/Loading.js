@@ -10,11 +10,15 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     border-radius: 10px;
     border: 2px solid black;
+    background: ${props => props.background};
+    position: absolute;
+    z-index: 20;
 `
 
-const Loading = () => {
+const Loading = ({background}) => {
     const [text, setText] = useState('')
     const [loadTime, setLoadTime] = useState(0)
     const snackbarContext = useSnackbarContext()
@@ -48,7 +52,6 @@ const Loading = () => {
             setLoadTime(newLoad)
         }
 
-        console.log(snackbarContext)
         timeouts.push(setTimeout(() => {
             snackbarContext.setSnackbar('Something definitely broke. Thats my bad...')
         }, 20000))
@@ -59,13 +62,14 @@ const Loading = () => {
 
         return () => {
             for (const timeout of timeouts){
-                console.log(timeout)
                 clearTimeout(timeout)
             }
         }
     }, [])
     return (
-        <Wrapper>
+        <Wrapper
+            background={background}
+        >
             <ProgressBar
                 loadTime={loadTime}
             />
