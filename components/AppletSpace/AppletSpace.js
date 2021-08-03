@@ -13,7 +13,7 @@ const AppletSpaceWrapper = styled.div`
 const AppletSpace = (props) => {
     return (
         <AppletSpaceWrapper>
-            {props.loading || true && (
+            {props.loading && (
             <Loading
                 background={props.background}
             />
