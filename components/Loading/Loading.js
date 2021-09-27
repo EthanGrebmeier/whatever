@@ -13,7 +13,9 @@ const Wrapper = styled.div`
     text-align: center;
     border-radius: 10px;
     border: 2px solid black;
-    background: ${props => props.background};
+    background-image: linear-gradient(rgb(231, 57, 63) 1px, transparent 1px), linear-gradient(to right, rgb(231, 57, 63) 1px, transparent 1px);
+    background-size: 25px 25px;
+    background-color: #F49FBC;
     position: absolute;
     z-index: 20;
 `
@@ -54,7 +56,7 @@ const Loading = ({background}) => {
 
         timeouts.push(setTimeout(() => {
             snackbarContext.setSnackbar('Something definitely broke. Thats my bad...')
-        }, 20000))
+        }, 25000))
 
         setText(phrases[0])
 
