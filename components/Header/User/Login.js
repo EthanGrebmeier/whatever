@@ -26,7 +26,7 @@ const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const accessTokenContext = useAccessTokenContext()
 
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -38,14 +38,14 @@ const Login = (props) => {
             props.setLayout()
             accessTokenContext.setAccessToken(res.data.accessToken)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
-            snackbarContext.setSnackbar('Logged In')
+            setSnackbar('Logged In')
             setIsLoading(false)
             props.setIsHovered && props.setIsHovered(false)
         }).catch( err => {
             console.log(err)
             if (err.response){
                 console.log(err.response)
-                snackbarContext.setSnackbar(err.response.data)
+                setSnackbar(err.response.data)
             }
 
             setIsLoading(false)

@@ -108,11 +108,11 @@ const Notepad = ({applet}) => {
         }
     }
 
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
 
     const onSave = () => {
         if (!accessTokenContext.accessToken){
-            return snackbarContext.setSnackbar('Please sign in to save your notes')
+            return setSnackbar('Please sign in to save your notes')
         }
         if (canSave){
             let error;
@@ -127,7 +127,7 @@ const Notepad = ({applet}) => {
                 
             }).catch((err) => {
                 console.log(err)
-                return snackbarContext.setSnackbar('Error Saving...')
+                return setSnackbar('Error Saving...')
             })
 
             if (!error){
@@ -135,10 +135,10 @@ const Notepad = ({applet}) => {
                 setTimeout(() => {
                     setCanSave(true)
                 }, 60000)
-                return snackbarContext.setSnackbar('Saved Notes')
+                return setSnackbar('Saved Notes')
             }
         } else {
-            snackbarContext.setSnackbar('There is a limit of one save per minute')
+            setSnackbar('There is a limit of one save per minute')
         }
     }
 

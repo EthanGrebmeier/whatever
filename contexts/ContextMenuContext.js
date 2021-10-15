@@ -1,11 +1,18 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
-const ContextMenuContext = createContext({contextMenu: ''});
+const ContextMenuContext = createContext(null);
 
 export function ContextMenuProvider(props){
 
+  const [contextMenu, setContextMenu] = useState({contextMenu: ''})
+
   return (
-    <ContextMenuContext.Provider value={props.value}>
+    <ContextMenuContext.Provider value={
+      {
+        contextMenu,
+        setContextMenu
+      }
+    }>
       {props.children}
     </ContextMenuContext.Provider>
   );

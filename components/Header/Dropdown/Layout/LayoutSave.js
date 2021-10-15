@@ -13,7 +13,7 @@ const LayoutSave = (props) => {
 
     const [inputName, setInputName] = useState('')
 
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
 
 
     const onSubmitNew = (e) => {
@@ -25,7 +25,7 @@ const LayoutSave = (props) => {
         axios.post(process.env.NEXT_PUBLIC_URL + '/user/layout', {
             layout: currentLayout,
         }).then( res => {
-            snackbarContext.setSnackbar(`Saved ${currentLayout.name}`)
+            setSnackbar(`Saved ${currentLayout.name}`)
             let user = {...props.user}
             user.layoutMeta = res.data
             props.setUser(user)

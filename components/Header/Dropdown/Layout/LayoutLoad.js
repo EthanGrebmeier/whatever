@@ -62,10 +62,10 @@ const LayoutLoad = (props) => {
     const [editIndex, setEditIndex] = useState()
     const [inputNewName, setInputNewName] = useState('')
 
-    let snackbarContext = useSnackbarContext()
+    let {snackbar, setSnackbar} = useSnackbarContext()
 
     const onSelect = async (layout) => {
-        snackbarContext.setSnackbar(`Switched to ${layout.name}`)
+        setSnackbar(`Switched to ${layout.name}`)
         let {data} = await axios.get(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id)
         props.setLayout(data)
     }
@@ -84,7 +84,7 @@ const LayoutLoad = (props) => {
         axios.put(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
             layout: current
         }).then( res => {
-            snackbarContext.setSnackbar(`Renamed to ${inputNewName}`)
+            setSnackbar(`Renamed to ${inputNewName}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
@@ -98,7 +98,7 @@ const LayoutLoad = (props) => {
             isDefault: true,
             layout: layout
         }).then( res => {
-            snackbarContext.setSnackbar(`Set ${layout.name} as default layout`)
+            setSnackbar(`Set ${layout.name} as default layout`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)
@@ -111,7 +111,7 @@ const LayoutLoad = (props) => {
         }
         
         axios.delete(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id).then( res => {
-            snackbarContext.setSnackbar(`Deleted ${layout.name}`)
+            setSnackbar(`Deleted ${layout.name}`)
             let currentUser = {...props.user}
             currentUser.layoutMeta = res.data
             props.setUser(currentUser)

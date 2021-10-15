@@ -28,7 +28,7 @@ const Register = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const accessTokenContext = useAccessTokenContext()
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
 
     const checklists = useSelector(state => state.checklist.checklists)
 
@@ -55,10 +55,10 @@ const Register = (props) => {
             setIsLoading(false)
             accessTokenContext.setAccessToken(res.data.accessToken)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
-            snackbarContext.setSnackbar('Logged in')
+            setSnackbar('Logged in')
         }).catch( err => {
             setIsLoading(false)
-            snackbarContext.setSnackbar(err.response.data.message)
+            setSnackbar(err.response.data.message)
             console.log(err)
         })
     }

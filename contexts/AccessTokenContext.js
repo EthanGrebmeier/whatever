@@ -1,11 +1,18 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const AccessTokenContext = createContext({accessToken: ''});
 
 export function AccessTokenProvider(props){
 
+  const [accessToken, setAccessToken] = useState('')
+
   return (
-    <AccessTokenContext.Provider value={props.value}>
+    <AccessTokenContext.Provider value={
+      {
+        accessToken,
+        setAccessToken
+      }
+      }>
       {props.children}
     </AccessTokenContext.Provider>
   );

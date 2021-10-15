@@ -50,7 +50,7 @@ const Item = ({item, isWide, isTall, checkItem, completeItem, deleteItem}) => {
 
     const [timeouts, setTimeouts] = useState([])
 
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
 
     const contextMenuContext = useContextMenuContext()
 
@@ -97,7 +97,7 @@ const Item = ({item, isWide, isTall, checkItem, completeItem, deleteItem}) => {
                             onClick: (e) => {
                                 e.stopPropagation();
                                 deleteItem(item)
-                                snackbarContext.setSnackbar( `Deleted '${item.title}'`)
+                                setSnackbar( `Deleted '${item.title}'`)
                             }
                         }                        
                     ]

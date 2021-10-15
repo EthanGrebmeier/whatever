@@ -67,12 +67,12 @@ const Checklist = ({applet, items, checkItem, completeItem, createItem, deleteIt
     const [showChecklistForm, setShowChecklistForm] = useState(false)
     const [inputItemTitle, setInputItemTitle] = useState('')
     const [inputItemDate, setInputItemDate] = useState('')
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
     const checklistRef = useRef(null)
 
     const submitForm = () =>{
         if (!inputItemTitle){
-            return snackbarContext.setSnackbar('Item Name Required')
+            return setSnackbar('Item Name Required')
         }
         createItem({
             title: inputItemTitle,

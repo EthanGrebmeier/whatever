@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 const Loading = ({background}) => {
     const [text, setText] = useState('')
     const [loadTime, setLoadTime] = useState(0)
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
 
     const phrases = [
         "Loading",
@@ -53,7 +53,7 @@ const Loading = ({background}) => {
         }
 
         timeouts.push(setTimeout(() => {
-            snackbarContext.setSnackbar('Something definitely broke. Thats my bad...')
+            setSnackbar('Something definitely broke. Thats my bad...')
         }, 20000))
 
         setText(phrases[0])

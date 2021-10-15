@@ -1,16 +1,30 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-const SnackbarContext = createContext({snackBar: {
+const SnackbarContext = createContext(null);
+
+export function SnackbarProvider(props){
+
+  const [snackbar, setSnackbarObject] = useState({
     text: '',
     actionText: '',
     actionOnClick: undefined,
     id: Math.floor(Math.random() * 800 + 100)
-}});
+  })
 
-export function SnackbarProvider(props){
+  const setSnackbar = (text) => {
+    setSnackbarObject({
+      ...snackbar,
+      text
+    })
+  }
 
   return (
-    <SnackbarContext.Provider value={props.value}>
+    <SnackbarContext.Provider value={
+      {
+        snackbar, 
+        setSnackbar
+      }
+      }>
       {props.children}
     </SnackbarContext.Provider>
   );

@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 
 const LayoutMenu = ({setFrame, user, layout}) => {
 
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
     
     const checkIsSavedLayout = (layoutID) => {
         let layouts = user?.layoutMeta?.layouts
@@ -36,7 +36,7 @@ const LayoutMenu = ({setFrame, user, layout}) => {
         axios.put(process.env.NEXT_PUBLIC_URL + '/user/layout/' + layout._id, {
             layout: layout
         }).then( res => {
-            snackbarContext.setSnackbar(`Saved ${layout.name}`)
+            setSnackbar(`Saved ${layout.name}`)
         }).catch(err => console.log(err))
     }
 

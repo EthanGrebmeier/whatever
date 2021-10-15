@@ -80,11 +80,12 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
     
     const dispatch = useDispatch()
     const accessTokenContext = useAccessTokenContext()
-    const snackbarContext = useSnackbarContext()
+    const {snackbar, setSnackbar} = useSnackbarContext()
     const checklists = useSelector(state => state.checklist.checklists)
     const [selectedChecklistID, setSelectedChecklistID] = useState('')
 
     useEffect(() => {
+        console.log(snackbar)
         if (accessTokenContext.accessToken){
             fetchChecklistsRequest()
         }
@@ -124,10 +125,10 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                     item: res.data.item,
                     checklistID: selectedChecklistID
                 }))
-                snackbarContext.setSnackbar(`${res.data.item.title} created`)
+                setSnackbar(`${res.data.item.title} created`)
             }).catch(err => {
                 console.log(err)
-                snackbarContext.setSnackbar('Something went wrong')
+                setSnackbar('Something went wrong')
             })
         } else {
             let newItemID = new mongoose.Types.ObjectId()
@@ -141,7 +142,7 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                     isChecked: false
                 }
             }))
-            snackbarContext.setSnackbar(`${item.title} created`)
+            setSnackbar(`${item.title} created`)
         }
     }
 
@@ -223,7 +224,7 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                 dispatch(deleteChecklist({
                     checklistID: checklist._id
                 }))
-                snackbarContext.setSnackbar('Deleted ' + checklist.name)
+                setSnackbar('Deleted ' + checklist.name)
             }).catch(err => console.log(err))
         } else {
             dispatch(deleteChecklist({
