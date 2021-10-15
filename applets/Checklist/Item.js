@@ -52,7 +52,7 @@ const Item = ({item, isWide, isTall, checkItem, completeItem, deleteItem}) => {
 
     const {snackbar, setSnackbar} = useSnackbarContext()
 
-    const contextMenuContext = useContextMenuContext()
+    const {contextMenu, setContextMenu} = useContextMenuContext()
 
     const getDateString = (date) => {
         return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}`
@@ -80,7 +80,8 @@ const Item = ({item, isWide, isTall, checkItem, completeItem, deleteItem}) => {
             isWide={isWide}
             onContextMenu={(e) => {
                 e.preventDefault()
-                contextMenuContext.setContextMenu({
+                console.log('test')
+                setContextMenu({
                     isShowing: true,
                     xPos: e.pageX + 'px',
                     yPos: e.pageY + 'px',

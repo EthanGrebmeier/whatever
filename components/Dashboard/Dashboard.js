@@ -11,6 +11,7 @@ import { getMobileComponent, getMobileComponentObject } from '../../applets/appl
 import styled from 'styled-components'
 import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import { useAccessTokenContext } from '../../contexts/AccessTokenContext'
+import { useContextMenuContext } from '../../contexts/ContextMenuContext'
 
 const Site = styled.div`
   width: 100%;
@@ -68,12 +69,7 @@ const Dashboard = () => {
     const [layout, setLayout] = useState() 
     const [mobileApplet, setMobileApplet] = useState(getMobileComponent())
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [contextMenu, setContextMenu] = useState({
-        isShowing: false,
-        options: [],
-        xPos: 0,
-        yPos: 0,
-    })
+    const {contextMenu, setContextMenu} = useContextMenuContext()
 
     useEffect(async () => {
         if (user && accessToken) { 

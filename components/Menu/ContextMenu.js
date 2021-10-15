@@ -32,12 +32,12 @@ const Option = styled.button`
 
 const ContextMenu = ({isShowing, options, xPos, yPos}) => {
 
-    const contextMenuContext = useContextMenuContext()
+    const {contextMenu, setContextMenu} = useContextMenuContext()
 
     const onClick = (e, optionClick) => {
         optionClick(e)
-        contextMenuContext.setContextMenu({
-            ...contextMenuContext.contextMenu,
+        setContextMenu({
+            ...contextMenu,
             isShowing: false
         })
     }   
@@ -48,7 +48,7 @@ const ContextMenu = ({isShowing, options, xPos, yPos}) => {
             xPos={xPos} 
             yPos={yPos}
         >
-            {options.map((option) => (
+            {options?.map((option) => (
                 <Option 
                     onClick={(e) => onClick(e, option.onClick)}
                     key={option.prompt}
