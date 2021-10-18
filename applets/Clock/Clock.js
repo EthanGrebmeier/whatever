@@ -31,13 +31,23 @@ const Clock = ({applet}) => {
 
     const [currentTime, setCurrentTime] = useState(new Date())
 
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentTime(new Date())
+        }, 1000)
+        return () => {
+            clearInterval(interval)
+        }
+    }, [])
+
     return (
         <Wrapper
             background={applet.background}
         >
 
             <h1>
-                {currentTime.getTime()}
+                {currentTime.toLocaleTimeString()}
             </h1>
         </Wrapper>
     )
