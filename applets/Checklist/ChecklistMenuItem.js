@@ -9,12 +9,12 @@ const ChecklistMenuWrapper = styled(Wrapper)`
     }
 `
 
-const ChecklistMenuItem = ({checklist, setSelectedChecklistID, deleteChecklist}) => {
+const ChecklistMenuItem = ({checklist, setSelectedChecklist, deleteChecklist}) => {
     return (
         <ChecklistMenuWrapper
         key={checklist._id}
         onClick={() => {
-            setSelectedChecklistID(checklist._id)
+            setSelectedChecklist(checklist)
         }}
         >
             <Section width='100%'>

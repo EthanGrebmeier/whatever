@@ -4,7 +4,7 @@ import ChecklistForm from "./ChecklistForm";
 import { MenuButton } from "./Checklist";
 import ChecklistMenuItem from "./ChecklistMenuItem";
 
-const ChecklistMenu = ({submitNewChecklist, checklists, setSelectedChecklistID, deleteChecklist}) => {
+const ChecklistMenu = ({submitNewChecklist, checklists, setSelectedChecklist, deleteChecklist}) => {
 
     const [inputTitle, setInputTitle] = useState('')
     const [showForm, setShowForm] = useState(false)
@@ -43,7 +43,7 @@ const ChecklistMenu = ({submitNewChecklist, checklists, setSelectedChecklistID, 
             <ul>
                 {checklists && checklists.map((checklist) => (
                     <ChecklistMenuItem
-                        setSelectedChecklistID={setSelectedChecklistID}
+                        setSelectedChecklist={setSelectedChecklist}
                         checklist={checklist}
                         deleteChecklist={deleteChecklist}
                         key={checklist._id}

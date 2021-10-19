@@ -4,6 +4,7 @@ import store from '../redux/store'
 import { Provider } from 'react-redux'
 import { ContextMenuProvider } from '../contexts/ContextMenuContext'
 import Dashboard from '../components/Dashboard/Dashboard'
+import { ChecklistProvider } from '../contexts/AppletContext/ChecklistContext'
 
 const Index = (props) => {
 
@@ -12,7 +13,9 @@ const Index = (props) => {
       <SnackbarProvider>
         <AccessTokenProvider>
           <ContextMenuProvider>
-            <Dashboard/>
+            <ChecklistProvider>
+              <Dashboard/>
+            </ChecklistProvider>
           </ContextMenuProvider>
         </AccessTokenProvider>
       </SnackbarProvider>

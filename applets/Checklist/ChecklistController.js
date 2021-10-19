@@ -1,22 +1,12 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useSelector, useDispatch } from 'react-redux'
-import {
-    fetchChecklistsSuccess,
-    createChecklist,
-    deleteChecklist,
-    checkItem, 
-    completeItem, 
-    createItem, 
-    deleteItem, 
-    deleteAllItems 
-} from '../../redux/applets/checklist/checklistSlice'
 import Checklist from "./Checklist"
 import {useAccessTokenContext} from '../../contexts/AccessTokenContext'
 import { useSnackbarContext } from "../../contexts/SnackbarContext"
 import styled from "styled-components"
 import ChecklistMenu from "./ChecklistMenu"
 import mongoose  from "mongoose"
+import { useChecklistContext } from "../../contexts/AppletContext/ChecklistContext"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -67,9 +57,9 @@ const Wrapper = styled.div`
     }
 `
 
-const getChecklistIndex = (selectedChecklistID, checklists) => {
+const getChecklistIndex = (selectedChecklist, checklists) => {
     for (let i in checklists){
-        if (checklists[i]._id == selectedChecklistID){
+        if (checklists[i]._id == selectedChecklist._id){
             return i
         }
     }
@@ -78,11 +68,21 @@ const getChecklistIndex = (selectedChecklistID, checklists) => {
 
 const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => {
     
-    const dispatch = useDispatch()
     const accessTokenContext = useAccessTokenContext()
     const {snackbar, setSnackbar} = useSnackbarContext()
-    const checklists = useSelector(state => state.checklist.checklists)
-    const [selectedChecklistID, setSelectedChecklistID] = useState('')
+    const {
+        checklists, 
+        setChecklists,
+        fetchChecklistsSuccess,
+        createChecklist,
+        deleteChecklist,
+        checkItem,
+        completeItem,
+        createItem,
+        deleteItem,
+        deleteAllItems
+    } = useChecklistContext()
+    const [selectedChecklist, setSelectedChecklist] = useState({})
 
     useEffect(() => {
         console.log(snackbar)
@@ -93,10 +93,12 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
 
     useEffect(() => {
         let newApplet = isMobile ? mobileApplet : applet
-        if (selectedChecklistID) {
+        console.log(selectedChecklist)
+        console.log(Object.keys(selectedChecklist))
+        if (Object.keys(selectedChecklist).length > 0) {
             updateApplet(applet.position, {
                 ...newApplet, 
-                name: checklists.filter((checklist) => checklist._id == selectedChecklistID)[0].name
+                name: checklists.filter((checklist) => checklist._id == selectedChecklist._id)[0].name
             })
         } else {
             updateApplet(applet.position, {
@@ -104,27 +106,27 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                 name: 'Checklist'
             })
         }
-    }, [selectedChecklistID])
+    }, [selectedChecklist])
 
     const fetchChecklistsRequest = () => {
         axios.get(process.env.NEXT_PUBLIC_URL + '/applets/checklist').then(res => {
-            dispatch(fetchChecklistsSuccess({checklists: res.data.checklists}))
+            fetchChecklistsSuccess({checklists: res.data.checklists})
         }).catch(err => console.log(err))
     }
 
     const postNewItemRequest = async (item) => {
         if (accessTokenContext.accessToken){
-            axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklistID + '/item/', {
+            axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklist._id + '/item/', {
                 item: {
                     ...item,
                     isCompleted: false,
                     isChecked: false
                 }
             }).then(res => {
-                dispatch(createItem({
+                createItem({
                     item: res.data.item,
-                    checklistID: selectedChecklistID
-                }))
+                    checklist: selectedChecklist
+                })
                 setSnackbar(`${res.data.item.title} created`)
             }).catch(err => {
                 console.log(err)
@@ -133,22 +135,22 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
         } else {
             let newItemID = new mongoose.Types.ObjectId()
             let idString = newItemID.toString()
-            dispatch(createItem({
-                checklistID: selectedChecklistID,
+            createItem({
+                checklist: selectedChecklist,
                 item: {
                     ...item,
                     _id: idString,
                     isCompleted: false,
                     isChecked: false
                 }
-            }))
+            })
             setSnackbar(`${item.title} created`)
         }
     }
 
     const putCompletedItemRequest = async (item) => {
         if (accessTokenContext.accessToken){
-            axios.put(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklistID + '/item/' + item._id, {
+            axios.put(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklist._id + '/item/' + item._id, {
                 item: {
                     ...item,
                     isCompleted: !item.isCompleted,
@@ -156,89 +158,78 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
                 }
             }).catch(err => console.log(err))
         }
-        dispatch(completeItem({
+        completeItem({
             item,
-            checklistID: selectedChecklistID
-        }))
+            checklist: selectedChecklist
+        })
     }
 
     const checkItemWrapper = (item) => {
-        dispatch(checkItem({
+        checkItem({
             item,
-            checklistID: selectedChecklistID
-        }))
+            checklist: selectedChecklist
+        })
     }
 
     const deleteItemRequest = async (item) => {
         console.log(item)
         if (accessTokenContext.accessToken){
-            axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklistID + '/item/' + item._id).then(res => {
-                dispatch(deleteItem({
+            axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklist._id + '/item/' + item._id).then(res => {
+                deleteItem({
                     item,
-                    checklistID: selectedChecklistID
-                }))
+                    checklist: selectedChecklist
+                })
             }).catch(err => console.log(err))
         } else {
-            dispatch(deleteItem({
+            deleteItem({
                 item,
-                checklistID: selectedChecklistID
-            }))
+                checklist: selectedChecklist
+            })
         }
     }
 
     const deleteCompletedRequest = async () => {
         if (accessTokenContext.accessToken){
-            axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklistID + '/item').then(res => {
-                dispatch(deleteAllItems({
-                    checklistID: selectedChecklistID
-                }))
+            axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + selectedChecklist._id + '/item').then(res => {
+                deleteAllItems({
+                    checklist: selectedChecklist
+                })
             }).catch(err => console.log(err))
         } else {
-            dispatch(deleteAllItems({
-                checklistID: selectedChecklistID
-            }))
+            deleteAllItems({
+                checklist: selectedChecklist
+            })
         }
     }
 
     const postNewChecklist = async (checklist) => {
         if (accessTokenContext.accessToken){
             axios.post(process.env.NEXT_PUBLIC_URL + '/applets/checklist/', checklist).then(res => {
-                dispatch(createChecklist(res.data))
+                createChecklist({checklist: res.data.checklist})
             }).catch(err => console.log(err))
         } else {
             let newCheckListID = new mongoose.Types.ObjectId()
             let idString = newCheckListID.toString()
-            dispatch(createChecklist({
+            createChecklist({
                 checklist: {
                     name: checklist.name,
                     _id: idString,
                     items: []
                 }
-            }))
+            })
         }
     }
 
     const deleteChecklistRequest = async (checklist) => {
         if (accessTokenContext.accessToken){
             axios.delete(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + checklist._id).then(res => {
-                dispatch(deleteChecklist({
-                    checklistID: checklist._id
-                }))
+                deleteChecklist({checklist})
                 setSnackbar('Deleted ' + checklist.name)
             }).catch(err => console.log(err))
         } else {
-            dispatch(deleteChecklist({
-                checklistID: checklist._id
-            }))
+            deleteChecklist({checklist: checklist})
         }
     }
-
-    const editChecklist = async (checklist) => {
-        axios.put(process.env.NEXT_PUBLIC_URL + '/applets/checklist/' + checklist._id).then(res => {
-            dispatch(updateChecklist(res.data))
-        }).catch(err => console.log(err))
-    }
-
 
     return (
         <Wrapper
@@ -246,21 +237,21 @@ const ChecklistController = ({applet, updateApplet, mobileApplet, isMobile}) => 
             isTall={applet.height === '100%'}
             background={applet.background}
         >
-            {selectedChecklistID ? (
+            {Object.keys(selectedChecklist).length > 0 ? (
             <Checklist
                 applet={applet}
-                items={checklists[getChecklistIndex(selectedChecklistID, checklists)].items}
+                items={checklists[getChecklistIndex(selectedChecklist, checklists)].items}
                 checkItem={checkItemWrapper}
                 completeItem={putCompletedItemRequest}
                 createItem={postNewItemRequest}
                 deleteItem={deleteItemRequest}
                 deleteAllItems={deleteCompletedRequest}
-                exitChecklist={() => setSelectedChecklistID('')}
+                exitChecklist={() => setSelectedChecklist({})}
             />   
             ) : (    
             <ChecklistMenu
                 submitNewChecklist={postNewChecklist}
-                setSelectedChecklistID={setSelectedChecklistID}
+                setSelectedChecklist={setSelectedChecklist}
                 checklists={checklists}
                 deleteChecklist={deleteChecklistRequest}
             />
