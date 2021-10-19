@@ -6,15 +6,19 @@ export function ChecklistProvider(props){
 
   const [checklists, setChecklists] = useState([])
 
-  export const createChecklist = ({checklist}) => {
+  const fetchChecklistsSuccess = ({checklists}) => {
+    setChecklists(checklists)
+  }
+
+  const createChecklist = ({checklist}) => {
     setChecklists([...checklists, checklist])
   }
 
-  export const deleteChecklist = ({checklist}) => {
+  const deleteChecklist = ({checklist}) => {
     setChecklists([...checklists.filter((currentChecklist) => currentChecklist._id != checklist._id)])
   }
 
-  export const checkItem = ({checklist, item}) => {
+  const checkItem = ({checklist, item}) => {
     let checklistIndex = checklists.map((currentChecklist) => (currentChecklist._id)).indexOf(checklist._id)
     let itemIndex = checklists[checklistIndex].items.map(currentItem => (currentItem._id)).indexOf(item._id)
     let checklistsCopy = [...checklists]
@@ -22,7 +26,7 @@ export function ChecklistProvider(props){
     setChecklists(checklistsCopy)
   }
 
-  export const completeItem = ({checklist, item}) => {
+  const completeItem = ({checklist, item}) => {
     let checklistIndex = checklists.map((currentChecklist) => (currentChecklist._id)).indexOf(checklist._id)
     let itemIndex = checklists[checklistIndex].items.map(currentItem => (currentItem._id)).indexOf(item._id)
     let checklistsCopy = [...checklists]
@@ -30,26 +34,26 @@ export function ChecklistProvider(props){
     setChecklists(checklistsCopy)
   }
 
-  export const createItem = ({checklist, item}) => {
+  const createItem = ({checklist, item}) => {
     let checklistIndex = checklists.map((currentChecklist) => (currentChecklist._id)).indexOf(checklist._id)
     let newItem = {
         isChecked: false,
         isCompleted: false,
-        ...action.payload.item
+        ...item
       }
     let checklistsCopy = [...checklists]
     checklistsCopy[checklistIndex].items.push(newItem)
     setChecklists(checklistsCopy)
   }
 
-  export const deleteItem = ({checklist, item}) => {
+  const deleteItem = ({checklist, item}) => {
     let checklistIndex = checklists.map((currentChecklist) => (currentChecklist._id)).indexOf(checklist._id)
     let checklistsCopy = [...checklists]
     checklistsCopy[checklistIndex].items = checklistsCopy[checklistIndex].items.filter(currentItem => currentItem._id != item._id)
     setChecklists(checklistsCopy)
  }
 
-  export const deleteAllItems = ({checklist}) => {
+  const deleteAllItems = ({checklist}) => {
     let checklistIndex = checklists.map((currentChecklist) => (currentChecklist._id)).indexOf(checklist._id)
     let checklistsCopy = [...checklists] 
     checklistsCopy[checklistIndex].items = checklistsCopy[checklistIndex].items.filter(item => !item.isCompleted)
@@ -59,8 +63,9 @@ export function ChecklistProvider(props){
   return (
     <ChecklistContext.Provider value={
       {
-        checklist, 
-        setChecklist,
+        checklists, 
+        setChecklists,
+        fetchChecklistsSuccess,
         createChecklist,
         deleteChecklist,
         checkItem,
