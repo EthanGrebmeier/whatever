@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import { getMobileComponent, getMobileComponentObject } from '../../applets/applets'
+import { getComponent, getMobileComponentObject } from '../../applets/applets'
 import { useAccessTokenContext } from '../../contexts/AccessTokenContext'
 import MobileMenu from '../Header/MobileMenu/MobileMenu'
 
@@ -30,7 +30,7 @@ const MobileAppletSpace = ({user, setUser, mobileMenuOpen, setMobileMenuOpen, mo
 
     return (
         <Wrapper>
-            {getMobileComponent(mobileApplet.id, {
+            {getComponent(mobileApplet.id, {
                 mobileApplet, 
                 setMobileApplet, 
                 applet: {

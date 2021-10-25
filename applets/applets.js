@@ -69,25 +69,10 @@ export const getComponent = (id, props) => {
             return <PatchNotes {...props}/>
         case 'clock':
             return <Clock {...props}/>
-        // case 'piano':
-        //     return <Piano {...props}/>
+        case 'piano':
+            return <Piano {...props}/>
         default:
             return  <ChecklistController {...props} />
-    }
-}
-
-export const getMobileComponent = (id, props) => {
-    switch (id) {
-        case 'notepad':
-            return <Notepad {...props}/>
-        case 'checklist':
-            return <ChecklistController {...props} />
-        case 'patchnotes':
-            return <PatchNotes {...props}/>
-        // case 'piano':
-        //     return <Piano {...props}/>
-        default:
-            return  <MobileWelcome />
     }
 }
 
