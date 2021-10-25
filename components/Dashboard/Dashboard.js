@@ -7,7 +7,7 @@ import Snackbar from '../Snackbar/Snackbar'
 import ContextMenu from '../Menu/ContextMenu'
 import defaultApplets from '../../applets/defaultApplets'
 import hiddenBaseLayout from '../../applets/hiddenBaseLayout'
-import { getMobileComponent} from '../../applets/applets'
+import { getComponent} from '../../applets/applets'
 import styled from 'styled-components'
 import { useSnackbarContext } from '../../contexts/SnackbarContext'
 import { useAccessTokenContext } from '../../contexts/AccessTokenContext'
@@ -67,7 +67,7 @@ const Dashboard = () => {
     
     const [background, setBackground] = useState('#F49FBC')
     const [layout, setLayout] = useState() 
-    const [mobileApplet, setMobileApplet] = useState(getMobileComponent())
+    const [mobileApplet, setMobileApplet] = useState(getComponent())
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const {contextMenu, setContextMenu} = useContextMenuContext()
 
