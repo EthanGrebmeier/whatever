@@ -7,6 +7,9 @@ const ChecklistMenuWrapper = styled(Wrapper)`
     p { 
         cursor: pointer;
     }
+    p:hover{
+        text-decoration: underline;
+    }
 `
 
 const ChecklistMenuItem = ({checklist, setSelectedChecklist, deleteChecklist}) => {
