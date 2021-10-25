@@ -16,6 +16,9 @@ const Wrapper = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    :disabled{
+        cursor: not-allowed;
+    }
 `
 
 const Tooltip = styled.div`
@@ -43,12 +46,12 @@ const Tooltip = styled.div`
 `
 
 
-const IconButton = ({children, onClick, tooltip}) => {
+const IconButton = ({children, onClick, tooltip, disabled}) => {
     const [isHovered, setIsHovered] = useState(false)
 
     return (
         <ButtonWrapper>
-            <Wrapper onMouseLeave={() => setIsHovered(false)} onMouseEnter={() => setIsHovered(true)} onClick={onClick}>
+            <Wrapper onMouseLeave={() => setIsHovered(false)} onMouseEnter={() => setIsHovered(true)} onClick={onClick} disabled={disabled}>
                 {children}
             </Wrapper>
             {tooltip && (

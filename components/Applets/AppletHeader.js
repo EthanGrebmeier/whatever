@@ -111,19 +111,19 @@ const AppletHeader = (props) => {
     const renderArrows = () => {
         return (
             <>
-                {canAppletExpand('left') && <ExpandLeft/>}
-                {canAppletExpand('right') && <ExpandRight/>}
-                {canAppletExpand('down') && <ExpandDown/>}
-                {canAppletExpand('up') && <ExpandUp/>}
-                {canAppletShrink('left') && <ShrinkLeft/>}
-                {canAppletShrink('right') && <ShrinkRight/>}
-                {canAppletShrink('down') && <ShrinkDown/>}
-                {canAppletShrink('up') && <ShrinkUp/>}
+                <ExpandLeft disabled={!canAppletExpand('left')}/>
+                <ExpandRight disabled={!canAppletExpand('right')}/>
+                <ExpandDown disabled={!canAppletExpand('down')}/>
+                <ExpandUp disabled={!canAppletExpand('up')}/>
+                <ShrinkLeft disabled={!canAppletShrink('left')}/>
+                <ShrinkRight disabled={!canAppletShrink('right')}/>
+                <ShrinkDown disabled={!canAppletShrink('down')}/>
+                <ShrinkUp disabled={!canAppletShrink('up')}/>
             </>
         )
     }
 
-    const ShrinkUp = () => {
+    const ShrinkUp = ({disabled}) => {
         const shrinkComponentUp = () => {
             const [y, x] = props.position.split(' ')
             if (y == 'bottom'){
@@ -132,13 +132,13 @@ const AppletHeader = (props) => {
             props.setHeight('49%')
         }
         return (
-            <IconButton tooltip='Shrink Up' onClick={shrinkComponentUp}>
-                <UilTopArrowFromTop title='test'/>
+            <IconButton tooltip='Shrink Up' onClick={shrinkComponentUp} disabled={disabled}>
+                <UilTopArrowFromTop title='test' color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
 
-    const ShrinkDown = () => {
+    const ShrinkDown = ({disabled}) => {
         const shrinkComponentDown = () => {
             const [y, x] = props.position.split(' ')
             if (y == 'top'){
@@ -147,13 +147,13 @@ const AppletHeader = (props) => {
             props.setHeight('49%')
         }
         return (
-            <IconButton tooltip='Shrink Down' onClick={shrinkComponentDown}>
-                <UilArrowFromTop title='test'/>
+            <IconButton tooltip='Shrink Down' onClick={shrinkComponentDown} disabled={disabled}>
+                <UilArrowFromTop title='test' color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
 
-    const ShrinkLeft = () => {
+    const ShrinkLeft = ({disabled}) => {
         const shrinkComponentLeft = () => {
             const [y, x] = props.position.split(' ')
             if (x == 'right'){
@@ -162,13 +162,13 @@ const AppletHeader = (props) => {
             props.setWidth('49%')
         }
         return (
-            <IconButton tooltip='Shrink Left' onClick={shrinkComponentLeft}>
-                <UilLeftArrowFromLeft title='test'/>
+            <IconButton tooltip='Shrink Left' onClick={shrinkComponentLeft} disabled={disabled}>
+                <UilLeftArrowFromLeft title='test' color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
 
-    const ShrinkRight = () => {
+    const ShrinkRight = ({disabled}) => {
         const shrinkComponentRight = () => {
             const [y, x] = props.position.split(' ')
             if (x == 'left'){
@@ -177,52 +177,52 @@ const AppletHeader = (props) => {
             props.setWidth('49%')
         }
         return (
-            <IconButton tooltip='Shrink Right' onClick={shrinkComponentRight}>
-                <UilArrowFromRight/>
+            <IconButton tooltip='Shrink Right' onClick={shrinkComponentRight} disabled={disabled}>
+                <UilArrowFromRight color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
 
-    const ExpandUp = () => {
+    const ExpandUp = ({disabled}) => {
         const expandComponentUp = () => {
             props.setHeight('100%')
         }
         return (
-            <IconButton tooltip='Expand Up'  onClick={expandComponentUp}>
-                <UilTopArrowFromTop title='test'/>
+            <IconButton tooltip='Expand Up'  onClick={expandComponentUp} disabled={disabled}>
+                <UilTopArrowFromTop title='test' color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
 
-    const ExpandRight = () => {
+    const ExpandRight = ({disabled}) => {
         const expandComponentRight = () => {
             props.setWidth('100%')
         }
         return (
-            <IconButton tooltip='Expand Right' onClick={expandComponentRight}>
-                <UilArrowFromRight/>
+            <IconButton tooltip='Expand Right' onClick={expandComponentRight} disabled={disabled}>
+                <UilArrowFromRight color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
 
-    const ExpandDown = () => {
+    const ExpandDown = ({disabled}) => {
         const expandComponentDown = () => {
             props.setHeight('100%')
         }
         return (
-            <IconButton tooltip='Expand Down' onClick={expandComponentDown}>
-                <UilArrowFromTop/>
+            <IconButton tooltip='Expand Down' onClick={expandComponentDown} disabled={disabled}>
+                <UilArrowFromTop color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
 
-    const ExpandLeft = () => {
+    const ExpandLeft = ({disabled}) => {
         const expandComponentLeft = () => {
             props.setWidth('100%')
         }
         return (
-            <IconButton tooltip='Expand Left' onClick={expandComponentLeft}>
-                <UilLeftArrowFromLeft/>
+            <IconButton tooltip='Expand Left' onClick={expandComponentLeft} disabled={disabled}>
+                <UilLeftArrowFromLeft color={disabled ? '#A3B9C9' : 'black'}/>
             </IconButton>
         )
     }
