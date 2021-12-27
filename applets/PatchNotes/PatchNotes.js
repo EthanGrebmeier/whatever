@@ -31,6 +31,7 @@ const Section = styled.div`
 
 const Notes = styled.p`
     width: 100%;
+    flex: 1 1 0px;
     font-family: 'Quicksand';
     font-size: ${props => props.isWide ? '18px' : '16px'};
     font-weight: 500;
