@@ -6,10 +6,6 @@ export function ChecklistProvider(props){
 
   const [checklists, setChecklists] = useState([])
 
-  useEffect(() => {
-   console.log(checklists)
-  }, [checklists])
-
   const fetchChecklistsSuccess = ({checklists}) => {
     setChecklists(checklists)
   }
