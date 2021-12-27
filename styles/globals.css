@@ -9,6 +9,7 @@ body {
   font-family: 'Quicksand';
   font-weight: 300;
   overflow: hidden;
+  height: 100%;
 }
 
 @media screen and (max-width: 740px) {

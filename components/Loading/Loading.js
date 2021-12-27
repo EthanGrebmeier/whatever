@@ -47,7 +47,7 @@ const Loading = ({background}) => {
             let newLoad = Math.floor(Math.random() * 2000) + 1000
             
             timeouts.push(setTimeout(() => {
-                setText(phrases[Math.floor(Math.random() * 10)])
+                setText(phrases[Math.floor(Math.random() * phrases.length)])
                 getLoadingText()
             }, newLoad))
             
