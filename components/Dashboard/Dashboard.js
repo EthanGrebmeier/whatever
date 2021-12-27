@@ -96,7 +96,6 @@ const Dashboard = () => {
         axios.get(process.env.NEXT_PUBLIC_URL + '/user').then(res => {
             setUser(res.data)
             setLoading(false)
-            
         }).catch(err => {
             console.log(err)
             setLoading(false)

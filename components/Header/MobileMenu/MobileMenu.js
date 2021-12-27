@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     height: 100%;
     width: 100%;
     position: absolute;
-    z-index: 10;
+    z-index: 30;
     top: 0;
     background: #CED0FA;
 `

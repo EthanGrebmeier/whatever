@@ -7,7 +7,7 @@ import MobileMenu from '../Header/MobileMenu/MobileMenu'
 
 const Wrapper = styled.div`
     width: 100%;
-    height: 85vh; 
+    height: 100%; 
     position: relative;
     padding-bottom: 10px;
 `     
