@@ -55,7 +55,7 @@ const Loading = ({background}) => {
         }
 
         timeouts.push(setTimeout(() => {
-            snackbarContext.setSnackbar('Something definitely broke. Thats my bad...')
+            setSnackbar('Something definitely broke. Thats my bad...')
         }, 25000))
 
         setText(phrases[0])
