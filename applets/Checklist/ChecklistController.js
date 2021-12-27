@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     align-items: start;
     position: relative;
 
-    * {
+    * { 
         transition: all .2s ease;
     }
     
@@ -41,7 +41,7 @@ const Wrapper = styled.div`
         list-style-type: none;
         padding-inline-start: 0;
         overflow-y: scroll;
-        flex-grow: 2;
+        flex: 1 1 0; 
         width: 100%;
     }
 

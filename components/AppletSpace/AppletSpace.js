@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const AppletSpaceWrapper = styled.div`
     position: relative;
     width: 100%;
-    flex: 1 0;
+    flex: 1;
 `
 
 const AppletSpace = (props) => {
