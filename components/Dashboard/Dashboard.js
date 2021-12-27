@@ -15,7 +15,7 @@ import { useContextMenuContext } from '../../contexts/ContextMenuContext'
 
 const Site = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   min-height: 100%;
   background: ${props => props.background};
   display: flex;
@@ -23,13 +23,10 @@ const Site = styled.div`
   overflow: hidden; 
   @media screen and (max-width: 740px){
     background: ${props => props.mobileBackground};
-    overflow: scroll;
-    height: 100vh;
   }
 `
 
 const Wrapper = styled.div`
-  min-height: 100vh;
   height: 100%;
   width: 100%;
   max-width: 1500px;
